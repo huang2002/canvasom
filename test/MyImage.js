@@ -4,7 +4,7 @@
 
 const MyImage = () => {
 
-    const srcWidth = 130,
+    const srcWidth = 115,
         srcHeight = 50,
         offsetX = 30,
         offsetY = 20;
@@ -52,13 +52,14 @@ const MyImage = () => {
 
     return COM.create('rect', {
         x: 390,
-        y: 381,
+        y: 380,
         width: srcWidth,
         height: srcHeight,
         radius: 6,
         clipPath: true,
         style: {
-            strokeStyle: '#090'
+            strokeStyle: '#090',
+            ...commonShadowStyle
         }
     },
         COM.create('image', {
@@ -71,8 +72,7 @@ const MyImage = () => {
             srcWidth: srcWidth * RATIO,
             srcHeight: srcHeight * RATIO,
             style: {
-                fillStyle: '#9FF',
-                ...commonShadowStyle
+                fillStyle: '#9FF'
             }
         },
             COM.create('text', {
