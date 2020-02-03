@@ -13,6 +13,15 @@ export interface PointerEventData {
 
 export type PointerEvent = Event<PointerEventData>;
 
+export interface WheelEventData extends PointerEventData {
+    deltaX: number;
+    deltaY: number;
+    deltaZ: number;
+    deltaMode: number;
+}
+
+export type WheelEvent = Event<WheelEventData>;
+
 export type RootOptions = NodeOptions & Partial<{
     canvas: HTMLCanvasElement;
     width: number;
@@ -49,6 +58,7 @@ export class Root extends Node implements Required<RootOptions> {
         this._onTouchStart = this._onTouchStart.bind(this);
         this._onTouchMove = this._onTouchMove.bind(this);
         this._onTouchEnd = this._onTouchEnd.bind(this);
+        this._onWheel = this._onWheel.bind(this);
         if (this.interactive) {
             this.attachListeners();
         }
@@ -136,18 +146,18 @@ export class Root extends Node implements Required<RootOptions> {
         Utils.renderNodes(this.childNodes, context);
     }
 
-    private _emit(type: string, clientX: number, clientY: number, timeStamp: number) {
+    private _emit(type: string, clientX: number, clientY: number, data: object) {
         const { _scale } = this,
             x = (clientX - this._clientX) / _scale,
             y = (clientY - this._clientY) / _scale,
             target = detectTarget(this.childNodes, x, y, true);
         if (target && target.interactive) {
             target.dispatchEvent(
-                new Event<PointerEventData>(type, {
+                new Event(type, {
                     target,
                     cancelable: true,
                     bubbles: true,
-                    data: { x, y, timeStamp }
+                    data: Object.assign(data, { x, y })
                 })
             );
         }
@@ -155,19 +165,40 @@ export class Root extends Node implements Required<RootOptions> {
 
     private _onMouseDown(event: MouseEvent) {
         if (this.interactive) {
-            this._emit('pointerdown', event.clientX, event.clientY, event.timeStamp);
+            this._emit(
+                'pointerdown',
+                event.clientX,
+                event.clientY,
+                {
+                    timeStamp: event.timeStamp
+                }
+            );
         }
     }
 
     private _onMouseMove(event: MouseEvent) {
         if (this.interactive) {
-            this._emit('pointermove', event.clientX, event.clientY, event.timeStamp);
+            this._emit(
+                'pointermove',
+                event.clientX,
+                event.clientY,
+                {
+                    timeStamp: event.timeStamp
+                }
+            );
         }
     }
 
     private _onMouseUp(event: MouseEvent) {
         if (this.interactive) {
-            this._emit('pointerup', event.clientX, event.clientY, event.timeStamp);
+            this._emit(
+                'pointerup',
+                event.clientX,
+                event.clientY,
+                {
+                    timeStamp: event.timeStamp
+                }
+            );
         }
     }
 
@@ -177,7 +208,9 @@ export class Root extends Node implements Required<RootOptions> {
                 'pointerdown',
                 event.changedTouches[0].clientX,
                 event.changedTouches[0].clientY,
-                event.timeStamp
+                {
+                    timeStamp: event.timeStamp
+                }
             );
         }
     }
@@ -188,7 +221,9 @@ export class Root extends Node implements Required<RootOptions> {
                 'pointermove',
                 event.changedTouches[0].clientX,
                 event.changedTouches[0].clientY,
-                event.timeStamp
+                {
+                    timeStamp: event.timeStamp
+                }
             );
         }
     }
@@ -199,7 +234,26 @@ export class Root extends Node implements Required<RootOptions> {
                 'pointerup',
                 event.changedTouches[0].clientX,
                 event.changedTouches[0].clientY,
-                event.timeStamp
+                {
+                    timeStamp: event.timeStamp
+                }
+            );
+        }
+    }
+
+    private _onWheel(event: globalThis.WheelEvent) {
+        if (this.interactive) {
+            this._emit(
+                'wheel',
+                event.clientX,
+                event.clientY,
+                {
+                    deltaX: event.deltaX,
+                    deltaY: event.deltaY,
+                    deltaZ: event.deltaZ,
+                    deltaMode: event.deltaMode,
+                    timeStamp: event.timeStamp
+                }
             );
         }
     }
@@ -218,6 +272,7 @@ export class Root extends Node implements Required<RootOptions> {
             canvas.addEventListener('mousedown', this._onMouseDown, Root.eventOptions);
             canvas.addEventListener('mousemove', this._onMouseMove, Root.eventOptions);
             canvas.addEventListener('mouseup', this._onMouseUp, Root.eventOptions);
+            canvas.addEventListener('wheel', this._onWheel, Root.eventOptions);
         }
     }
 
@@ -235,6 +290,7 @@ export class Root extends Node implements Required<RootOptions> {
             canvas.removeEventListener('mousedown', this._onMouseDown, Root.eventOptions);
             canvas.removeEventListener('mousemove', this._onMouseMove, Root.eventOptions);
             canvas.removeEventListener('mouseup', this._onMouseUp, Root.eventOptions);
+            canvas.removeEventListener('wheel', this._onWheel, Root.eventOptions);
         }
     }
 
