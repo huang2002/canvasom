@@ -7,7 +7,7 @@ const StopPropagation = () => (
         interactive: true,
         x: 200,
         y: 380,
-        width: 240,
+        width: 160,
         height: 50,
         radius: 6,
         style: {
@@ -24,8 +24,8 @@ const StopPropagation = () => (
         }
     },
         COM.create('text', {
-            data: 'event.stopPropagation()',
-            x: 120,
+            data: 'no propagation',
+            x: 80,
             y: 25,
             style: {
                 font: 'bold 18px sans-serif',
