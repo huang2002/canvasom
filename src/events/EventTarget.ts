@@ -46,7 +46,7 @@ export class EventTarget {
             _listenerMap.set(
                 event.type,
                 records.filter(record => {
-                    record.listener(event);
+                    record.listener.call(this, event);
                     return !record.once;
                 })
             );
