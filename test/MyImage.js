@@ -50,33 +50,42 @@ const MyImage = () => {
     _root.compose();
     COM.Schedule.unmark(_root);
 
-    return COM.create('image', {
-        texture: _root.canvas,
-        interactive: true,
+    return COM.create('rect', {
         x: 470,
         y: 381,
         width: srcWidth,
         height: srcHeight,
-        srcX: offsetX * RATIO,
-        srcY: offsetY * RATIO,
-        srcWidth: srcWidth * RATIO,
-        srcHeight: srcHeight * RATIO,
+        radius: 6,
+        clipPath: true,
         style: {
-            fillStyle: '#9FF',
-            strokeStyle: '#090',
-            ...commonShadowStyle
+            strokeStyle: '#090'
         }
     },
-        COM.create('text', {
-            data: 'mark',
-            x: 2,
-            y: 2,
+        COM.create('image', {
+            texture: _root.canvas,
+            interactive: true,
+            width: srcWidth,
+            height: srcHeight,
+            srcX: offsetX * RATIO,
+            srcY: offsetY * RATIO,
+            srcWidth: srcWidth * RATIO,
+            srcHeight: srcHeight * RATIO,
             style: {
-                font: 'bold 10px sans-serif',
-                fillStyle: '#00F',
-                opacity: .8
+                fillStyle: '#9FF',
+                ...commonShadowStyle
             }
-        })
+        },
+            COM.create('text', {
+                data: 'mark',
+                x: 2,
+                y: 2,
+                style: {
+                    font: 'bold 10px sans-serif',
+                    fillStyle: '#00F',
+                    opacity: .8
+                }
+            })
+        )
     );
 
 };
