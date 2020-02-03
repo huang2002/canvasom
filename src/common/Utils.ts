@@ -49,15 +49,16 @@ export namespace Utils {
 
     export const deg2rad = (deg: number) => deg / 180 * Math.PI;
 
-    export const getRoot = (node: Node) => {
-        let current = node;
-        while (current.parentNode) {
-            current = current.parentNode;
+    export const getRoots = (node: Node) => {
+        const roots = [];
+        let current: Node | null = node;
+        while (current) {
             if (current instanceof Root) {
-                return current;
+                roots.push(current);
             }
+            current = current.parentNode;
         }
-        return null;
+        return roots;
     };
 
     export const renderNodes = (nodes: Node[], context: CanvasRenderingContext2D) => {

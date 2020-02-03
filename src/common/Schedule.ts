@@ -34,13 +34,11 @@ export namespace Schedule {
         // compose roots in ascending order
         const roots = new Array<Root>();
         nodes.forEach(node => {
-            const root = Utils.getRoot(node);
-            if (root && !roots.includes(root)) {
-                roots.push(root);
-            }
-            if (node instanceof Root) {
-                roots.push(node);
-            }
+            Utils.getRoots(node).forEach(root => {
+                if (!roots.includes(root)) {
+                    roots.push(root);
+                }
+            });
         });
         roots.sort(
             (rootA, rootB) => rootB.contains(rootA) ? -1 : 1
