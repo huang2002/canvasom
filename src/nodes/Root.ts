@@ -32,6 +32,10 @@ export class Root extends Node implements Required<RootOptions> {
         margin: 0
     };
 
+    static eventOptions: AddEventListenerOptions = {
+        passive: true
+    };
+
     constructor(options?: Readonly<RootOptions>) {
         super();
         Object.assign(this, Root.defaults, options);
@@ -207,13 +211,13 @@ export class Root extends Node implements Required<RootOptions> {
         this._listenerAttached = true;
         const { canvas } = this;
         if (Utils.Const.IS_TOUCH_MODE) {
-            canvas.addEventListener('touchstart', this._onTouchStart);
-            canvas.addEventListener('touchmove', this._onTouchMove);
-            canvas.addEventListener('touchend', this._onTouchEnd);
+            canvas.addEventListener('touchstart', this._onTouchStart, Root.eventOptions);
+            canvas.addEventListener('touchmove', this._onTouchMove, Root.eventOptions);
+            canvas.addEventListener('touchend', this._onTouchEnd, Root.eventOptions);
         } else {
-            canvas.addEventListener('mousedown', this._onMouseDown);
-            canvas.addEventListener('mousemove', this._onMouseMove);
-            canvas.addEventListener('mouseup', this._onMouseUp);
+            canvas.addEventListener('mousedown', this._onMouseDown, Root.eventOptions);
+            canvas.addEventListener('mousemove', this._onMouseMove, Root.eventOptions);
+            canvas.addEventListener('mouseup', this._onMouseUp, Root.eventOptions);
         }
     }
 
@@ -224,13 +228,13 @@ export class Root extends Node implements Required<RootOptions> {
         this._listenerAttached = false;
         const { canvas } = this;
         if (Utils.Const.IS_TOUCH_MODE) {
-            canvas.removeEventListener('touchstart', this._onTouchStart);
-            canvas.removeEventListener('touchmove', this._onTouchMove);
-            canvas.removeEventListener('touchend', this._onTouchEnd);
+            canvas.removeEventListener('touchstart', this._onTouchStart, Root.eventOptions);
+            canvas.removeEventListener('touchmove', this._onTouchMove, Root.eventOptions);
+            canvas.removeEventListener('touchend', this._onTouchEnd, Root.eventOptions);
         } else {
-            canvas.removeEventListener('mousedown', this._onMouseDown);
-            canvas.removeEventListener('mousemove', this._onMouseMove);
-            canvas.removeEventListener('mouseup', this._onMouseUp);
+            canvas.removeEventListener('mousedown', this._onMouseDown, Root.eventOptions);
+            canvas.removeEventListener('mousemove', this._onMouseMove, Root.eventOptions);
+            canvas.removeEventListener('mouseup', this._onMouseUp, Root.eventOptions);
         }
     }
 
