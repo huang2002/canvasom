@@ -64,7 +64,7 @@ export class Root extends Node implements Required<RootOptions> {
     readonly canvas!: HTMLCanvasElement;
     readonly context: CanvasRenderingContext2D;
     readonly sizingDelay!: number;
-    penetrable = true;
+    readonly resize: () => void;
     width!: number;
     height!: number;
     sizing!: SizingStrategy | null;
@@ -75,7 +75,9 @@ export class Root extends Node implements Required<RootOptions> {
     private _clientX = 0;
     private _clientY = 0;
 
-    readonly resize: () => void;
+    protected _containsPoint(x: number, y: number) {
+        return this.bounds.containsPoint(x, y);
+    }
 
     private _resize() {
         const { canvas, context, sizing, computedStyle, width, height } = this,
