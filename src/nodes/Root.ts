@@ -69,6 +69,7 @@ export class Root extends Node implements Required<RootOptions> {
     height!: number;
     sizing!: SizingStrategy | null;
     margin!: number;
+    protected _fixedBounds = true;
     private _scale = 1;
     private _listenerAttached = false;
     private _clientX = 0;
@@ -108,6 +109,7 @@ export class Root extends Node implements Required<RootOptions> {
 
     protected _compute() {
         this._resize();
+        this.bounds.setSize(this.width, this.height);
         if (this.interactive && !this._listenerAttached) {
             this.attachListeners();
         }

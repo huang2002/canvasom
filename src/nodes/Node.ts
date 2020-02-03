@@ -42,6 +42,7 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     y!: number;
     style: Partial<CanvasStyle> = {};
     protected _parent: Node | null = null;
+    protected _fixedBounds = false;
     readonly left: number = 0;
     readonly top: number = 0;
     readonly computedStyle: Readonly<CanvasStyle> = Object.assign(
@@ -146,7 +147,9 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         childNodes.forEach(childNode => {
             childNode.compute();
         });
-        bounds.contain(childNodes);
+        if (!this._fixedBounds) {
+            bounds.contain(childNodes);
+        }
     }
 
     containsPoint?(x: number, y: number): boolean;
