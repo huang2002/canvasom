@@ -3,12 +3,14 @@ import { Utils } from '../common/Utils';
 
 export type ShapeOptions = NodeOptions & Partial<{
     closePath: boolean;
+    clipPath: boolean;
 }>;
 
 export abstract class Shape extends Node implements Required<ShapeOptions> {
 
     static defaults: ShapeOptions = {
         closePath: true,
+        clipPath: false
     };
 
     static readonly _canvas = document.createElement('canvas');
@@ -20,6 +22,7 @@ export abstract class Shape extends Node implements Required<ShapeOptions> {
     }
 
     closePath!: boolean;
+    clipPath!: boolean;
 
     abstract path(context: CanvasRenderingContext2D): void;
 
@@ -34,7 +37,7 @@ export abstract class Shape extends Node implements Required<ShapeOptions> {
     }
 
     protected _render(context: CanvasRenderingContext2D) {
-        const { computedStyle } = this;
+        const { computedStyle, clipPath } = this;
         context.beginPath();
         this.path(context);
         if (this.closePath) {
@@ -44,10 +47,18 @@ export abstract class Shape extends Node implements Required<ShapeOptions> {
             context.fill();
             context.shadowColor = Utils.Const.TRANSPARENT;
         }
+        if (clipPath) {
+            context.save();
+            context.clip();
+            Utils.renderNodes(this.childNodes, context);
+            context.restore();
+        }
         if (computedStyle.strokeStyle) {
             context.stroke();
         }
-        Utils.renderNodes(this.childNodes, context);
+        if (!clipPath) {
+            Utils.renderNodes(this.childNodes, context);
+        }
     }
 
 }
