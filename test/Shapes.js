@@ -2,7 +2,7 @@
 /// <reference types=".." />
 /// <reference path="./common.js" />
 
-const Shapes = () => COM.create('group', null,
+const Shapes = () => COM.create('group', null, [
     // fill with stroke (splitted)
     COM.create('arc', {
         x: 50,
@@ -177,4 +177,4 @@ const Shapes = () => COM.create('group', null,
             ...commonShadowStyle
         }
     })
-);
+]);

@@ -15,7 +15,7 @@ const root = COM.create(COM.Root, {
         fillStyle: '#CCC',
         ratio: RATIO
     }
-},
+}, [
     Wrapper(
         Shapes(),
         Button(),
@@ -34,6 +34,6 @@ const root = COM.create(COM.Root, {
             strokeStyle: '#600'
         }
     })
-);
+]);
 
 document.body.appendChild(root.canvas);

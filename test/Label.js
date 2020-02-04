@@ -17,7 +17,7 @@ const Label = () => (
             shadowBlur: 5,
             shadowOffsetY: 5
         }
-    },
+    }, [
         COM.create('text', {
             data: 'TEST',
             x: 70,
@@ -33,5 +33,5 @@ const Label = () => (
                 shadowOffsetY: 5
             }
         })
-    )
+    ])
 );

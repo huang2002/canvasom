@@ -61,7 +61,7 @@ const MyImage = () => {
             strokeStyle: '#090',
             ...commonShadowStyle
         }
-    },
+    }, [
         COM.create('image', {
             texture: _root.canvas,
             interactive: true,
@@ -74,7 +74,7 @@ const MyImage = () => {
             style: {
                 fillStyle: '#9FF'
             }
-        },
+        }, [
             COM.create('text', {
                 data: 'mark',
                 x: 2,
@@ -85,7 +85,7 @@ const MyImage = () => {
                     opacity: .8
                 }
             })
-        )
-    );
+        ])
+    ]);
 
 };

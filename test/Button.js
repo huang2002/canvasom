@@ -20,7 +20,7 @@ const Button = () => (
                 alert('Hello, canvasom!');
             }
         }
-    },
+    }, [
         COM.create('text', {
             data: 'click me',
             x: 60,
@@ -32,5 +32,5 @@ const Button = () => (
                 fillStyle: '#000'
             }
         })
-    )
+    ])
 );

@@ -34,7 +34,7 @@ const draggable = COM.create('rect', {
             isDragging = false;
         }
     }
-},
+}, [
     COM.create('text', {
         data: 'draggable',
         x: 55,
@@ -46,7 +46,7 @@ const draggable = COM.create('rect', {
             textBaseline: 'middle'
         }
     })
-);
+]);
 
 root.addListener(
     'pointermove',

@@ -24,11 +24,11 @@ export const registry = new Map<string, NodeConstructor<any, any>>([
 export const create = <T extends Node, U>(
     type: string | NodeConstructor<T, U>,
     options: U,
-    ...childNodes: Node[]
+    childNodes?: Node[]
 ): T => {
     const constructor = typeof type === 'string' ? registry.get(type.toLowerCase())! : type,
         node = new constructor(options);
-    if (childNodes.length) {
+    if (childNodes) {
         childNodes.forEach(childNode => {
             node.appendChild(childNode);
         });

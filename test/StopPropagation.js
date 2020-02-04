@@ -22,7 +22,7 @@ const StopPropagation = () => (
                 event.stopPropagation();
             }
         }
-    },
+    }, [
         COM.create('text', {
             data: 'no propagation',
             x: 80,
@@ -36,5 +36,5 @@ const StopPropagation = () => (
                 shadowOffsetY: 1
             }
         })
-    )
+    ])
 );
