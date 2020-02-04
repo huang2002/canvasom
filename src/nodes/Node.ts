@@ -35,6 +35,12 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
 
     readonly childNodes = new Array<Node>();
     readonly bounds = new Bounds();
+    readonly left: number = 0;
+    readonly top: number = 0;
+    readonly computedStyle: Readonly<CanvasStyle> = Object.assign(
+        Object.create(null),
+        Style.defaults
+    );
     visible!: boolean;
     interactive!: boolean;
     penetrable!: boolean;
@@ -43,12 +49,6 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     style: Partial<CanvasStyle> = {};
     protected _parent: Node | null = null;
     protected _fixedBounds = false;
-    readonly left: number = 0;
-    readonly top: number = 0;
-    readonly computedStyle: Readonly<CanvasStyle> = Object.assign(
-        Object.create(null),
-        Style.defaults
-    );
 
     get parentNode() {
         return this._parent;
