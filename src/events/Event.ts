@@ -4,7 +4,7 @@ export interface EventOptions<T> {
     cancelable?: boolean;
     bubbles?: boolean;
     target?: EventTarget | null;
-    data: T;
+    data: Readonly<T>;
 }
 
 export class Event<T> {
@@ -26,7 +26,7 @@ export class Event<T> {
     readonly cancelable: boolean;
     readonly bubbles: boolean;
     readonly target: EventTarget | null;
-    readonly data!: T;
+    readonly data!: Readonly<T>;
     readonly defaultPrevented: boolean = false;
     readonly propagationStopped: boolean;
 
