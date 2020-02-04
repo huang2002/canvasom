@@ -49,6 +49,16 @@ export namespace Utils {
 
     export const deg2rad = (deg: number) => deg / 180 * Math.PI;
 
+    export const clamp = (value: number, min: number, max: number) => {
+        if (value < min) {
+            return min;
+        }
+        if (value > max) {
+            return max;
+        }
+        return value;
+    };
+
     export const getRoots = (node: Node) => {
         const roots = [];
         let current: Node | null = node;
