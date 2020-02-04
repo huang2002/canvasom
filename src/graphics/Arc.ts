@@ -1,23 +1,22 @@
 import { Shape, ShapeOptions } from './Shape';
 import { Utils } from '../common/Utils';
 
-export type ArcOptions = ShapeOptions & Partial<{
-    startAngle: number;
-    endAngle: number;
+export interface ArcOptions extends ShapeOptions {
+    startAngle?: number;
+    endAngle?: number;
     radius: number;
-    anticlockwise: boolean;
-}>;
+    anticlockwise?: boolean;
+}
 
 export class Arc extends Shape implements Required<ArcOptions> {
 
-    static defaults: ArcOptions = {
+    static defaults: Partial<ArcOptions> = {
         startAngle: 0,
         endAngle: Utils.Const.TWO_PI,
-        radius: 10,
         anticlockwise: false,
     };
 
-    constructor(options?: Readonly<ArcOptions>) {
+    constructor(options: Readonly<ArcOptions>) {
         super();
         Object.assign(this, Arc.defaults, options);
     }

@@ -1,21 +1,19 @@
 import { Shape, ShapeOptions } from './Shape';
 import { Utils } from '../common/Utils';
 
-export type RectOptions = ShapeOptions & Partial<{
+export interface RectOptions extends ShapeOptions {
     width: number;
     height: number;
-    radius: number;
-}>;
+    radius?: number;
+}
 
 export class Rect extends Shape implements Required<RectOptions> {
 
-    static defaults: RectOptions = {
-        width: 100,
-        height: 50,
+    static defaults: Partial<RectOptions> = {
         radius: 0,
     };
 
-    constructor(options?: Readonly<RectOptions>) {
+    constructor(options: Readonly<RectOptions>) {
         super();
         Object.assign(this, Rect.defaults, options);
     }

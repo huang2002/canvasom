@@ -25,10 +25,10 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         interactive: false,
         penetrable: false,
         x: 0,
-        y: 0
+        y: 0,
     };
 
-    constructor(options?: NodeOptions) {
+    constructor(options?: Readonly<NodeOptions>) {
         super();
         Object.assign(this, Node.defaults, options);
     }

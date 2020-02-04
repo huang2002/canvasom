@@ -34,24 +34,33 @@ export type RootOptions = NodeOptions & Partial<{
 export class Root extends Node implements Required<RootOptions> {
 
     static defaults: RootOptions = {
-        width: 300,
-        height: 150,
         sizing: Sizing.Contain,
         sizingDelay: 200,
         margin: 0
     };
 
     static eventOptions: AddEventListenerOptions = {
-        passive: true
+        passive: true,
     };
 
     constructor(options?: Readonly<RootOptions>) {
         super();
+
         Object.assign(this, Root.defaults, options);
-        if (!this.canvas) {
-            this.canvas = document.createElement('canvas');
+
+        let { canvas } = this;
+        if (!canvas) {
+            this.canvas = canvas = document.createElement('canvas');
         }
-        this.context = this.canvas.getContext('2d')!;
+        this.context = canvas.getContext('2d')!;
+
+        if (!this.width) {
+            this.width = canvas.width;
+        }
+        if (!this.height) {
+            this.height = canvas.height;
+        }
+
         this._onMouseDown = this._onMouseDown.bind(this);
         this._onMouseMove = this._onMouseMove.bind(this);
         this._onMouseUp = this._onMouseUp.bind(this);
@@ -59,20 +68,25 @@ export class Root extends Node implements Required<RootOptions> {
         this._onTouchMove = this._onTouchMove.bind(this);
         this._onTouchEnd = this._onTouchEnd.bind(this);
         this._onWheel = this._onWheel.bind(this);
+
         if (this.interactive) {
             this.attachListeners();
         }
-        this.resize = Utils.debounce(
-            function resize(this: Root) {
-                if (this.canvas.parentNode) {
-                    this._resize();
-                    Schedule.mark(this);
-                }
-            },
-            this.sizingDelay,
-            this
+
+        window.addEventListener(
+            'resize',
+            this.resize = Utils.debounce(
+                function resize(this: Root) {
+                    if (this.canvas.parentNode) {
+                        this._resize();
+                        Schedule.mark(this);
+                    }
+                },
+                this.sizingDelay,
+                this
+            )
         );
-        window.addEventListener('resize', this.resize);
+
     }
 
     readonly canvas!: HTMLCanvasElement;

@@ -1,17 +1,15 @@
 import { Node, NodeOptions } from '../nodes/Node';
 import { Utils } from '../common/Utils';
 
-export type TextOptions = NodeOptions & Partial<{
+export interface TextOptions extends NodeOptions {
     data: string;
-}>;
+}
 
 export class Text extends Node implements Required<TextOptions> {
 
-    static defaults: TextOptions = {
-        data: '',
-    };
+    static defaults: Partial<TextOptions> = {};
 
-    constructor(options?: Readonly<TextOptions>) {
+    constructor(options: Readonly<TextOptions>) {
         super();
         Object.assign(this, Text.defaults, options);
     }

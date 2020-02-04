@@ -1,20 +1,18 @@
 import { Shape, ShapeOptions } from './Shape';
 
-export type LineOptions = ShapeOptions & Partial<{
+export interface LineOptions extends ShapeOptions {
     width: number;
     height: number;
-    cross: boolean;
-}>;
+    cross?: boolean;
+}
 
 export class Line extends Shape implements Required<LineOptions> {
 
-    static defaults: LineOptions = {
-        width: 0,
-        height: 0,
+    static defaults: Partial<LineOptions> = {
         cross: false,
     };
 
-    constructor(options?: Readonly<LineOptions>) {
+    constructor(options: Readonly<LineOptions>) {
         super();
         Object.assign(this, Line.defaults, options);
     }

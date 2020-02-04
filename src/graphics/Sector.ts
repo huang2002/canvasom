@@ -1,23 +1,22 @@
 import { Shape, ShapeOptions } from './Shape';
 import { Utils } from '../common/Utils';
 
-export type SectorOptions = ShapeOptions & Partial<{
-    startAngle: number;
-    endAngle: number;
+export interface SectorOptions extends ShapeOptions {
+    startAngle?: number;
+    endAngle?: number;
     radius: number;
-    anticlockwise: boolean;
-}>;
+    anticlockwise?: boolean;
+}
 
 export class Sector extends Shape implements Required<SectorOptions> {
 
-    static defaults: SectorOptions = {
+    static defaults: Partial<SectorOptions> = {
         startAngle: 0,
         endAngle: Utils.Const.TWO_PI,
-        radius: 10,
         anticlockwise: false,
     };
 
-    constructor(options?: Readonly<SectorOptions>) {
+    constructor(options: Readonly<SectorOptions>) {
         super();
         Object.assign(this, Sector.defaults, options);
     }
