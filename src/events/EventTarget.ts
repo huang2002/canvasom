@@ -1,6 +1,6 @@
 import { Event } from './Event';
 
-export type Listener = (event: Event<unknown>) => void;
+export type Listener = (event: Event<any>) => void;
 
 export interface ListenerRecord {
     listener: Listener;
