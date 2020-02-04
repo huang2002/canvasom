@@ -167,7 +167,7 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         context.translate(-x, -y);
     }
 
-    update(properties: Partial<this>) {
+    update(properties: Partial<ThisType<this>>) {
         Object.assign(this, properties);
         Schedule.mark(this);
         return this;
