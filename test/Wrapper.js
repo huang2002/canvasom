@@ -3,7 +3,10 @@
 /// <reference path="./common.js" />
 /// <reference path="./Label.js" />
 
-const Wrapper = (...childNodes) => (
+/**
+ * @param {COM.Node[]} childNodes
+ */
+const Wrapper = childNodes => (
     COM.create('group', {
         penetrable: true,
     }, [

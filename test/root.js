@@ -16,12 +16,12 @@ const root = COM.create(COM.Root, {
         ratio: RATIO
     }
 }, [
-    Wrapper(
+    Wrapper([
         Shapes(),
         Button(),
         StopPropagation(),
         MyImage()
-    ),
+    ]),
     // invisible text
     COM.create('text', {
         data: 'THIS SHOULD BE INVISIBLE',
