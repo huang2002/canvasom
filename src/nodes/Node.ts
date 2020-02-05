@@ -48,7 +48,6 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     y!: number;
     style: Partial<CanvasStyle> = {};
     protected _parent: Node | null = null;
-    protected _fixedBounds = false;
 
     get parentNode() {
         return this._parent;
@@ -124,10 +123,14 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         return newChild;
     }
 
-    protected _compute?(): void;
+    protected _compute() {
+        this.childNodes.forEach(childNode => {
+            childNode.compute();
+        });
+    }
 
     compute() {
-        const { bounds, x, y, _parent, childNodes } = this;
+        const { bounds, x, y, _parent } = this;
         if (_parent) {
             bounds.init(
                 (this.left as number) = _parent.left + x,
@@ -141,15 +144,7 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
             );
             Style.compute(this.computedStyle, Style.defaults, this.style);
         }
-        if (this._compute) {
-            this._compute();
-        }
-        childNodes.forEach(childNode => {
-            childNode.compute();
-        });
-        if (!this._fixedBounds) {
-            bounds.contain(childNodes);
-        }
+        this._compute();
     }
 
     containsPoint?(x: number, y: number): boolean;

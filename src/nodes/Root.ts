@@ -97,7 +97,6 @@ export class Root extends Node implements Required<RootOptions> {
     height!: number;
     sizing!: SizingStrategy | null;
     margin!: number;
-    protected _fixedBounds = true;
     private _scale = 1;
     private _listenerAttached = false;
     private _clientX = 0;
@@ -143,6 +142,9 @@ export class Root extends Node implements Required<RootOptions> {
         if (this.interactive && !this._listenerAttached) {
             this.attachListeners();
         }
+        this.childNodes.forEach(childNode => {
+            childNode.compute();
+        });
     }
 
     protected _render(context: CanvasRenderingContext2D) {

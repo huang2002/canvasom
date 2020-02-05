@@ -27,7 +27,12 @@ export class Arc extends Shape implements Required<ArcOptions> {
     anticlockwise!: boolean;
 
     protected _compute() {
+        const { childNodes } = this;
         this.bounds.setSize(this.radius * 2);
+        childNodes.forEach(childNode => {
+            childNode.compute();
+        });
+        this.bounds.contain(childNodes);
     }
 
     path(context: CanvasRenderingContext2D) {

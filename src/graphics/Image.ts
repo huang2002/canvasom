@@ -62,7 +62,12 @@ export class Image extends Node implements Required<ImageOptions> {
         }
         (this.dstWidth as number) = this.width || this.srcWidth;
         (this.dstHeight as number) = this.height || this.srcHeight;
+        const { childNodes } = this;
         this.bounds.setSize(this.dstWidth, this.dstHeight);
+        childNodes.forEach(childNode => {
+            childNode.compute();
+        });
+        this.bounds.contain(childNodes);
     }
 
     protected _render(context: CanvasRenderingContext2D) {

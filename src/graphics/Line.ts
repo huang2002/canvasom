@@ -22,7 +22,12 @@ export class Line extends Shape implements Required<LineOptions> {
     cross!: boolean;
 
     protected _compute() {
+        const { childNodes } = this;
         this.bounds.setSize(this.width, this.height);
+        childNodes.forEach(childNode => {
+            childNode.compute();
+        });
+        this.bounds.contain(childNodes);
     }
 
     path(context: CanvasRenderingContext2D) {
