@@ -27,8 +27,8 @@ const draggable = COM.create('rect', {
         pointerdown(event) {
             event.stopPropagation();
             isDragging = true;
-            dragOffsetX = event.data.x - this.left;
-            dragOffsetY = event.data.y - this.top;
+            dragOffsetX = event.data.x - this.x;
+            dragOffsetY = event.data.y - this.y;
         },
         pointerup() {
             isDragging = false;
