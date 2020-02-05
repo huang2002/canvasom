@@ -25,7 +25,7 @@ const draggable = COM.create('rect', {
          * @param {COM.PointerEvent} event
          */
         pointerdown(event) {
-            event.stopPropagation();
+            event.preventDefault();
             isDragging = true;
             dragOffsetX = event.data.x - this.x;
             dragOffsetY = event.data.y - this.y;
