@@ -4,8 +4,8 @@
 
 const Label = () => (
     COM.create('rect', {
-        x: 90,
-        y: 30,
+        x: 30,
+        y: -30,
         width: 140,
         height: 60,
         radius: -10,
