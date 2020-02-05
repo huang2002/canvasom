@@ -20,3 +20,5 @@ export * from './graphics/Sector';
 export * from './graphics/Line';
 export * from './graphics/Text';
 export * from './graphics/Image';
+
+export * from './layouts/ScrollView';

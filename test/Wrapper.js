@@ -10,14 +10,17 @@ const Wrapper = childNodes => (
     COM.create('group', {
         penetrable: true,
     }, [
-        COM.create(
-            'rect',
-            {
+        COM.create(COM.ScrollView, {
+            x: PADDING,
+            y: PADDING,
+            width: WIDTH - PADDING * 2,
+            height: HEIGHT - PADDING * 2,
+            vertical: true
+        }, [
+            COM.create('rect', {
                 interactive: true,
-                x: PADDING,
-                y: PADDING,
                 width: WIDTH - PADDING * 2,
-                height: HEIGHT - PADDING * 2,
+                height: 800,
                 radius: 10,
                 style: {
                     fillStyle: '#EFE',
@@ -26,9 +29,8 @@ const Wrapper = childNodes => (
                     shadowBlur: 10,
                     shadowOffsetY: 10
                 }
-            },
-            childNodes
-        ),
-        Label()
+            }, childNodes),
+            Label()
+        ]),
     ])
 );
