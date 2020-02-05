@@ -7,6 +7,7 @@ import { Text } from '../graphics/Text';
 import { Root } from './Root';
 import { Group } from './Group';
 import { Image } from '../graphics/Image';
+import { ScrollView } from '../layouts/ScrollView';
 
 export type NodeConstructor<T extends Node, U> = new (options: U) => T;
 
@@ -18,7 +19,8 @@ export const registry = new Map<string, NodeConstructor<any, any>>([
     ['text', Text],
     ['image', Image],
     ['root', Root],
-    ['group', Group]
+    ['group', Group],
+    ['scrollview', ScrollView],
 ]);
 
 export const create = <T extends Node, U>(
