@@ -31,12 +31,14 @@ export class Bounds {
             const { bounds } = node;
             if (bounds.left < left) {
                 left = bounds.left;
-            } else if (bounds.right > right) {
+            }
+            if (bounds.right > right) {
                 right = bounds.right;
             }
             if (bounds.top < top) {
                 top = bounds.top;
-            } else if (bounds.bottom > bottom) {
+            }
+            if (bounds.bottom > bottom) {
                 bottom = bounds.bottom;
             }
         });
