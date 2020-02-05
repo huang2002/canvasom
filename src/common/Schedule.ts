@@ -4,8 +4,8 @@ import { Utils } from './Utils';
 
 export namespace Schedule {
 
-    const _expiredNodes = new Array<Node>();
-    let _willTick = false;
+    let _expiredNodes = new Array<Node>(),
+        _willTick = false;
 
     const _tick = () => {
         _willTick = false;
@@ -63,10 +63,7 @@ export namespace Schedule {
     };
 
     export const unmark = (node: Node) => {
-        const index = _expiredNodes.indexOf(node);
-        if (~index) {
-            Utils.removeIndex(_expiredNodes, index);
-        }
+        _expiredNodes = _expiredNodes.filter(expiredNode => !node.contains(expiredNode));
     };
 
 }
