@@ -148,7 +148,7 @@ export class Root extends Node implements Required<RootOptions> {
     }
 
     protected _render(context: CanvasRenderingContext2D) {
-        context.drawImage(this.canvas, 0, 0);
+        context.drawImage(this.canvas, this.left, this.top);
     }
 
     compose() {

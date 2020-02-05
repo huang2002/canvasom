@@ -17,13 +17,13 @@ export class Text extends Node implements Required<TextOptions> {
     data!: string;
 
     protected _render(context: CanvasRenderingContext2D) {
-        const { computedStyle } = this;
+        const { computedStyle, left, top } = this;
         if (computedStyle.fillStyle) {
-            context.fillText(this.data, 0, 0);
+            context.fillText(this.data, left, top);
             context.shadowColor = Utils.Const.TRANSPARENT;
         }
         if (computedStyle.strokeStyle) {
-            context.strokeText(this.data, 0, 0);
+            context.strokeText(this.data, left, top);
         }
         Utils.renderNodes(this.childNodes, context);
     }

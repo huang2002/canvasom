@@ -75,9 +75,9 @@ export class Image extends Node implements Required<ImageOptions> {
         if (!texture) {
             return;
         }
-        const { computedStyle, dstWidth, dstHeight } = this;
+        const { computedStyle, left, top, dstWidth, dstHeight } = this;
         if (computedStyle.fillStyle) {
-            context.fillRect(0, 0, dstWidth, dstHeight);
+            context.fillRect(left, top, dstWidth, dstHeight);
             context.shadowColor = Utils.Const.TRANSPARENT;
         }
         context.drawImage(
@@ -86,13 +86,13 @@ export class Image extends Node implements Required<ImageOptions> {
             this.srcY,
             this.srcWidth,
             this.srcHeight,
-            0,
-            0,
+            left,
+            top,
             dstWidth,
             dstHeight
         );
         if (computedStyle.strokeStyle) {
-            context.strokeRect(0, 0, dstWidth, dstHeight);
+            context.strokeRect(left, top, dstWidth, dstHeight);
         }
         Utils.renderNodes(this.childNodes, context);
     }

@@ -155,11 +155,8 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         if (!this.visible) {
             return;
         }
-        const { x, y } = this;
-        context.translate(x, y);
         Style.apply(context, this.computedStyle);
         this._render(context);
-        context.translate(-x, -y);
     }
 
     update(properties: Partial<ThisType<this>>) {

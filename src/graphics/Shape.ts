@@ -37,12 +37,14 @@ export abstract class Shape extends Node implements Required<ShapeOptions> {
     }
 
     protected _render(context: CanvasRenderingContext2D) {
-        const { computedStyle, clipPath } = this;
+        const { computedStyle, clipPath, left, top } = this;
+        context.translate(left, top);
         context.beginPath();
         this.path(context);
         if (this.closePath) {
             context.closePath();
         }
+        context.translate(-left, -top);
         if (computedStyle.fillStyle) {
             context.fill();
             context.shadowColor = Utils.Const.TRANSPARENT;
