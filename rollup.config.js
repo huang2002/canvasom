@@ -1,4 +1,4 @@
-import rollupPluginBabel from "rollup-plugin-babel";
+import rollupPluginBabel from 'rollup-plugin-babel';
 
 const input = 'raw/index.js';
 
