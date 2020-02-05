@@ -20,6 +20,12 @@ const StopPropagation = () => (
              */
             pointerdown(event) {
                 event.stopPropagation();
+            },
+            /**
+             * @param {COM.WheelEvent} event
+             */
+            wheel(event) {
+                event.stopPropagation();
             }
         }
     }, [
