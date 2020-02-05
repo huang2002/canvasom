@@ -15,7 +15,7 @@ const MyImage = () => {
         style: {
             ratio: RATIO
         }
-    },
+    }, [
         COM.create('rect', {
             x: offsetX + 25,
             y: offsetY + 10,
@@ -29,7 +29,7 @@ const MyImage = () => {
                 shadowOffsetX: 2,
                 shadowOffsetY: 3
             }
-        },
+        }, [
             COM.create('text', {
                 data: 'image',
                 x: 40,
@@ -43,8 +43,8 @@ const MyImage = () => {
                     shadowOffsetY: '1'
                 }
             })
-        )
-    );
+        ])
+    ]);
 
     _root.compute();
     _root.compose();
