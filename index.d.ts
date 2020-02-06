@@ -1,3 +1,3 @@
 export as namespace COM;
 
-export * from "./typings/index";
+export * from './typings/index';
