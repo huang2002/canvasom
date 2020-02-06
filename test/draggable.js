@@ -30,9 +30,6 @@ const draggable = COM.create('rect', {
             isDragging = true;
             dragOffsetX = event.data.x - this.x;
             dragOffsetY = event.data.y - this.y;
-        },
-        pointerup() {
-            isDragging = false;
         }
     }
 }, [
@@ -62,6 +59,8 @@ root.addListener(
             });
         }
     }
-);
+).addListener('pointerup', () => {
+    isDragging = false;
+});
 
 root.selectClass('wrapper')[0].selectTag('scrollview')[0].appendChild(draggable);
