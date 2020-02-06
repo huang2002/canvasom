@@ -9,7 +9,7 @@ export class Group extends Node {
         const { childNodes } = this;
         childNodes.forEach(childNode => {
             childNode.compute();
-        })
+        });
         this.bounds.contain(childNodes);
     }
 
