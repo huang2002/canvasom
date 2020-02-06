@@ -3,6 +3,7 @@ import { Utils } from '../common/Utils';
 
 export class Group extends Node {
 
+    readonly tag = 'group';
     penetrable = true;
 
     protected _compute() {

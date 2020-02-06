@@ -21,6 +21,7 @@ export class Sector extends Shape implements Required<SectorOptions> {
         Object.assign(this, Sector.defaults, options);
     }
 
+    readonly tag = 'sector';
     startAngle!: number;
     endAngle!: number;
     radius!: number;

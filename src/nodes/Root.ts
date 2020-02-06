@@ -89,6 +89,7 @@ export class Root extends Node implements Required<RootOptions> {
 
     }
 
+    readonly tag = 'root';
     readonly canvas!: HTMLCanvasElement;
     readonly context: CanvasRenderingContext2D;
     readonly sizingDelay!: number;

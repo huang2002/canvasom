@@ -33,6 +33,7 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         Object.assign(this, Node.defaults, options);
     }
 
+    abstract readonly tag: string;
     readonly childNodes = new Array<Node>();
     readonly bounds = new Bounds();
     readonly left: number = 0;

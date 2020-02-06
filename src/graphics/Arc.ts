@@ -21,6 +21,7 @@ export class Arc extends Shape implements Required<ArcOptions> {
         Object.assign(this, Arc.defaults, options);
     }
 
+    readonly tag = 'arc';
     startAngle!: number;
     endAngle!: number;
     radius!: number;

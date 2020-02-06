@@ -43,6 +43,7 @@ export class ScrollView extends Node implements Required<ScrollViewOptions> {
         }
     }
 
+    readonly tag = 'scrollview';
     readonly offsetX: number = 0;
     readonly offsetY: number = 0;
     readonly offsetWidth: number = 0;

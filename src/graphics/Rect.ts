@@ -18,6 +18,7 @@ export class Rect extends Shape implements Required<RectOptions> {
         Object.assign(this, Rect.defaults, options);
     }
 
+    readonly tag = 'rect';
     width!: number;
     height!: number;
     radius!: number;

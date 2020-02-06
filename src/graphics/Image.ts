@@ -35,6 +35,9 @@ export class Image extends Node implements Required<ImageOptions> {
         Object.assign(this, Image.defaults, options);
     }
 
+    readonly tag = 'image';
+    readonly dstWidth: number = 0;
+    readonly dstHeight: number = 0;
     texture!: Texture | null;
     width!: number;
     height!: number;
@@ -42,8 +45,6 @@ export class Image extends Node implements Required<ImageOptions> {
     srcY!: number;
     srcWidth!: number;
     srcHeight!: number;
-    readonly dstWidth: number = 0;
-    readonly dstHeight: number = 0;
 
     containsPoint(x: number, y: number) {
         return this.bounds.containsPoint(x, y);

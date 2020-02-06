@@ -14,6 +14,7 @@ export class Text extends Node implements Required<TextOptions> {
         Object.assign(this, Text.defaults, options);
     }
 
+    readonly tag = 'text';
     data!: string;
 
     protected _render(context: CanvasRenderingContext2D) {

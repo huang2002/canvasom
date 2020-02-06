@@ -17,6 +17,7 @@ export class Line extends Shape implements Required<LineOptions> {
         Object.assign(this, Line.defaults, options);
     }
 
+    readonly tag = 'line';
     width!: number;
     height!: number;
     cross!: boolean;
