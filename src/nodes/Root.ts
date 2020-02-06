@@ -2,7 +2,7 @@ import { NodeOptions, Node } from './Node';
 import { Utils } from '../common/Utils';
 import { Event } from '../events/Event';
 import { detectTarget } from './detectTarget';
-import { SizingStrategy, Sizing, SizingResult } from './Sizing';
+import { SizingStrategy, Sizing } from './Sizing';
 import { Schedule } from '../common/Schedule';
 
 export interface PointerEventData {
@@ -102,7 +102,6 @@ export class Root extends Node implements Required<RootOptions> {
     private _listenerAttached = false;
     private _clientX = 0;
     private _clientY = 0;
-    private _sizingResult!: SizingResult;
 
     protected _containsPoint(x: number, y: number) {
         return this.bounds.containsPoint(x, y);
@@ -111,18 +110,32 @@ export class Root extends Node implements Required<RootOptions> {
     private _resize() {
         const { canvas, sizing } = this,
             parent = canvas.parentNode as HTMLElement | null;
-        // compute sizing
+        // sizing
         if (parent && sizing) {
-            const refBox = parent.getBoundingClientRect(),
+            const { width, height, computedStyle: { ratio } } = this,
+                refBox = parent.getBoundingClientRect(),
                 sizingResult = sizing(
-                    this.width,
-                    this.height,
+                    width,
+                    height,
                     refBox.width,
                     refBox.height,
                     this.margin
                 );
-            this._sizingResult = sizingResult;
             this._scale = sizingResult.scale;
+            if (sizingResult) {
+                const { style: canvasStyle } = canvas;
+                canvas.width = sizingResult.width * ratio;
+                canvas.height = sizingResult.height * ratio;
+                canvasStyle.width = sizingResult.styleWidth + 'px';
+                canvasStyle.height = sizingResult.styleHeight + 'px';
+                canvasStyle.marginLeft = sizingResult.left + 'px';
+                canvasStyle.marginTop = sizingResult.top + 'px';
+            } else {
+                canvas.width = width * ratio;
+                canvas.height = height * ratio;
+                canvas.style.width = width + 'px';
+                canvas.style.height = height + 'px';
+            }
         }
         // update client coordinates
         const box = canvas.getBoundingClientRect();
@@ -146,23 +159,8 @@ export class Root extends Node implements Required<RootOptions> {
     }
 
     compose() {
-        const { canvas, context, computedStyle, width, height, left, top, _sizingResult } = this,
-            { style: canvasStyle } = canvas,
-            { ratio } = computedStyle;
-        if (_sizingResult) {
-            canvas.width = _sizingResult.width * ratio;
-            canvas.height = _sizingResult.height * ratio;
-            canvasStyle.width = _sizingResult.styleWidth + 'px';
-            canvasStyle.height = _sizingResult.styleHeight + 'px';
-            canvasStyle.marginLeft = _sizingResult.left + 'px';
-            canvasStyle.marginTop = _sizingResult.top + 'px';
-        } else {
-            canvas.width = width * ratio;
-            canvas.height = height * ratio;
-            canvas.style.width = width + 'px';
-            canvas.style.height = height + 'px';
-        }
-        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+        const { context, computedStyle, width, height, left, top } = this;
+        context.setTransform(computedStyle.ratio, 0, 0, computedStyle.ratio, 0, 0);
         if (computedStyle.fillStyle) {
             context.fillStyle = computedStyle.fillStyle;
             context.fillRect(0, 0, width, height);
