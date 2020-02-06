@@ -9,6 +9,8 @@ export interface ListenerDeclaration {
 }
 
 export type NodeOptions = Partial<{
+    id: string;
+    classNames: string[];
     visible: boolean;
     interactive: boolean;
     penetrable: boolean;
@@ -34,6 +36,8 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     }
 
     abstract readonly tag: string;
+    readonly id: string = '';
+    readonly classNames = new Array<string>();
     readonly childNodes = new Array<Node>();
     readonly bounds = new Bounds();
     readonly left: number = 0;
@@ -122,6 +126,44 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
             Schedule.mark(this);
         }
         return newChild;
+    }
+
+    selectId(id: string): Node | null {
+        const { childNodes } = this;
+        for (let i = 0; i < childNodes.length; i++) {
+            if (childNodes[i].id === id) {
+                return childNodes[i];
+            }
+            const result = childNodes[i].selectId(id);
+            if (result) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    selectClass(className: string) {
+        const { childNodes } = this;
+        let results = new Array<Node>();
+        for (let i = 0; i < childNodes.length; i++) {
+            if (childNodes[i].classNames.includes(className)) {
+                results.push(childNodes[i]);
+            }
+            results.push(...childNodes[i].selectClass(className));
+        }
+        return results;
+    }
+
+    selectTag(tag: string) {
+        const { childNodes } = this;
+        let results = new Array<Node>();
+        for (let i = 0; i < childNodes.length; i++) {
+            if (childNodes[i].tag === tag) {
+                results.push(childNodes[i]);
+            }
+            results.push(...childNodes[i].selectTag(tag));
+        }
+        return results;
     }
 
     protected _compute() {
