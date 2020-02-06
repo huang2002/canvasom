@@ -8,6 +8,7 @@
  */
 const Wrapper = childNodes => (
     COM.create('group', {
+        classNames: ['wrapper'],
         penetrable: true,
     }, [
         COM.create(COM.ScrollView, {

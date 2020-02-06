@@ -4,6 +4,7 @@
 
 const StopPropagation = () => (
     COM.create('rect', {
+        classNames: ['stop-propagation'],
         interactive: true,
         x: 200,
         y: 380,

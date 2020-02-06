@@ -8,9 +8,10 @@ let isDragging = false,
     dragOffsetY = 0;
 
 const draggable = COM.create('rect', {
+    id: 'draggable',
     interactive: true,
-    x: PADDING + 535,
-    y: PADDING + 380,
+    x: 535,
+    y: 380,
     width: 110,
     height: 50,
     radius: 6,
@@ -63,4 +64,4 @@ root.addListener(
     }
 );
 
-root.appendChild(draggable);
+root.selectClass('wrapper')[0].selectTag('scrollview')[0].appendChild(draggable);

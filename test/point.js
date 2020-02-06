@@ -4,6 +4,7 @@
 /// <reference path="./root.js" />
 
 const point = COM.create(COM.Arc, {
+    id: 'point',
     penetrable: true,
     radius: 15,
     style: {

@@ -51,6 +51,7 @@ const MyImage = () => {
     COM.Schedule.unmark(_root);
 
     return COM.create('rect', {
+        classNames: ['my-image'],
         x: 390,
         y: 380,
         width: srcWidth,

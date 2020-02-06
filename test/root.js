@@ -8,6 +8,7 @@
 /// <reference path="./MyImage.js" />
 
 const root = COM.create(COM.Root, {
+    id: 'root',
     interactive: true,
     width: WIDTH,
     height: HEIGHT,

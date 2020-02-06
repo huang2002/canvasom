@@ -4,6 +4,7 @@
 
 const Button = () => (
     COM.create('rect', {
+        classNames: ['button'],
         interactive: true,
         x: 50,
         y: 380,
