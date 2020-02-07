@@ -145,7 +145,9 @@ export class Root extends Node implements Required<RootOptions> {
 
     protected _compute() {
         this._resize();
-        this.bounds.setSize(this.width, this.height);
+        const { bounds } = this;
+        bounds.width = this.width;
+        bounds.height = this.height;
         if (this.interactive && !this._listenerAttached) {
             this.attachListeners();
         }

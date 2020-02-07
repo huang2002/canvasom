@@ -23,8 +23,9 @@ export class Line extends Shape implements Required<LineOptions> {
     cross!: boolean;
 
     protected _compute() {
-        const { childNodes } = this;
-        this.bounds.setSize(this.width, this.height);
+        const { childNodes, bounds } = this;
+        bounds.width = this.width;
+        bounds.height = this.height;
         childNodes.forEach(childNode => {
             childNode.compute();
         });

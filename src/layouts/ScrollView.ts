@@ -60,10 +60,11 @@ export class ScrollView extends Node implements Required<ScrollViewOptions> {
     private _lastY = 0;
 
     protected _compute() {
-        this.bounds.setSize(this.width, this.height);
+        const { childNodes, bounds } = this;
+        bounds.width = this.width;
+        bounds.height = this.height;
         (this.left as number) -= this.offsetX;
         (this.top as number) -= this.offsetY;
-        const { childNodes, bounds } = this;
         childNodes.forEach(childNode => {
             childNode.compute();
         });

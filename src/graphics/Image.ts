@@ -63,8 +63,9 @@ export class Image extends Node implements Required<ImageOptions> {
         }
         (this.dstWidth as number) = this.width || this.srcWidth;
         (this.dstHeight as number) = this.height || this.srcHeight;
-        const { childNodes } = this;
-        this.bounds.setSize(this.dstWidth, this.dstHeight);
+        const { childNodes, bounds } = this;
+        bounds.width = this.dstWidth;
+        bounds.height = this.dstHeight;
         childNodes.forEach(childNode => {
             childNode.compute();
         });

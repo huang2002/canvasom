@@ -15,14 +15,17 @@ export class Bounds {
         return this.bottom - this.top;
     }
 
+    set width(width: number) {
+        this.right = this.left + width;
+    }
+
+    set height(height: number) {
+        this.bottom = this.top + height;
+    }
+
     init(x: number, y: number) {
         this.left = this.right = x;
         this.top = this.bottom = y;
-    }
-
-    setSize(width: number, height = width) {
-        this.right = this.left + width;
-        this.bottom = this.top + height;
     }
 
     contain(nodes: Node[]) {

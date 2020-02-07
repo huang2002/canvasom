@@ -24,8 +24,9 @@ export class Rect extends Shape implements Required<RectOptions> {
     radius!: number;
 
     protected _compute() {
-        const { childNodes } = this;
-        this.bounds.setSize(this.width, this.height);
+        const { childNodes, bounds } = this;
+        bounds.width = this.width;
+        bounds.height = this.height;
         childNodes.forEach(childNode => {
             childNode.compute();
         });

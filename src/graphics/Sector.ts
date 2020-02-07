@@ -28,8 +28,8 @@ export class Sector extends Shape implements Required<SectorOptions> {
     anticlockwise!: boolean;
 
     protected _compute() {
-        const { childNodes } = this;
-        this.bounds.setSize(this.radius * 2);
+        const { childNodes, bounds } = this;
+        bounds.width = bounds.height = this.radius * 2;
         childNodes.forEach(childNode => {
             childNode.compute();
         });
