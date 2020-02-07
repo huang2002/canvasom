@@ -33,7 +33,9 @@ export class Sector extends Shape implements Required<SectorOptions> {
         childNodes.forEach(childNode => {
             childNode.compute();
         });
-        this.bounds.contain(childNodes);
+        if (!this.clipPath) {
+            this.bounds.contain(childNodes);
+        }
     }
 
     path(context: CanvasRenderingContext2D) {

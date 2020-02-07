@@ -29,7 +29,9 @@ export class Rect extends Shape implements Required<RectOptions> {
         childNodes.forEach(childNode => {
             childNode.compute();
         });
-        this.bounds.contain(childNodes);
+        if (!this.clipPath) {
+            this.bounds.contain(childNodes);
+        }
     }
 
     path(context: CanvasRenderingContext2D) {

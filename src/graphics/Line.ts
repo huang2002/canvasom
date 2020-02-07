@@ -28,7 +28,9 @@ export class Line extends Shape implements Required<LineOptions> {
         childNodes.forEach(childNode => {
             childNode.compute();
         });
-        this.bounds.contain(childNodes);
+        if (!this.clipPath) {
+            this.bounds.contain(childNodes);
+        }
     }
 
     path(context: CanvasRenderingContext2D) {
