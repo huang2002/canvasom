@@ -73,7 +73,7 @@ export namespace Schedule {
         _expiredNodes = _expiredNodes.filter(expiredNode => !node.contains(expiredNode));
     };
 
-    export const nextTick = () => new Promise(resolve => {
+    export const nextTick = () => new Promise<void>(resolve => {
         _nextTickCallbacks.push(resolve);
         _requestTick();
     });
