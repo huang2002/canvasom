@@ -81,23 +81,20 @@ export class ScrollView extends Node implements Required<ScrollViewOptions> {
     }
 
     scrollBy(deltaX: number, deltaY: number) {
-        this.update({
-            offsetX: Utils.clamp(
-                this.offsetX + deltaX,
-                0,
-                this.offsetWidth - this.width
-            ),
-            offsetY: Utils.clamp(
-                this.offsetY + deltaY,
-                0,
-                this.offsetHeight - this.height
-            )
-        });
+        const { offsetX: _offsetX, offsetY: _offsetY } = this,
+            offsetX = Utils.clamp(_offsetX + deltaX, 0, this.offsetWidth - this.width),
+            offsetY = Utils.clamp(_offsetY + deltaY, 0, this.offsetHeight - this.height),
+            dx = offsetX - _offsetX,
+            dy = offsetY - _offsetY;
+        this.update({ offsetX, offsetY });
         this.dispatchEvent(
             new Event<ScrollEventData>('scroll', {
                 cancelable: true,
                 target: this,
-                data: { deltaX, deltaY }
+                data: {
+                    deltaX: dx,
+                    deltaY: dy
+                }
             })
         );
     }
