@@ -26,6 +26,9 @@ export class Bounds {
     }
 
     contain(nodes: Node[]) {
+        if (!nodes.length) {
+            return;
+        }
         let { left, right, top, bottom } = this;
         nodes.forEach(node => {
             const { bounds } = node;
