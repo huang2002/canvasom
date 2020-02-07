@@ -63,4 +63,22 @@ root.addListener(
     isDragging = false;
 });
 
-root.selectClass('wrapper')[0].selectTag('scrollview')[0].appendChild(draggable);
+const scrollView = root.selectClass('wrapper')[0].selectTag('scrollview')[0];
+scrollView.addListener(
+    'scroll',
+    /**
+     * @param {COM.ScrollEvent} event
+     */
+    event => {
+        if (isDragging) {
+            const { data: { deltaX, deltaY } } = event;
+            dragOffsetX -= deltaX;
+            dragOffsetY -= deltaY;
+            draggable.update({
+                x: draggable.x + deltaX,
+                y: draggable.y + deltaY
+            });
+        }
+    }
+);
+scrollView.appendChild(draggable);
