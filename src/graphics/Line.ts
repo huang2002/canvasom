@@ -1,8 +1,8 @@
 import { Shape, ShapeOptions } from './Shape';
 
 export interface LineOptions extends ShapeOptions {
-    width: number;
-    height: number;
+    deltaX: number;
+    deltaY: number;
     cross?: boolean;
 }
 
@@ -18,14 +18,14 @@ export class Line extends Shape implements Required<LineOptions> {
     }
 
     readonly tag = 'line';
-    width!: number;
-    height!: number;
+    deltaX!: number;
+    deltaY!: number;
     cross!: boolean;
 
     protected _compute() {
         const { childNodes, bounds } = this;
-        bounds.width = this.width;
-        bounds.height = this.height;
+        bounds.width = this.deltaX;
+        bounds.height = this.deltaY;
         childNodes.forEach(childNode => {
             childNode.compute();
         });

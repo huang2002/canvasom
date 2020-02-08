@@ -111,8 +111,8 @@ const Shapes = () => COM.create('group', null, [
     COM.create('line', {
         x: 50,
         y: 220,
-        width: 100,
-        height: 100,
+        deltaX: 100,
+        deltaY: 100,
         style: {
             strokeStyle: Colors.DARK_BLUE,
             lineWidth: 2,
@@ -124,8 +124,8 @@ const Shapes = () => COM.create('group', null, [
     COM.create('line', {
         x: 200,
         y: 220,
-        width: 100,
-        height: 100,
+        deltaX: 100,
+        deltaY: 100,
         style: {
             strokeStyle: Colors.BLUE,
             lineWidth: 8,
@@ -137,8 +137,8 @@ const Shapes = () => COM.create('group', null, [
     COM.create('line', {
         x: 200,
         y: 220,
-        width: 100,
-        height: 100,
+        deltaX: 100,
+        deltaY: 100,
         cross: true,
         style: {
             strokeStyle: Colors.BLUE,
@@ -152,8 +152,8 @@ const Shapes = () => COM.create('group', null, [
     COM.create('line', {
         x: 350,
         y: 220,
-        width: 100,
-        height: 100,
+        deltaX: 100,
+        deltaY: 100,
         style: {
             strokeStyle: Colors.LIGHT_BLUE,
             lineWidth: 6,
@@ -167,8 +167,8 @@ const Shapes = () => COM.create('group', null, [
     COM.create('line', {
         x: 500,
         y: 220,
-        width: 100,
-        height: 100,
+        deltaX: 100,
+        deltaY: 100,
         cross: true,
         style: {
             strokeStyle: Colors.DARK_BLUE,
