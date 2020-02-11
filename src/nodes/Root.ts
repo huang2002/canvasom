@@ -103,7 +103,7 @@ export class Root extends Node implements Required<RootOptions> {
     private _clientX = 0;
     private _clientY = 0;
 
-    protected _containsPoint(x: number, y: number) {
+    containsPoint(x: number, y: number) {
         return this.bounds.containsPoint(x, y);
     }
 
