@@ -307,7 +307,7 @@ export class Root extends Node implements Required<RootOptions> {
         if (!this._listenerAttached) {
             return;
         }
-        this._listenerAttached = false;
+        this._listenerAttached = this.interactive = false;
         const { canvas } = this;
         if (Utils.Const.IS_TOUCH_MODE) {
             canvas.removeEventListener('touchstart', this._onTouchStart, Root.eventOptions);
