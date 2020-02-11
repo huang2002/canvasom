@@ -124,6 +124,8 @@ export class Root extends Node implements Required<RootOptions> {
             this._scale = sizingResult.scale;
             if (sizingResult) {
                 const { style: canvasStyle } = canvas;
+                this.width = width;
+                this.height = height;
                 canvas.width = sizingResult.width * ratio;
                 canvas.height = sizingResult.height * ratio;
                 canvasStyle.width = sizingResult.styleWidth + 'px';
