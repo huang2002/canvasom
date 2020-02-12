@@ -70,6 +70,19 @@ export class Root extends Node implements Required<RootOptions> {
         this._onTouchEnd = this._onTouchEnd.bind(this);
         this._onWheel = this._onWheel.bind(this);
 
+        this.addListener('pointerdown', (event: PointerEvent) => {
+            this.pointerInit.set(event.data.id, event);
+        }).addListener('pointerup', (event: PointerEvent) => {
+            const { data } = event,
+                init = this.pointerInit.get(data.id);
+            if (init) {
+                if (event.target === init.target) {
+                    event.target!.dispatchEvent(new Event('click', event));
+                }
+                this.pointerInit.delete(data.id);
+            }
+        });
+
         if (this.interactive) {
             this.attachListeners();
         }
@@ -95,6 +108,7 @@ export class Root extends Node implements Required<RootOptions> {
     readonly context: CanvasRenderingContext2D;
     readonly sizingDelay!: number;
     readonly resize: () => void;
+    readonly pointerInit = new Map<number, PointerEvent>();
     width!: number;
     height!: number;
     sizing!: SizingStrategy | null;
