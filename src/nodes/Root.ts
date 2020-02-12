@@ -6,6 +6,7 @@ import { SizingStrategy, Sizing } from './Sizing';
 import { Schedule } from '../common/Schedule';
 
 export interface PointerEventData {
+    id: number;
     x: number;
     y: number;
     timeStamp: number;
@@ -199,6 +200,7 @@ export class Root extends Node implements Required<RootOptions> {
                 event.clientX,
                 event.clientY,
                 {
+                    id: -1,
                     timeStamp: event.timeStamp
                 }
             );
@@ -212,6 +214,7 @@ export class Root extends Node implements Required<RootOptions> {
                 event.clientX,
                 event.clientY,
                 {
+                    id: -1,
                     timeStamp: event.timeStamp
                 }
             );
@@ -225,6 +228,7 @@ export class Root extends Node implements Required<RootOptions> {
                 event.clientX,
                 event.clientY,
                 {
+                    id: -1,
                     timeStamp: event.timeStamp
                 }
             );
@@ -233,11 +237,13 @@ export class Root extends Node implements Required<RootOptions> {
 
     private _onTouchStart(event: TouchEvent) {
         if (this.interactive) {
+            const touch = event.changedTouches[0];
             this._emit(
                 'pointerdown',
-                event.changedTouches[0].clientX,
-                event.changedTouches[0].clientY,
+                touch.clientX,
+                touch.clientY,
                 {
+                    id: touch.identifier,
                     timeStamp: event.timeStamp
                 }
             );
@@ -246,11 +252,13 @@ export class Root extends Node implements Required<RootOptions> {
 
     private _onTouchMove(event: TouchEvent) {
         if (this.interactive) {
+            const touch = event.changedTouches[0];
             this._emit(
                 'pointermove',
-                event.changedTouches[0].clientX,
-                event.changedTouches[0].clientY,
+                touch.clientX,
+                touch.clientY,
                 {
+                    id: touch.identifier,
                     timeStamp: event.timeStamp
                 }
             );
@@ -259,11 +267,13 @@ export class Root extends Node implements Required<RootOptions> {
 
     private _onTouchEnd(event: TouchEvent) {
         if (this.interactive) {
+            const touch = event.changedTouches[0];
             this._emit(
                 'pointerup',
-                event.changedTouches[0].clientX,
-                event.changedTouches[0].clientY,
+                touch.clientX,
+                touch.clientY,
                 {
+                    id: touch.identifier,
                     timeStamp: event.timeStamp
                 }
             );
