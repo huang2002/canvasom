@@ -69,7 +69,7 @@ export class Image extends Node implements Required<ImageOptions> {
         childNodes.forEach(childNode => {
             childNode.compute();
         });
-        this.bounds.contain(childNodes);
+        bounds.contain(childNodes);
     }
 
     protected _render(context: CanvasRenderingContext2D) {

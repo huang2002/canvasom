@@ -30,7 +30,7 @@ export class Line extends Shape implements Required<LineOptions> {
             childNode.compute();
         });
         if (!this.clipPath) {
-            this.bounds.contain(childNodes);
+            bounds.contain(childNodes);
         }
     }
 

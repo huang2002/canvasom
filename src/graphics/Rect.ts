@@ -31,7 +31,7 @@ export class Rect extends Shape implements Required<RectOptions> {
             childNode.compute();
         });
         if (!this.clipPath) {
-            this.bounds.contain(childNodes);
+            bounds.contain(childNodes);
         }
     }
 

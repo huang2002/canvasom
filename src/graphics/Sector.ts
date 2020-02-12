@@ -34,7 +34,7 @@ export class Sector extends Shape implements Required<SectorOptions> {
             childNode.compute();
         });
         if (!this.clipPath) {
-            this.bounds.contain(childNodes);
+            bounds.contain(childNodes);
         }
     }
 

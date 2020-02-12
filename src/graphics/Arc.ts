@@ -34,7 +34,7 @@ export class Arc extends Shape implements Required<ArcOptions> {
             childNode.compute();
         });
         if (!this.clipPath) {
-            this.bounds.contain(childNodes);
+            bounds.contain(childNodes);
         }
     }
 
