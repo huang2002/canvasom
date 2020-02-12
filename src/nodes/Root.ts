@@ -76,8 +76,15 @@ export class Root extends Node implements Required<RootOptions> {
             const { data } = event,
                 init = this.pointerInit.get(data.id);
             if (init) {
-                if (event.target === init.target) {
-                    event.target!.dispatchEvent(new Event('click', event));
+                if (
+                    !init.defaultPrevented
+                    && event.target === init.target
+                ) {
+                    Schedule.nextTick(() => {
+                        if (!event.defaultPrevented) {
+                            event.target!.dispatchEvent(new Event('click', event));
+                        }
+                    });
                 }
                 this.pointerInit.delete(data.id);
             }
