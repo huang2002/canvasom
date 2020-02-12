@@ -17,7 +17,7 @@ const Button = () => (
             ...commonShadowStyle
         },
         listeners: {
-            pointerup() {
+            click() {
                 alert('Hello, canvasom!');
             }
         }
