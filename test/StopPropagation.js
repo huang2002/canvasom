@@ -32,8 +32,8 @@ const StopPropagation = () => (
     }, [
         COM.create('text', {
             data: 'no propagation',
-            x: 80,
-            y: 25,
+            width: 160,
+            height: 50,
             style: {
                 font: 'bold 18px sans-serif',
                 textAlign: 'center',

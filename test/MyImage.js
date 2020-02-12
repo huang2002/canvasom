@@ -32,8 +32,8 @@ const MyImage = () => {
         }, [
             COM.create('text', {
                 data: 'image',
-                x: 40,
-                y: 15,
+                width: 80,
+                height: 30,
                 style: {
                     font: 'bold 18px Consolas',
                     textAlign: 'center',

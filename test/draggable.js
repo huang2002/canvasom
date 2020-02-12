@@ -35,8 +35,8 @@ const draggable = COM.create('rect', {
 }, [
     COM.create('text', {
         data: 'draggable',
-        x: 55,
-        y: 25,
+        width: 110,
+        height: 50,
         style: {
             fillStyle: '#000',
             font: '18px Consolas',

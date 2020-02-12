@@ -21,8 +21,8 @@ const Label = () => (
     }, [
         COM.create('text', {
             data: 'TEST',
-            x: 70,
-            y: 32,
+            width: 140,
+            height: 60,
             style: {
                 fillStyle: '#FC0',
                 strokeStyle: '#F00',

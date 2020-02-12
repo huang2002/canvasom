@@ -24,8 +24,8 @@ const Button = () => (
     }, [
         COM.create('text', {
             data: 'click me',
-            x: 60,
-            y: 25,
+            width: 120,
+            height: 50,
             style: {
                 font: '22px sans-serif',
                 textAlign: 'center',
