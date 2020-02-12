@@ -4,7 +4,9 @@ import { Utils } from './Utils';
 
 export namespace Schedule {
 
-    const _nextTickCallbacks = new Array<() => void>();
+    export type TickCallback = () => void;
+
+    const _nextTickCallbacks = new Array<TickCallback>();
     let _expiredNodes = new Array<Node>(),
         _willTick = false;
 
@@ -73,9 +75,19 @@ export namespace Schedule {
         _expiredNodes = _expiredNodes.filter(expiredNode => !node.contains(expiredNode));
     };
 
-    export const nextTick = () => new Promise<void>(resolve => {
-        _nextTickCallbacks.push(resolve);
+    type NextTick =
+        | ((callback: TickCallback) => void)
+        | (() => Promise<void>);
+
+    export const nextTick: NextTick = (callback?: TickCallback) => {
+        if (callback) {
+            _nextTickCallbacks.push(callback);
+        } else {
+            return new Promise<void>(resolve => {
+                _nextTickCallbacks.push(resolve);
+            });
+        }
         _requestTick();
-    });
+    };
 
 }
