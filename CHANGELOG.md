@@ -1,3 +1,8 @@
+## 0.3.0 - 2020-02-14
+
+- Add offset size options to `ScrollView`
+- Add `text.width/height/maxWidth`
+
 ## 0.2.0 - 2020-02-12
 
 - Add `click` event
