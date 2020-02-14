@@ -132,7 +132,7 @@ export class Root extends Node implements Required<RootOptions> {
     private _resize() {
         const { canvas, sizing } = this,
             parent = canvas.parentNode as HTMLElement | null;
-        // sizing
+        /* sizing */
         if (parent && sizing) {
             const { width, height, computedStyle: { ratio } } = this,
                 refBox = parent.getBoundingClientRect(),
@@ -161,7 +161,7 @@ export class Root extends Node implements Required<RootOptions> {
                 canvas.style.height = height + 'px';
             }
         }
-        // update client coordinates
+        /* update client coordinates */
         const box = canvas.getBoundingClientRect();
         this._clientX = box.left;
         this._clientY = box.top;

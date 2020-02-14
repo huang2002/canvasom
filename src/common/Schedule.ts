@@ -13,7 +13,7 @@ export namespace Schedule {
     const _tick = () => {
         _willTick = false;
 
-        // filter child nodes
+        /* filter child nodes */
         const nodes = new Array<Node>();
         _expiredNodes.forEach(node => {
             for (let i = 0; i < nodes.length; i++) {
@@ -29,12 +29,12 @@ export namespace Schedule {
         });
         _expiredNodes.length = 0;
 
-        // update nodes
+        /* update nodes */
         nodes.forEach(node => {
             node.compute();
         });
 
-        // compose roots in ascending order
+        /* compose roots in ascending order */
         const roots = new Array<Root>();
         nodes.forEach(node => {
             Utils.getRoots(node).forEach(root => {
@@ -49,7 +49,7 @@ export namespace Schedule {
             root.compose();
         });
 
-        // resolve nextTick callbacks
+        /* resolve nextTick callbacks */
         _nextTickCallbacks.forEach(callback => {
             callback();
         });
