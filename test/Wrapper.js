@@ -16,6 +16,7 @@ const Wrapper = childNodes => (
             y: PADDING,
             width: WIDTH - PADDING * 2,
             height: HEIGHT - PADDING * 2,
+            offsetHeight: 800,
             vertical: true
         }, [
             COM.create('rect', {

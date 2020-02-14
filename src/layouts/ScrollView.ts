@@ -15,6 +15,8 @@ export interface ScrollViewOptions extends NodeOptions {
     vertical?: boolean;
     width: number;
     height: number;
+    offsetWidth?: number;
+    offsetHeight?: number;
     pixelScale?: number;
     lineScale?: number;
     pageScale?: number;
@@ -26,6 +28,8 @@ export class ScrollView extends Node implements Required<ScrollViewOptions> {
         interactive: true,
         horizontal: false,
         vertical: false,
+        offsetWidth: 0,
+        offsetHeight: 0,
         pixelScale: 1,
         lineScale: 25,
         pageScale: 300,
@@ -46,12 +50,12 @@ export class ScrollView extends Node implements Required<ScrollViewOptions> {
     readonly tag = 'scrollview';
     readonly offsetX: number = 0;
     readonly offsetY: number = 0;
-    readonly offsetWidth: number = 0;
-    readonly offsetHeight: number = 0;
     horizontal!: boolean;
     vertical!: boolean;
     width!: number;
     height!: number;
+    offsetWidth!: number;
+    offsetHeight!: number;
     pixelScale!: number;
     lineScale!: number;
     pageScale!: number;
@@ -69,8 +73,6 @@ export class ScrollView extends Node implements Required<ScrollViewOptions> {
             childNode.compute();
         });
         bounds.contain(childNodes);
-        (this.offsetWidth as number) = bounds.right - this.left;
-        (this.offsetHeight as number) = bounds.bottom - this.top;
     }
 
     containsPoint(x: number, y: number) {
@@ -82,11 +84,11 @@ export class ScrollView extends Node implements Required<ScrollViewOptions> {
     }
 
     scrollBy(deltaX: number, deltaY: number) {
-        const { offsetX: _offsetX, offsetY: _offsetY } = this,
-            offsetX = Utils.clamp(_offsetX + deltaX, 0, this.offsetWidth - this.width),
-            offsetY = Utils.clamp(_offsetY + deltaY, 0, this.offsetHeight - this.height),
-            dx = offsetX - _offsetX,
-            dy = offsetY - _offsetY;
+        const { offsetX: ox, offsetY: oy, offsetWidth, offsetHeight } = this,
+            offsetX = offsetWidth && Utils.clamp(ox + deltaX, 0, offsetWidth - this.width),
+            offsetY = offsetHeight && Utils.clamp(oy + deltaY, 0, offsetHeight - this.height),
+            dx = offsetX - ox,
+            dy = offsetY - oy;
         this.update({ offsetX, offsetY });
         this.dispatchEvent(
             new Event<ScrollEventData>('scroll', {
