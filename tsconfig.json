@@ -4,7 +4,7 @@
         "module": "ESNext",
         "declaration": true,
         "declarationDir": "./typings",
-        "outDir": "./raw",
+        "outDir": "./js",
         "rootDir": "./src",
         "strict": true,
         "noUnusedLocals": true,

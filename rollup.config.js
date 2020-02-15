@@ -1,6 +1,6 @@
 import rollupPluginBabel from 'rollup-plugin-babel';
 
-const input = 'raw/index.js';
+const input = 'js/index.js';
 
 export default [
     {
