@@ -2,9 +2,9 @@ import { Node } from '../nodes/Node';
 import { Root } from '../nodes/Root';
 import { Utils } from './Utils';
 
-export namespace Schedule {
+export type TickCallback = () => void;
 
-    export type TickCallback = () => void;
+export namespace Schedule {
 
     const _nextTickCallbacks = new Array<TickCallback>();
     let _expiredNodes = new Array<Node>(),
