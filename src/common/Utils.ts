@@ -49,6 +49,8 @@ export namespace Utils {
 
     export const deg2rad = (deg: number) => deg / 180 * Math.PI;
 
+    export const mix = (a: number, b: number, k: number) => a + (b - a) * k;
+
     export const clamp = (value: number, min: number, max: number) => {
         if (value < min) {
             return min;
