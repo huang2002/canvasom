@@ -2,13 +2,9 @@ import { Utils } from '../common/Utils';
 import { Bounds } from '../common/Bounds';
 import { CanvasStyle, Style } from '../common/Style';
 import { Schedule } from '../common/Schedule';
-import { EventTarget, Listener } from '../events/EventTarget';
+import { EventTargetOptions, EventTarget } from '../events/EventTarget';
 
-export interface ListenerDeclaration {
-    [type: string]: Listener | { listener: Listener; once: boolean; };
-}
-
-export type NodeOptions = Partial<{
+export type NodeOptions = EventTargetOptions & Partial<{
     id: string;
     classNames: string[];
     visible: boolean;
@@ -17,7 +13,6 @@ export type NodeOptions = Partial<{
     x: number;
     y: number;
     style: Partial<CanvasStyle>;
-    listeners: ListenerDeclaration;
 }>;
 
 export abstract class Node extends EventTarget implements Required<NodeOptions> {
@@ -56,17 +51,6 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
 
     get parentNode() {
         return this._parent;
-    }
-
-    set listeners(listeners: ListenerDeclaration) {
-        Object.keys(listeners).forEach(type => {
-            const declaration = listeners[type];
-            if (typeof declaration === 'function') {
-                this.addListener(type, declaration);
-            } else {
-                this.addListener(type, declaration.listener, declaration.once);
-            }
-        });
     }
 
     contains(node: Node) {

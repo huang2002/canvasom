@@ -7,10 +7,29 @@ export interface ListenerRecord {
     once: boolean;
 }
 
+export interface ListenerDeclaration {
+    [type: string]: Listener | { listener: Listener; once: boolean; };
+}
+
+export type EventTargetOptions = Partial<{
+    listeners: ListenerDeclaration;
+}>;
+
 export class EventTarget {
 
     private _listenerMap = new Map<string, ListenerRecord[]>();
     protected _parent: EventTarget | null = null;
+
+    set listeners(listeners: ListenerDeclaration) {
+        Object.keys(listeners).forEach(type => {
+            const declaration = listeners[type];
+            if (typeof declaration === 'function') {
+                this.addListener(type, declaration);
+            } else {
+                this.addListener(type, declaration.listener, declaration.once);
+            }
+        });
+    }
 
     addListener(type: string, listener: Listener, once?: boolean) {
         const { _listenerMap } = this,
