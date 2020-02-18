@@ -13,19 +13,25 @@ const point = COM.create(COM.Arc, {
     }
 });
 
-let hidePointHandler;
+root.listeners = {
 
-root.addListener(
-    'pointerdown',
     /** @param {COM.PointerEvent} event */
-    event => {
-        console.log(event);
+    pointerdown(event) {
         point.x = event.data.x - point.radius;
         point.y = event.data.y - point.radius;
         root.appendChild(point);
-        clearTimeout(hidePointHandler);
-        hidePointHandler = setTimeout(() => {
-            root.removeChild(point);
-        }, 666);
+    },
+
+    /** @param {COM.PointerEvent} event */
+    pointermove(event) {
+        point.update({
+            x: event.data.x - point.radius,
+            y: event.data.y - point.radius
+        });
+    },
+
+    pointerup() {
+        root.removeChild(point);
     }
-);
+
+};
