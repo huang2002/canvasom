@@ -1,3 +1,9 @@
+## 0.4.0 - 2020-02-20
+
+- Add Animation APIs
+- Add `Utils.mix`
+- Move `listeners` setter to `EventTarget`
+
 ## 0.3.0 - 2020-02-14
 
 - Add offset size options to `ScrollView`
