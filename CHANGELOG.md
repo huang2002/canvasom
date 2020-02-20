@@ -1,3 +1,8 @@
+### 0.4.1 - 2020-02-20
+
+- Add null support to `node.contains`
+- Fix node computing
+
 ## 0.4.0 - 2020-02-20
 
 - Add Animation APIs
