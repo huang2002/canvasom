@@ -21,20 +21,32 @@ export namespace Schedule {
         });
 
         /* filter child nodes */
-        const nodes = new Array<Node>();
-        _expiredNodes.forEach(node => {
-            for (let i = 0; i < nodes.length; i++) {
-                if (nodes[i].contains(node)) {
+        const _nodes = new Array<Node | null>();
+        _expiredNodes.forEach(current => {
+            for (let i = 0; i < _nodes.length; i++) {
+                const node = _nodes[i];
+                if (!node) {
+                    continue;
+                }
+                if (node.contains(current)) {
                     return;
                 }
-                if (node.contains(nodes[i])) {
-                    nodes[i] = node;
+                if (current.contains(node)) {
+                    for (let j = i + 1; j < _nodes.length; j++) {
+                        if (_nodes[j] && current.contains(_nodes[j])) {
+                            _nodes[j] = null;
+                        }
+                    }
+                    _nodes[i] = current;
                     return;
                 }
             }
-            nodes.push(node);
+            _nodes.push(current);
         });
         _expiredNodes.length = 0;
+
+        /* get actual nodes */
+        const nodes = _nodes.filter(Boolean) as Node[];
 
         /* update nodes */
         nodes.forEach(node => {
