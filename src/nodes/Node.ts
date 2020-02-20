@@ -54,7 +54,10 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         return this._parent;
     }
 
-    contains(node: Node) {
+    contains(node: Node | null) {
+        if (!node) {
+            return false;
+        }
         let current = node;
         while (current !== this && current._parent) {
             current = current._parent;
