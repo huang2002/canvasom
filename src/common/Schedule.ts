@@ -1,17 +1,24 @@
 import { Node } from '../nodes/Node';
 import { Root } from '../nodes/Root';
 import { Utils } from './Utils';
+import { Animation } from '../animation/Animation';
 
-export type TickCallback = () => void;
+export type ScheduleCallback = () => void;
 
 export namespace Schedule {
 
-    const _nextTickCallbacks = new Array<TickCallback>();
+    const _animations = new Array<Animation<Node>>(),
+        _nextTickCallbacks = new Array<ScheduleCallback>();
     let _expiredNodes = new Array<Node>(),
         _willTick = false;
 
     const _tick = () => {
         _willTick = false;
+
+        /* update animation */
+        _animations.forEach(animation => {
+            animation.update();
+        });
 
         /* filter child nodes */
         const nodes = new Array<Node>();
@@ -76,10 +83,10 @@ export namespace Schedule {
     };
 
     type NextTick =
-        | ((callback: TickCallback) => void)
+        | ((callback: ScheduleCallback) => void)
         | (() => Promise<void>);
 
-    export const nextTick: NextTick = (callback?: TickCallback) => {
+    export const nextTick: NextTick = (callback?: ScheduleCallback) => {
         if (callback) {
             _nextTickCallbacks.push(callback);
         } else {
@@ -88,6 +95,20 @@ export namespace Schedule {
             });
         }
         _requestTick();
+    };
+
+    export const registerAnimation = (animation: Animation<any>) => {
+        if (!_animations.includes(animation)) {
+            _animations.push(animation);
+            _requestTick();
+        }
+    };
+
+    export const removeAnimation = (animation: Animation<any>) => {
+        const index = _animations.indexOf(animation);
+        if (~index) {
+            Utils.removeIndex(_animations, index);
+        }
     };
 
 }

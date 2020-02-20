@@ -6,6 +6,9 @@ export * from './common/Schedule';
 export * from './events/Event';
 export * from './events/EventTarget';
 
+export * from './animation/Timing';
+export * from './animation/Animation';
+
 export * from './nodes/Node';
 export * from './nodes/Group';
 export * from './nodes/detectTarget';

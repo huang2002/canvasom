@@ -3,6 +3,7 @@ import { Bounds } from '../common/Bounds';
 import { CanvasStyle, Style } from '../common/Style';
 import { Schedule } from '../common/Schedule';
 import { EventTargetOptions, EventTarget } from '../events/EventTarget';
+import { AnimationOptions, Animation } from '../animation/Animation';
 
 export type NodeOptions = EventTargetOptions & Partial<{
     id: string;
@@ -196,6 +197,13 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         Object.assign(this.style, properties);
         Schedule.mark(this);
         return this;
+    }
+
+    animate(options: AnimationOptions<this, ThisType<this>>) {
+        const animation = new Animation<this>(options);
+        animation.target = this;
+        animation.start();
+        return animation;
     }
 
 }
