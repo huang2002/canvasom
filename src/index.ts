@@ -25,3 +25,4 @@ export * from './graphics/Text';
 export * from './graphics/Image';
 
 export * from './layouts/ScrollView';
+export * from './layouts/Center';

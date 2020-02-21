@@ -19,20 +19,28 @@ const Wrapper = childNodes => (
             offsetHeight: 800,
             vertical: true
         }, [
-            COM.create('rect', {
-                interactive: true,
-                width: WIDTH - PADDING * 2,
-                height: 800,
-                radius: 10,
-                style: {
-                    fillStyle: '#EFE',
-                    strokeStyle: '#06C',
-                    shadowColor: '#999',
-                    shadowBlur: 10,
-                    shadowOffsetY: 10
-                }
-            }, childNodes),
-            Label()
-        ]),
+            COM.create(COM.Center, {
+                width: WIDTH - PADDING * 2
+            }, [
+                COM.create('rect', {
+                    interactive: true,
+                    width: WIDTH - PADDING * 2,
+                    height: 800,
+                    radius: 10,
+                    style: {
+                        fillStyle: '#EFE',
+                        strokeStyle: '#06C',
+                        shadowColor: '#999',
+                        shadowBlur: 10,
+                        shadowOffsetY: 10
+                    }
+                }, childNodes)
+            ]),
+            COM.create(COM.Center, {
+                direction: 'y'
+            }, [
+                Label()
+            ])
+        ])
     ])
 );
