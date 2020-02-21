@@ -59,20 +59,17 @@ export class ScrollView extends Node implements Required<ScrollViewOptions> {
     pixelScale!: number;
     lineScale!: number;
     pageScale!: number;
+    protected _flexible = true;
     private _isDragging = false;
     private _lastX = 0;
     private _lastY = 0;
 
     protected _compute() {
-        const { childNodes, bounds } = this;
+        const { bounds } = this;
         bounds.width = this.width;
         bounds.height = this.height;
         (this.left as number) -= this.offsetX;
         (this.top as number) -= this.offsetY;
-        childNodes.forEach(childNode => {
-            childNode.compute();
-        });
-        bounds.contain(childNodes);
     }
 
     containsPoint(x: number, y: number) {

@@ -23,15 +23,10 @@ export class Line extends Shape implements Required<LineOptions> {
     cross!: boolean;
 
     protected _compute() {
-        const { childNodes, bounds } = this;
+        const { bounds } = this;
         bounds.width = this.deltaX;
         bounds.height = this.deltaY;
-        childNodes.forEach(childNode => {
-            childNode.compute();
-        });
-        if (!this.clipPath) {
-            bounds.contain(childNodes);
-        }
+        this._flexible = !this.clipPath;
     }
 
     path(context: CanvasRenderingContext2D) {

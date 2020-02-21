@@ -26,15 +26,12 @@ export class Text extends Node implements Required<TextOptions> {
     width!: number;
     height!: number;
     maxWidth!: number;
+    protected _flexible = true;
 
     protected _compute() {
-        const { childNodes, bounds } = this;
+        const { bounds } = this;
         bounds.width = this.width;
         bounds.height = this.height;
-        childNodes.forEach(childNode => {
-            childNode.compute();
-        });
-        bounds.contain(childNodes);
     }
 
     protected _render(context: CanvasRenderingContext2D) {

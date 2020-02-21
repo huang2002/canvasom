@@ -28,14 +28,9 @@ export class Sector extends Shape implements Required<SectorOptions> {
     anticlockwise!: boolean;
 
     protected _compute() {
-        const { childNodes, bounds } = this;
+        const { bounds } = this;
         bounds.width = bounds.height = this.radius * 2;
-        childNodes.forEach(childNode => {
-            childNode.compute();
-        });
-        if (!this.clipPath) {
-            bounds.contain(childNodes);
-        }
+        this._flexible = !this.clipPath;
     }
 
     path(context: CanvasRenderingContext2D) {

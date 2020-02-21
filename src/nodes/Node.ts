@@ -49,6 +49,8 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     y!: number;
     style: Partial<CanvasStyle> = {};
     protected _parent: Node | null = null;
+    protected _isContainer = true;
+    protected _flexible = false;
 
     get parentNode() {
         return this._parent;
@@ -154,28 +156,36 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         return results;
     }
 
-    protected _compute() {
-        this.childNodes.forEach(childNode => {
-            childNode.compute();
-        });
-    }
+    protected _compute?(): void;
+    protected _align?(): void;
 
     compute() {
-        const { bounds, x, y, _parent } = this;
+        const { bounds, x, y, _parent, childNodes } = this;
         if (_parent) {
-            bounds.init(
-                (this.left as number) = _parent.left + x,
-                (this.top as number) = _parent.top + y
-            );
+            (this.left as number) = _parent.left + x;
+            (this.top as number) = _parent.top + y;
             Style.compute(this.computedStyle, _parent.computedStyle, this.style);
         } else {
-            bounds.init(
-                (this.left as number) = x,
-                (this.top as number) = y
-            );
+            (this.left as number) = x;
+            (this.top as number) = y;
             Style.compute(this.computedStyle, Style.defaults, this.style);
         }
-        this._compute();
+        bounds.width = bounds.height = 0;
+        if (this._compute) {
+            this._compute();
+        }
+        if (_parent && _parent._align) {
+            _parent._align();
+        }
+        bounds.moveTo(this.left, this.top);
+        if (this._isContainer) {
+            childNodes.forEach(childNode => {
+                childNode.compute();
+            });
+        }
+        if (this._flexible) {
+            bounds.contain(childNodes);
+        }
     }
 
     containsPoint?(x: number, y: number): boolean;

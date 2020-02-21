@@ -45,6 +45,7 @@ export class Image extends Node implements Required<ImageOptions> {
     srcY!: number;
     srcWidth!: number;
     srcHeight!: number;
+    protected _flexible = true;
 
     containsPoint(x: number, y: number) {
         return this.bounds.containsPoint(x, y);
@@ -63,13 +64,9 @@ export class Image extends Node implements Required<ImageOptions> {
         }
         (this.dstWidth as number) = this.width || this.srcWidth;
         (this.dstHeight as number) = this.height || this.srcHeight;
-        const { childNodes, bounds } = this;
+        const { bounds } = this;
         bounds.width = this.dstWidth;
         bounds.height = this.dstHeight;
-        childNodes.forEach(childNode => {
-            childNode.compute();
-        });
-        bounds.contain(childNodes);
     }
 
     protected _render(context: CanvasRenderingContext2D) {

@@ -23,9 +23,12 @@ export class Bounds {
         this.bottom = this.top + height;
     }
 
-    init(x: number, y: number) {
-        this.left = this.right = x;
-        this.top = this.bottom = y;
+    moveTo(x: number, y: number) {
+        const { width, height } = this;
+        this.left = x;
+        this.top = y;
+        this.right = x + width;
+        this.bottom = y + height;
     }
 
     contain(nodes: Node[]) {

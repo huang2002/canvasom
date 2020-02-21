@@ -5,14 +5,7 @@ export class Group extends Node {
 
     readonly tag = 'group';
     penetrable = true;
-
-    protected _compute() {
-        const { childNodes } = this;
-        childNodes.forEach(childNode => {
-            childNode.compute();
-        });
-        this.bounds.contain(childNodes);
-    }
+    protected _flexible = true;
 
     protected _render(context: CanvasRenderingContext2D) {
         Utils.renderNodes(this.childNodes, context);

@@ -175,9 +175,6 @@ export class Root extends Node implements Required<RootOptions> {
         if (this.interactive && !this._listenerAttached) {
             this.attachListeners();
         }
-        this.childNodes.forEach(childNode => {
-            childNode.compute();
-        });
     }
 
     protected _render(context: CanvasRenderingContext2D) {

@@ -24,15 +24,10 @@ export class Rect extends Shape implements Required<RectOptions> {
     radius!: number;
 
     protected _compute() {
-        const { childNodes, bounds } = this;
+        const { bounds } = this;
         bounds.width = this.width;
         bounds.height = this.height;
-        childNodes.forEach(childNode => {
-            childNode.compute();
-        });
-        if (!this.clipPath) {
-            bounds.contain(childNodes);
-        }
+        this._flexible = !this.clipPath;
     }
 
     path(context: CanvasRenderingContext2D) {
