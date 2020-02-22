@@ -24,5 +24,5 @@ export * from './graphics/Line';
 export * from './graphics/Text';
 export * from './graphics/Image';
 
-export * from './layouts/ScrollView';
+export * from './layouts/Scroll';
 export * from './layouts/Center';

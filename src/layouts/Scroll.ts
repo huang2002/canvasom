@@ -10,7 +10,7 @@ export interface ScrollEventData {
 
 export type ScrollEvent = Event<ScrollEventData>;
 
-export interface ScrollViewOptions extends NodeOptions {
+export interface ScrollOptions extends NodeOptions {
     horizontal?: boolean;
     vertical?: boolean;
     width: number;
@@ -22,9 +22,9 @@ export interface ScrollViewOptions extends NodeOptions {
     pageScale?: number;
 }
 
-export class ScrollView extends Node implements Required<ScrollViewOptions> {
+export class Scroll extends Node implements Required<ScrollOptions> {
 
-    static defaults: Partial<ScrollViewOptions> = {
+    static defaults: Partial<ScrollOptions> = {
         interactive: true,
         horizontal: false,
         vertical: false,
@@ -35,9 +35,9 @@ export class ScrollView extends Node implements Required<ScrollViewOptions> {
         pageScale: 300,
     };
 
-    constructor(options: Readonly<ScrollViewOptions>) {
+    constructor(options: Readonly<ScrollOptions>) {
         super();
-        Object.assign(this, ScrollView.defaults, options);
+        Object.assign(this, Scroll.defaults, options);
         if (Utils.Const.IS_TOUCH_MODE) {
             this.addListener('pointerdown', this._onPointerDown.bind(this));
             this.addListener('pointermove', this._onPointerMove.bind(this));
@@ -47,7 +47,7 @@ export class ScrollView extends Node implements Required<ScrollViewOptions> {
         }
     }
 
-    readonly tag = 'scrollview';
+    readonly tag = 'scroll';
     readonly offsetX: number = 0;
     readonly offsetY: number = 0;
     horizontal!: boolean;

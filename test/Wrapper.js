@@ -11,7 +11,7 @@ const Wrapper = childNodes => (
         classNames: ['wrapper'],
         penetrable: true,
     }, [
-        COM.create(COM.ScrollView, {
+        COM.create(COM.Scroll, {
             x: PADDING,
             y: PADDING,
             width: WIDTH - PADDING * 2,

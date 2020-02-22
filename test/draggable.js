@@ -63,7 +63,7 @@ root.addListener(
     isDragging = false;
 });
 
-const scrollView = root.selectClass('wrapper')[0].selectTag('scrollview')[0];
+const scrollView = root.selectClass('wrapper')[0].selectTag('scroll')[0];
 scrollView.addListener(
     'scroll',
     /**
