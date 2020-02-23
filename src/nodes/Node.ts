@@ -49,8 +49,11 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     y!: number;
     style: Partial<CanvasStyle> = {};
     protected _parent: Node | null = null;
-    protected _isContainer = true;
     protected _flexible = false;
+    private _x0 = 0;
+    private _y0 = 0;
+    private _left = 0;
+    private _top = 0;
 
     get parentNode() {
         return this._parent;
@@ -159,28 +162,51 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     protected _compute?(): void;
     protected _align?(): void;
 
+    private _locate() {
+        const { _parent } = this;
+        if (_parent) {
+            const dx = _parent.left - this._x0,
+                dy = _parent.top - this._y0;
+            this._x0 = _parent.left;
+            this._y0 = _parent.top;
+            this.bounds.move(dx + this.left - this._left, dy + this.top - this._top);
+            (this.left as number) += dx;
+            (this.top as number) += dy;
+            this._left = this.left;
+            this._top = this.top;
+        }
+        this.childNodes.forEach(childNode => {
+            childNode._locate();
+        });
+    }
+
     compute() {
-        const { bounds, x, y, _parent, childNodes } = this;
+        const { bounds, _parent, x, y, childNodes } = this;
         if (_parent) {
             (this.left as number) = _parent.left + x;
             (this.top as number) = _parent.top + y;
+            this._x0 = _parent.left;
+            this._y0 = _parent.top;
             Style.compute(this.computedStyle, _parent.computedStyle, this.style);
         } else {
             (this.left as number) = x;
             (this.top as number) = y;
             Style.compute(this.computedStyle, Style.defaults, this.style);
         }
+        this._left = this.left;
+        this._top = this.top;
         bounds.width = bounds.height = 0;
         if (this._compute) {
             this._compute();
         }
-        if (_parent && _parent._align) {
-            _parent._align();
-        }
         bounds.moveTo(this.left, this.top);
-        if (this._isContainer) {
-            childNodes.forEach(childNode => {
-                childNode.compute();
+        childNodes.forEach(childNode => {
+            childNode.compute();
+        });
+        if (this._align) {
+            this._align();
+            this.childNodes.forEach(childNode => {
+                childNode._locate();
             });
         }
         if (this._flexible) {
