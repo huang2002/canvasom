@@ -23,6 +23,13 @@ export class Bounds {
         this.bottom = this.top + height;
     }
 
+    move(dx: number, dy: number) {
+        this.left += dx;
+        this.right += dx;
+        this.top += dy;
+        this.bottom += dy;
+    }
+
     moveTo(x: number, y: number) {
         const { width, height } = this;
         this.left = x;
