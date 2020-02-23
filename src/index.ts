@@ -26,3 +26,4 @@ export * from './graphics/Image';
 
 export * from './layouts/Scroll';
 export * from './layouts/Center';
+export * from './layouts/Flow';

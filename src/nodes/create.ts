@@ -9,6 +9,7 @@ import { Group } from './Group';
 import { Image } from '../graphics/Image';
 import { Scroll } from '../layouts/Scroll';
 import { Center } from '../layouts/Center';
+import { Flow } from '../layouts/Flow';
 
 export type NodeConstructor<T extends Node, U> = new (options: U) => T;
 
@@ -23,6 +24,7 @@ export const registry = new Map<string, NodeConstructor<any, any>>([
     ['group', Group],
     ['scroll', Scroll],
     ['center', Center],
+    ['flow', Flow],
 ]);
 
 export const create = <T extends Node, U>(
