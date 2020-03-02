@@ -69,4 +69,11 @@ export class Bounds {
             && y >= this.top && y <= this.bottom;
     }
 
+    overlaps(bounds: Bounds) {
+        return this.left < bounds.left
+            && this.right > bounds.left
+            && this.top < bounds.bottom
+            && this.bottom > bounds.top;
+    }
+
 }
