@@ -1,5 +1,10 @@
 # Changelog
 
+### 0.6.0 - 2020-03-03
+
+- Add `parseArchive`
+- Add `bounds.overlaps`
+
 ### 0.5.0 - 2020-02-23
 
 - Add `Flow` layout
