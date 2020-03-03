@@ -9,42 +9,53 @@ const MyImage = () => {
         offsetX = 30,
         offsetY = 20;
 
-    const _root = COM.create(COM.Root, {
-        width: 200,
-        height: 100,
-        style: {
-            ratio: RATIO
-        }
-    }, [
-        COM.create('rect', {
-            x: offsetX + 25,
-            y: offsetY + 10,
-            width: 80,
-            height: 30,
-            radius: 5,
+    /**
+     * @type {COM.Root}
+     */
+    // @ts-ignore
+    const _root = COM.parseArchive({
+        tag: 'root',
+        options: {
+            width: 200,
+            height: 100,
             style: {
-                fillStyle: '#FF3',
-                strokeStyle: '#F00',
-                shadowColor: '#F00',
-                shadowOffsetX: 2,
-                shadowOffsetY: 3
+                ratio: RATIO
             }
-        }, [
-            COM.create('text', {
-                data: 'image',
+        },
+        childNodes: [{
+            tag: 'rect',
+            options: {
+                x: offsetX + 25,
+                y: offsetY + 10,
                 width: 80,
                 height: 30,
+                radius: 5,
                 style: {
-                    font: 'bold 18px Consolas',
-                    textAlign: 'center',
-                    textBaseline: 'middle',
-                    fillStyle: '#00F',
-                    shadowColor: '#FFF',
-                    shadowOffsetY: '1'
+                    fillStyle: '#FF3',
+                    strokeStyle: '#F00',
+                    shadowColor: '#F00',
+                    shadowOffsetX: 2,
+                    shadowOffsetY: 3
                 }
-            })
-        ])
-    ]);
+            },
+            childNodes: [{
+                tag: 'text',
+                options: {
+                    data: 'image',
+                    width: 80,
+                    height: 30,
+                    style: {
+                        font: 'bold 18px Consolas',
+                        textAlign: 'center',
+                        textBaseline: 'middle',
+                        fillStyle: '#00F',
+                        shadowColor: '#FFF',
+                        shadowOffsetY: '1'
+                    }
+                }
+            }]
+        }]
+    });
 
     _root.compute();
     _root.compose();

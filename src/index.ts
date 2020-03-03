@@ -15,6 +15,7 @@ export * from './nodes/detectTarget';
 export * from './nodes/Sizing';
 export * from './nodes/Root';
 export * from './nodes/create';
+export * from './nodes/parseArchive';
 
 export * from './graphics/Shape';
 export * from './graphics/Rect';
