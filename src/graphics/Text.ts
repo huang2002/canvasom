@@ -7,27 +7,48 @@ export interface TextOptions extends NodeOptions {
     height?: number;
     maxWidth?: number;
 }
-
+/** dts2md break */
 export class Text extends Node implements Required<TextOptions> {
 
+    /** dts2md break */
     static defaults: Partial<TextOptions> = {
         width: 0,
         height: 0,
         maxWidth: 1e9
     };
 
+    /** dts2md break */
     constructor(options: Readonly<TextOptions>) {
         super();
         Object.assign(this, Text.defaults, options);
     }
 
+    /** dts2md break */
     readonly tag = 'text';
+    /** dts2md break */
+    /**
+     * The text content
+     */
     data!: string;
+    /** dts2md break */
+    /**
+     * The bounds size of the text
+     * (may affect text rendering position based
+     * on `style.textAlign` and `style.textBaseline`)
+     * @default 0
+     */
     width!: number;
     height!: number;
+    /** dts2md break */
+    /**
+     * The maximum width of the text
+     * @defaults A very large number
+     */
     maxWidth!: number;
+    /** dts2md break */
     protected _flexible = true;
 
+    /** dts2md break */
     protected _compute() {
         const { bounds } = this;
         bounds.width = this.width;
@@ -68,5 +89,6 @@ export class Text extends Node implements Required<TextOptions> {
         }
         Utils.renderNodes(this.childNodes, context);
     }
+
 
 }

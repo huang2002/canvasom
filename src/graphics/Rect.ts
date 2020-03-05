@@ -6,23 +6,33 @@ export interface RectOptions extends ShapeOptions {
     height: number;
     radius?: number;
 }
-
+/** dts2md break */
 export class Rect extends Shape implements Required<RectOptions> {
 
+    /** dts2md break */
     static defaults: Partial<RectOptions> = {
         radius: 0,
     };
 
+    /** dts2md break */
     constructor(options: Readonly<RectOptions>) {
         super();
         Object.assign(this, Rect.defaults, options);
     }
 
+    /** dts2md break */
     readonly tag = 'rect';
+    /** dts2md break */
     width!: number;
     height!: number;
+    /** dts2md break */
+    /**
+     * The corner radius
+     * (negative radius results in concave corners)
+     */
     radius!: number;
 
+    /** dts2md break */
     protected _compute() {
         const { bounds } = this;
         bounds.width = this.width;
@@ -30,6 +40,7 @@ export class Rect extends Shape implements Required<RectOptions> {
         this._flexible = !this.clipPath;
     }
 
+    /** dts2md break */
     path(context: CanvasRenderingContext2D) {
         const { width, height, radius } = this;
         if (radius > 0) {
@@ -54,5 +65,6 @@ export class Rect extends Shape implements Required<RectOptions> {
             context.rect(0, 0, width, height);
         }
     }
+
 
 }

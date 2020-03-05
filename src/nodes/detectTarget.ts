@@ -1,5 +1,12 @@
 import { Node } from '../nodes/Node';
 
+/**
+ * Find out which node is the target of the point at the given position
+ * (using `node.containsPoint` internally)
+ * @param interactive Whether to check `node.interactive`
+ * @returns The last node that contains the point
+ * if there is one; null otherwise
+ */
 export const detectTarget = (
     nodes: Node[],
     x: number,

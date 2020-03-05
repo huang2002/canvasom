@@ -10,29 +10,35 @@ export interface AnimationUpdateEventData<T extends Node> {
     offset: number;
     states: Partial<Record<keyof T, number>>;
 }
-
+/** dts2md break */
+/**
+ * Emits on updating animations
+ */
 export type AnimationUpdateEvent<T extends Node> = Event<AnimationUpdateEventData<T>>;
-
+/** dts2md break */
 export interface AnimationStopEventData {
     finished: boolean;
 }
-
+/** dts2md break */
+/**
+ * Emits on animation stopping
+ */
 export type AnimationStopEvent = Event<AnimationStopEventData>;
-
+/** dts2md break */
 export interface AnimationState {
     offset: number;
     value: number;
 }
-
+/** dts2md break */
 export type AnimationStates<T> = {
     [K in keyof T]?: AnimationState[];
 };
-
+/** dts2md break */
 export interface AnimationFrame<T> {
     offset: number;
     states: Partial<T>;
 }
-
+/** dts2md break */
 export type AnimationOptions<T extends Node, U = T> = EventTargetOptions & Partial<{
     target: T | null;
     states: AnimationStates<U>;
@@ -41,17 +47,17 @@ export type AnimationOptions<T extends Node, U = T> = EventTargetOptions & Parti
     delay: number;
     timing: TimingFunction;
 }>;
-
+/** dts2md break */
 export class Animation<T extends Node> extends EventTarget
     implements Required<AnimationOptions<T>> {
-
+    /** dts2md break */
     static defaults: AnimationOptions<Node> = {
         target: null,
         duration: 1000,
         delay: 0,
         timing: Timing.linear,
     };
-
+    /** dts2md break */
     constructor(options?: Readonly<AnimationOptions<T>>) {
         super();
         Object.assign(this, Animation.defaults, options);
@@ -59,18 +65,41 @@ export class Animation<T extends Node> extends EventTarget
             this._states = {};
         }
     }
-
+    /** dts2md break */
+    /**
+     * Whether the animation is active
+     */
     readonly active: boolean = false;
+    /** dts2md break */
+    /**
+     * Last time the animation starts
+     */
     readonly startTime: number = 0;
+    /** dts2md break */
+    /**
+     * The offset time (now - startTime - delay - pauseTime)
+     */
     readonly offsetTime: number = 0;
+    /** dts2md break */
+    /**
+     * The animation target
+     * (the animation won't work without a target)
+     */
     target!: T | null;
+    /** dts2md break */
+    /**
+     * Animation parameters
+     */
     duration!: number;
     delay!: number;
     timing!: TimingFunction;
     private _states!: AnimationStates<T>;
     private _pauseDelay = 0;
     private _pauseTime = 0;
-
+    /** dts2md break */
+    /**
+     * Computed state map
+     */
     set states(states: AnimationStates<T>) {
         const _states = {} as AnimationStates<T>;
         Object.keys(states).forEach(key => {
@@ -84,6 +113,25 @@ export class Animation<T extends Node> extends EventTarget
         return this._states;
     }
 
+    /** dts2md break */
+    /**
+     * A utility setter that enables you to
+     * declare animation states in frame order
+     * @example
+     * ```js
+     * animation.frames = [{
+     *     offset: .5,
+     *     states: {
+     *         // ...
+     *     }
+     * }, {
+     *     offset: 1,
+     *     states: {
+     *         // ...
+     *     }
+     * }];
+     * ```
+     */
     set frames(frames: AnimationFrame<T>[]) {
         const states = {} as AnimationStates<T>;
         frames.sort((a, b) => a.offset - b.offset)
@@ -102,6 +150,11 @@ export class Animation<T extends Node> extends EventTarget
             });
         this._states = states;
     }
+
+    /** dts2md break */
+    /**
+     * Animation controling methods
+     */
 
     start() {
         if (this.active) {
@@ -205,12 +258,16 @@ export class Animation<T extends Node> extends EventTarget
         this._update(1);
     }
 
-    // FIXME
     cancel() {
         this._stop(false);
         this._update(0);
     }
 
+    /** dts2md break */
+    /**
+     * Update the animation
+     * (usually used internally)
+     */
     update() {
         const offsetTime = Date.now() - this.startTime - this._pauseDelay - this.delay;
         if (offsetTime < 0) {

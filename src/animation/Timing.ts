@@ -1,7 +1,11 @@
 export type TimingFunction = (x: number) => number;
-
+/** dts2md break */
+/**
+ * The namespace of built-in timing functions
+ * and timing function factories
+ */
 export namespace Timing {
-
+    /** dts2md break */
     export const linear: TimingFunction = (x: number) => x;
 
     const _interpolate = (p1: number, p2: number, t: number) => {
@@ -12,7 +16,7 @@ export namespace Timing {
             + t * t * t
         );
     };
-
+    /** dts2md break */
     export const cubic = (x1: number, y1: number, x2: number, y2: number): TimingFunction => (
         x => {
             if (x <= 0) {
@@ -38,12 +42,12 @@ export namespace Timing {
         }
     );
     cubic.accuracy = .001;
-
+    /** dts2md break */
     export const ease = cubic(.25, .2, .25, 1);
     export const easeIn = cubic(.42, 0, 1, 1);
     export const easeOut = cubic(0, 0, .58, 1);
     export const easeInOut = cubic(.42, 0, 0.25, 1);
-
+    /** dts2md break */
     export const steps = (stepCount: number, start?: boolean): TimingFunction => (
         x => {
             let t = Math.floor(x * stepCount);

@@ -9,6 +9,7 @@
         "prebuild": "tsc",
         "build": "rollup -c",
         "postbuild": "terser dist/canvasom.js --config-file terser.json --module -o dist/canvasom.min.js && terser dist/canvasom.umd.js --config-file terser.json -o dist/canvasom.umd.min.js && node stat",
+        "docs": "dts2md -i typings -o docs -lI -- ** !index.d.ts",
         "eslint": "eslint ./src/**/*.ts"
     },
     "license": "MIT",
@@ -35,6 +36,7 @@
         "@babel/preset-env": "^7.8.4",
         "@typescript-eslint/eslint-plugin": "^2.20.0",
         "@typescript-eslint/parser": "^2.20.0",
+        "dts2md": "^0.2.0",
         "eslint": "^6.8.0",
         "rollup": "^1.31.1",
         "rollup-plugin-babel": "^4.3.3",

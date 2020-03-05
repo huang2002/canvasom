@@ -12,7 +12,22 @@ import { Center } from '../layouts/Center';
 import { Flow } from '../layouts/Flow';
 
 export type NodeConstructor<T extends Node, U> = new (options: U) => T;
-
+/** dts2md break */
+/**
+ * The node registry that maps node tags to their constructors
+ * Initial map:
+ * - 'arc' -> Arc
+ * - 'line' -> Line
+ * - 'rect' -> Rect
+ * - 'sector' -> Sector
+ * - 'text' -> Text
+ * - 'image' -> Image
+ * - 'root' -> Root
+ * - 'group' -> Group
+ * - 'scroll' -> Scroll
+ * - 'center' -> Center
+ * - 'flow' -> Flow
+ */
 export const registry = new Map<string, NodeConstructor<any, any>>([
     ['arc', Arc],
     ['line', Line],
@@ -26,7 +41,24 @@ export const registry = new Map<string, NodeConstructor<any, any>>([
     ['center', Center],
     ['flow', Flow],
 ]);
-
+/** dts2md break */
+/**
+ * Create a node of the given type
+ * @example
+ * ```js
+ * const root = COM.create('root', {
+ *     width: 480,
+ *     height: 320
+ * }, [
+ *     COM.create('text', {
+ *         data: 'hello, world!',
+ *         style: {
+ *             fillStyle: '#000'
+ *         }
+ *     })
+ * ]);
+ * ```
+ */
 export const create = <T extends Node, U>(
     type: string | NodeConstructor<T, U>,
     options: U,

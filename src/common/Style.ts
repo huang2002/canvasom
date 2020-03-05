@@ -1,33 +1,89 @@
 import { Utils } from './Utils';
 
+/**
+ * The interface of canvas style properties
+ */
 export interface CanvasStyle {
-
+    /**
+     * @default null
+     */
     fillStyle: null | string | CanvasGradient | CanvasPattern;
+    /**
+     * @default null
+     */
     strokeStyle: null | string | CanvasGradient | CanvasPattern;
+    /**
+     * @default 1
+     */
     lineWidth: number;
+    /**
+     * @default 'butt'
+     */
     lineCap: CanvasLineCap;
+    /**
+     * @default 'miter'
+     */
     lineJoin: CanvasLineJoin;
+    /**
+     * @default 0
+     */
     lineDashOffset: number;
+    /**
+     * @default null
+     */
     lineDash: null | number[];
+    /**
+     * @default 10
+     */
     miterLimit: number;
-
+    /**
+     * @default 'inherit'
+     */
     direction: CanvasDirection;
+    /**
+     * @default '18px sans-serif'
+     */
     font: string;
+    /**
+     * @default 'left'
+     */
     textAlign: CanvasTextAlign;
+    /**
+     * @default 'top'
+     */
     textBaseline: CanvasTextBaseline;
-
+    /**
+     * @default null
+     */
     shadowColor: null | string;
+    /**
+     * @default 0
+     */
     shadowBlur: number;
+    /**
+     * @default 0
+     */
     shadowOffsetX: number;
+    /**
+     * @default 0
+     */
     shadowOffsetY: number;
-
+    /**
+     * @default 1
+     */
     opacity: number;
+    /**
+     * The canvas pixel ratio
+     * @default window.devicePixelRatio
+     */
     ratio: number;
-
 }
 
 export namespace Style {
 
+    /**
+     * The defaults of canvas styles (mutable)
+     */
     export const defaults: CanvasStyle = {
 
         fillStyle: null,
@@ -54,6 +110,9 @@ export namespace Style {
 
     };
 
+    /**
+     * Apply the style to the canvas context
+     */
     export const apply = (context: CanvasRenderingContext2D, style: CanvasStyle) => {
         if (style.fillStyle) {
             context.fillStyle = style.fillStyle;
@@ -87,6 +146,9 @@ export namespace Style {
         context.globalAlpha = style.opacity;
     };
 
+    /**
+     * Compute the style properties from the child's and its parent's styles
+     */
     export const compute = (
         output: CanvasStyle,
         parentStyle: CanvasStyle,

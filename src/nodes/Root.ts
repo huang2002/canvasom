@@ -6,23 +6,63 @@ import { SizingStrategy, Sizing } from './Sizing';
 import { Schedule } from '../common/Schedule';
 
 export interface PointerEventData {
+    /**
+     * The pointer id
+     * (native touch identifier for touch-caused
+     * events and -1 for mouse-caused events)
+     */
     id: number;
+    /**
+     * The position where this event happened
+     * (in canvas coordinates where the node is)
+     */
     x: number;
     y: number;
+    /**
+     * The timestamp when the event happened
+     * (equals the `timeStamp` property of corresponding native event)
+     */
     timeStamp: number;
 }
-
+/** dts2md break */
+/**
+ * Pointer events are emitted on nodes which are supposed to
+ * interact with the pointer(mouse/touch), like those in DOM.
+ * (You must set `interactive` properties to true on a node and
+ * all its parent nodes to let it receive related pointer events)
+ *
+ * Currently supported types of pointer events:
+ * - pointerdown
+ * - pointermove
+ * - pointerup
+ * - wheel
+ * - click
+ *
+ * @example
+ * ```js
+ * node.addListener('pointerdown', event => {
+ *     console.log('pointerdown', event);
+ * });
+ * ```
+ */
 export type PointerEvent = Event<PointerEventData>;
-
+/** dts2md break */
 export interface WheelEventData extends PointerEventData {
+    /**
+     * All these properties are equal to their
+     * counterparts on corresponding native event
+     */
     deltaX: number;
     deltaY: number;
     deltaZ: number;
     deltaMode: number;
 }
-
+/** dts2md break */
+/**
+ * A wrapper for native wheel events
+ */
 export type WheelEvent = Event<WheelEventData>;
-
+/** dts2md break */
 export type RootOptions = NodeOptions & Partial<{
     canvas: HTMLCanvasElement;
     width: number;
@@ -31,19 +71,26 @@ export type RootOptions = NodeOptions & Partial<{
     sizingDelay: number;
     margin: number;
 }>;
-
+/** dts2md break */
 export class Root extends Node implements Required<RootOptions> {
 
+    /** dts2md break */
     static defaults: RootOptions = {
         sizing: Sizing.Contain,
         sizingDelay: 200,
         margin: 0
     };
 
+    /** dts2md break */
+    /**
+     * The options used when invoking `element.addEventListener`
+     * @defaults { passive: true }
+     */
     static eventOptions: AddEventListenerOptions = {
         passive: true,
     };
 
+    /** dts2md break */
     constructor(options?: Readonly<RootOptions>) {
         super();
 
@@ -110,21 +157,62 @@ export class Root extends Node implements Required<RootOptions> {
 
     }
 
+    /** dts2md break */
     readonly tag = 'root';
+    /** dts2md break */
+    /**
+     * The canvas and its context used by the root when composing
+     * (The canvas can be passed as an option, and the context
+     * will be automatically created in the constructor; You must
+     * append the canvas to your document in order to display it
+     * if it is not contained in the document)
+     */
     readonly canvas!: HTMLCanvasElement;
     readonly context: CanvasRenderingContext2D;
+    /** dts2md break */
+    /**
+     * The sizing delay passed to `Utils.debounce` when the resize
+     * listener is created and attached.
+     */
     readonly sizingDelay!: number;
+    /** dts2md break */
+    /**
+     * The resize listener used internally
+     */
     readonly resize: () => void;
+    /** dts2md break */
+    /**
+     * A `pointerdown` event record (id -> event)
+     * (after a `pointerup` event happens, its
+     * corresponding `pointerdown` event will be deleted)
+     */
     readonly pointerInit = new Map<number, PointerEvent>();
+    /** dts2md break */
+    /**
+     * The design size of the canvas
+     * (used by sizing strategy and may be adjusted by it)
+     */
     width!: number;
     height!: number;
+    /** dts2md break */
+    /**
+     * The sizing strategy used to instruct the resizing
+     * (the sizing is based on the bounding client rect
+     * of the parent node of the canvas; sizing will be
+     * skipped if the canvas have no parent node)
+     */
     sizing!: SizingStrategy | null;
+    /** dts2md break */
+    /**
+     * The margin of the canvas (used by sizing strategy)
+     */
     margin!: number;
     private _scale = 1;
     private _listenerAttached = false;
     private _clientX = 0;
     private _clientY = 0;
 
+    /** dts2md break */
     containsPoint(x: number, y: number) {
         return this.bounds.containsPoint(x, y);
     }
@@ -167,6 +255,7 @@ export class Root extends Node implements Required<RootOptions> {
         this._clientY = box.top;
     }
 
+    /** dts2md break */
     protected _compute() {
         this._resize();
         const { bounds } = this;
@@ -181,6 +270,16 @@ export class Root extends Node implements Required<RootOptions> {
         context.drawImage(this.canvas, this.left, this.top, this.width, this.height);
     }
 
+    /** dts2md break */
+    /**
+     * Compose the content of the root synchronously
+     * (this method will be invoked asynchronously and
+     * automatically whenever the child nodes changed;
+     * if you have to compose the content synchronously,
+     * remember to invoke `compute` first to update the
+     * node states synchronously and unmark this root
+     * using `Schedule.unmark` to avoid extra compution)
+     */
     compose() {
         const { context, computedStyle, width, height, left, top } = this;
         context.setTransform(computedStyle.ratio, 0, 0, computedStyle.ratio, 0, 0);
@@ -315,6 +414,14 @@ export class Root extends Node implements Required<RootOptions> {
         }
     }
 
+    /** dts2md break */
+    /**
+     * Attach/Detach pointer event listeners synchronously
+     * (the listeners will be automatically attached when
+     * the `interactive` property is set to true, but they
+     * won't be automatically detached; when you detach
+     * the listeners, `interactive` will be set to false)
+     */
     attachListeners() {
         if (this._listenerAttached) {
             return;
@@ -350,5 +457,6 @@ export class Root extends Node implements Required<RootOptions> {
             canvas.removeEventListener('wheel', this._onWheel, Root.eventOptions);
         }
     }
+
 
 }

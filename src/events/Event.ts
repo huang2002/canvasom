@@ -6,9 +6,10 @@ export interface EventOptions<T> {
     target?: EventTarget | null;
     data: Readonly<T>;
 }
-
+/** dts2md break */
 export class Event<T> {
 
+    /** dts2md break */
     constructor(readonly type: string, options?: EventOptions<T>) {
         if (options) {
             this.cancelable = !!options.cancelable;
@@ -23,19 +24,45 @@ export class Event<T> {
         }
     }
 
+    /** dts2md break */
+    /**
+     * Whether the default action can be canceled
+     */
     readonly cancelable: boolean;
+    /** dts2md break */
+    /**
+     * Whether the event bubbles
+     */
     readonly bubbles: boolean;
     readonly target: EventTarget | null;
+    /** dts2md break */
     readonly data!: Readonly<T>;
+    /** dts2md break */
+    /**
+     * Whether `preventDefault` has been invoked
+     */
     readonly defaultPrevented: boolean = false;
+    /** dts2md break */
+    /**
+     * Whether `stopPropagation` has been invoked
+     */
     readonly propagationStopped: boolean;
 
+    /** dts2md break */
+    /**
+     * Prevent the default action
+     */
     preventDefault() {
         (this.defaultPrevented as boolean) = true;
     }
 
+    /** dts2md break */
+    /**
+     * Stop the propagation of the event
+     */
     stopPropagation() {
         (this.propagationStopped as boolean) = true;
     }
+
 
 }

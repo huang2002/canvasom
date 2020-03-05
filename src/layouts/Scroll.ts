@@ -7,9 +7,12 @@ export interface ScrollEventData {
     deltaX: number;
     deltaY: number;
 }
-
+/** dts2md break */
+/**
+ * Emits on the scroll view that is scrolling
+ */
 export type ScrollEvent = Event<ScrollEventData>;
-
+/** dts2md break */
 export interface ScrollOptions extends NodeOptions {
     horizontal?: boolean;
     vertical?: boolean;
@@ -21,9 +24,13 @@ export interface ScrollOptions extends NodeOptions {
     lineScale?: number;
     pageScale?: number;
 }
-
+/** dts2md break */
+/**
+ * The class of scroll view containers
+ */
 export class Scroll extends Node implements Required<ScrollOptions> {
 
+    /** dts2md break */
     static defaults: Partial<ScrollOptions> = {
         interactive: true,
         horizontal: false,
@@ -35,6 +42,7 @@ export class Scroll extends Node implements Required<ScrollOptions> {
         pageScale: 300,
     };
 
+    /** dts2md break */
     constructor(options: Readonly<ScrollOptions>) {
         super();
         Object.assign(this, Scroll.defaults, options);
@@ -47,23 +55,50 @@ export class Scroll extends Node implements Required<ScrollOptions> {
         }
     }
 
+    /** dts2md break */
     readonly tag = 'scroll';
+    /** dts2md break */
+    /**
+     * Current scrolling offset
+     */
     readonly offsetX: number = 0;
     readonly offsetY: number = 0;
+    /** dts2md break */
+    /**
+     * Whether the view can scroll horizontally/vertically
+     * @default false (both)
+     */
     horizontal!: boolean;
     vertical!: boolean;
+    /** dts2md break */
+    /**
+     * The view size
+     * (this affects the scrolling boundary)
+     */
     width!: number;
     height!: number;
+    /** dts2md break */
+    /**
+     * The content size
+     * (also affects the scrolling boundary)
+     */
     offsetWidth!: number;
     offsetHeight!: number;
+    /** dts2md break */
+    /**
+     * The scrolling scale of different scrolling modes
+     * (applied according to `event.deltaMode`)
+     */
     pixelScale!: number;
     lineScale!: number;
     pageScale!: number;
+    /** dts2md break */
     protected _flexible = true;
     private _isDragging = false;
     private _lastX = 0;
     private _lastY = 0;
 
+    /** dts2md break */
     protected _compute() {
         const { bounds } = this;
         bounds.width = this.width;
@@ -72,14 +107,17 @@ export class Scroll extends Node implements Required<ScrollOptions> {
         (this.top as number) -= this.offsetY;
     }
 
+    /** dts2md break */
     containsPoint(x: number, y: number) {
         return this.bounds.containsPoint(x, y);
     }
 
+    /** dts2md break */
     protected _render(context: CanvasRenderingContext2D) {
         Utils.renderNodes(this.childNodes, context);
     }
 
+    /** dts2md break */
     scrollBy(deltaX: number, deltaY: number) {
         const { offsetX: ox, offsetY: oy, offsetWidth, offsetHeight } = this,
             offsetX = offsetWidth && Utils.clamp(ox + deltaX, 0, offsetWidth - this.width),
@@ -152,5 +190,6 @@ export class Scroll extends Node implements Required<ScrollOptions> {
     private _onPointerUp() {
         this._isDragging = false;
     }
+
 
 }

@@ -4,7 +4,7 @@ import { Utils } from './Utils';
 import { Animation } from '../animation/Animation';
 
 export type ScheduleCallback = () => void;
-
+/** dts2md break */
 export namespace Schedule {
 
     const _animations = new Array<Animation<Node>>(),
@@ -83,6 +83,10 @@ export namespace Schedule {
         }
     };
 
+    /** dts2md break */
+    /**
+     * Mark a node as expired (usually used internally)
+     */
     export const mark = (node: Node) => {
         if (!_expiredNodes.includes(node)) {
             _expiredNodes.push(node);
@@ -90,14 +94,27 @@ export namespace Schedule {
         }
     };
 
+    /**
+     * Unmark an node and its child nodes
+     * (you can use this to cancel the updating of
+     * a node and its child nodes for some purpose)
+     */
     export const unmark = (node: Node) => {
         _expiredNodes = _expiredNodes.filter(expiredNode => !node.contains(expiredNode));
     };
 
-    type NextTick =
+    /** dts2md break */
+    export type NextTick =
         | ((callback: ScheduleCallback) => void)
         | (() => Promise<void>);
 
+    /** dts2md break */
+    /**
+     * Register a callback that will be invoked when
+     * next tick is about to end; or, get a promise
+     * that will be resolved at that time
+     * (after all updates are finished)
+     */
     export const nextTick: NextTick = (callback?: ScheduleCallback) => {
         if (callback) {
             _nextTickCallbacks.push(callback);
@@ -109,6 +126,11 @@ export namespace Schedule {
         _requestTick();
     };
 
+    /** dts2md break */
+    /**
+     * Register an animation
+     * (animations are automatically registered in `animation.start`)
+     */
     export const registerAnimation = (animation: Animation<any>) => {
         if (!_animations.includes(animation)) {
             _animations.push(animation);
@@ -116,11 +138,17 @@ export namespace Schedule {
         }
     };
 
+    /** dts2md break */
+    /**
+     * Remove an animation
+     * (animations are automatically removed when stopped)
+     */
     export const removeAnimation = (animation: Animation<any>) => {
         const index = _animations.indexOf(animation);
         if (~index) {
             Utils.removeIndex(_animations, index);
         }
     };
+
 
 }

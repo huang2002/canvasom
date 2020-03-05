@@ -2,6 +2,7 @@ import { Node } from '../nodes/Node';
 
 export class Bounds {
 
+    /** dts2md break */
     top = 0;
     right = 0;
     bottom = 0;
@@ -11,18 +12,22 @@ export class Bounds {
         return this.right - this.left;
     }
 
-    get height() {
-        return this.bottom - this.top;
-    }
-
     set width(width: number) {
         this.right = this.left + width;
+    }
+
+    get height() {
+        return this.bottom - this.top;
     }
 
     set height(height: number) {
         this.bottom = this.top + height;
     }
 
+    /** dts2md break */
+    /**
+     * Move the bounds by (dx, dy)
+     */
     move(dx: number, dy: number) {
         this.left += dx;
         this.right += dx;
@@ -30,6 +35,10 @@ export class Bounds {
         this.bottom += dy;
     }
 
+    /** dts2md break */
+    /**
+     * Move the bounds to (x, y)
+     */
     moveTo(x: number, y: number) {
         const { width, height } = this;
         this.left = x;
@@ -38,6 +47,10 @@ export class Bounds {
         this.bottom = y + height;
     }
 
+    /** dts2md break */
+    /**
+     * Adjust the bounds to contain the bounds of the given canvas nodes
+     */
     contain(nodes: Node[]) {
         if (!nodes.length) {
             return;
@@ -64,16 +77,25 @@ export class Bounds {
         this.bottom = bottom;
     }
 
+    /** dts2md break */
+    /**
+     * Tells whether the given position is inside the bounds
+     */
     containsPoint(x: number, y: number) {
         return x >= this.left && x <= this.right
             && y >= this.top && y <= this.bottom;
     }
 
+    /** dts2md break */
+    /**
+     * Tells whether the given bounds overlaps this bounds
+     */
     overlaps(bounds: Bounds) {
         return this.left < bounds.left
             && this.right > bounds.left
             && this.top < bounds.bottom
             && this.bottom > bounds.top;
     }
+
 
 }

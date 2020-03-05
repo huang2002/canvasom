@@ -6,7 +6,10 @@ export interface NodeArchive {
     options?: object;
     childNodes?: NodeArchive[];
 }
-
+/** dts2md break */
+/**
+ * Parse the node archive and get the node
+ */
 export const parseArchive = (archive: NodeArchive): Node => (
     create(
         archive.tag,

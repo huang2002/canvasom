@@ -1,25 +1,49 @@
 import { Event } from './Event';
 
 export type Listener = (event: Event<any>) => void;
-
+/** dts2md break */
 export interface ListenerRecord {
     listener: Listener;
     once: boolean;
 }
-
+/** dts2md break */
 export interface ListenerDeclaration {
     [type: string]: Listener | { listener: Listener; once: boolean; };
 }
-
+/** dts2md break */
 export type EventTargetOptions = Partial<{
     listeners: ListenerDeclaration;
 }>;
-
+/** dts2md break */
 export class EventTarget {
 
     private _listenerMap = new Map<string, ListenerRecord[]>();
+    /** dts2md break */
+    /**
+     * The parent target
+     * (if an event bubbles, it will spread to the parent)
+     */
     protected _parent: EventTarget | null = null;
 
+    /** dts2md break */
+    /**
+     * A utility setter that enables you to
+     * set several listeners at one time
+     * @example
+     * ```js
+     * eventTarget.listeners = {
+     *     pointerup: (event) => {
+     *         // ...
+     *     },
+     *     pointermove: {
+     *         listener: (event) => {
+     *             // ...
+     *         },
+     *         once: true
+     *     }
+     * };
+     * ```
+     */
     set listeners(listeners: ListenerDeclaration) {
         Object.keys(listeners).forEach(type => {
             const declaration = listeners[type];
@@ -31,6 +55,12 @@ export class EventTarget {
         });
     }
 
+    /** dts2md break */
+    /**
+     * Add a listener the given type of event
+     * @param once Whether the listener should be
+     * removed once it is invoked (default: false)
+     */
     addListener(type: string, listener: Listener, once?: boolean) {
         const { _listenerMap } = this,
             records = _listenerMap.get(type);
@@ -44,6 +74,12 @@ export class EventTarget {
         return this;
     }
 
+    /** dts2md break */
+    /**
+     * Remove a listener
+     * (the same arguments as those passed to `addListener`
+     * should be provided; regards once as false when it is omitted)
+     */
     removeListener(type: string, listener: Listener, once?: boolean) {
         const { _listenerMap } = this,
             records = _listenerMap.get(type);
@@ -58,6 +94,10 @@ export class EventTarget {
         return this;
     }
 
+    /** dts2md break */
+    /**
+     * @returns event.defaultPrevented
+     */
     dispatchEvent(event: Event<unknown>) {
         const { _listenerMap } = this,
             records = _listenerMap.get(event.type);
@@ -75,5 +115,6 @@ export class EventTarget {
         }
         return event.defaultPrevented;
     }
+
 
 }
