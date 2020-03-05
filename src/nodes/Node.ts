@@ -271,7 +271,7 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     protected _align?(): void;
 
     private _locate() {
-        const { _parent } = this;
+        const { _parent, childNodes } = this;
         if (_parent) {
             const dx = _parent.left - this._x0,
                 dy = _parent.top - this._y0;
@@ -283,9 +283,9 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
             this._left = this.left;
             this._top = this.top;
         }
-        this.childNodes.forEach(childNode => {
-            childNode._locate();
-        });
+        for (let i = 0; i < childNodes.length; i++) {
+            childNodes[i]._locate();
+        }
     }
 
     /** dts2md break */
@@ -322,14 +322,14 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
             this._compute();
         }
         bounds.moveTo(this.left, this.top);
-        childNodes.forEach(childNode => {
-            childNode.compute();
-        });
+        for (let i = 0; i < childNodes.length; i++) {
+            childNodes[i].compute();
+        }
         if (this._align) {
             this._align();
-            this.childNodes.forEach(childNode => {
-                childNode._locate();
-            });
+            for (let i = 0; i < childNodes.length; i++) {
+                childNodes[i]._locate();
+            }
         }
         if (this._flexible) {
             bounds.contain(childNodes);

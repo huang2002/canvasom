@@ -132,9 +132,9 @@ export namespace Utils {
      * Render the nodes with the given context
      */
     export const renderNodes = (nodes: Node[], context: CanvasRenderingContext2D) => {
-        nodes.forEach(node => {
-            node.render(context);
-        });
+        for (let i = 0; i < nodes.length; i++) {
+            nodes[i].render(context);
+        }
     };
 
     /** dts2md break */
