@@ -1,39 +1,44 @@
 # Changelog
 
-### 0.6.0 - 2020-03-03
+## 0.6.1
+
+- Improve performance
+- Employ `dts2md`
+
+## 0.6.0
 
 - Add `parseArchive`
 - Add `bounds.overlaps`
 
-### 0.5.0 - 2020-02-23
+## 0.5.0
 
 - Add `Flow` layout
 - Add `bounds.move`
 - Refactor internal compution
 
-#### 0.4.1 - 2020-02-20
+## 0.4.1
 
 - Add null support to `node.contains`
 - Fix node computing
 
-### 0.4.0 - 2020-02-20
+## 0.4.0
 
 - Add Animation APIs
 - Add `Utils.mix`
 - Move `listeners` setter to `EventTarget`
 
-### 0.3.0 - 2020-02-14
+## 0.3.0
 
 - Add offset size options to `ScrollView`
 - Add `text.width/height/maxWidth`
 
-### 0.2.0 - 2020-02-12
+## 0.2.0
 
 - Add `click` event
 - Add `pointerEvent.id`
 - Add `root.pointerInit`
 - Add callback support to `Schedule.nextTick`
 
-### 0.1.0 - 2020-02-11
+## 0.1.0
 
 - Initial release
