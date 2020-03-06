@@ -8,8 +8,8 @@ import { Schedule } from '../common/Schedule';
 export interface PointerEventData {
     /**
      * The pointer id
-     * (native touch identifier for touch-caused
-     * events and -1 for mouse-caused events)
+     * (native touch identifier for touch-caused events
+     * and `event.button` for mouse-caused events)
      */
     id: number;
     /**
@@ -317,7 +317,7 @@ export class Root extends Node implements Required<RootOptions> {
                 event.clientX,
                 event.clientY,
                 {
-                    id: -1,
+                    id: event.button,
                     timeStamp: event.timeStamp
                 }
             );
@@ -331,7 +331,7 @@ export class Root extends Node implements Required<RootOptions> {
                 event.clientX,
                 event.clientY,
                 {
-                    id: -1,
+                    id: event.button,
                     timeStamp: event.timeStamp
                 }
             );
@@ -345,7 +345,7 @@ export class Root extends Node implements Required<RootOptions> {
                 event.clientX,
                 event.clientY,
                 {
-                    id: -1,
+                    id: event.button,
                     timeStamp: event.timeStamp
                 }
             );
