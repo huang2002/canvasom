@@ -43,6 +43,7 @@ const Wrapper = childNodes => (
                 positionY: 'middle',
                 width: INNER_WIDTH,
                 direction: 'both',
+                penetrable: true
             }, [
                 Label()
             ])

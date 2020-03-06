@@ -81,4 +81,4 @@ scrollView.addListener(
         }
     }
 );
-scrollView.appendChild(draggable);
+scrollView.insertBefore(draggable, scrollView.childNodes[1]);
