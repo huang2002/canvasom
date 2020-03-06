@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7.0
+
+- Replace `Center` with `Align`
+- Improve pointer event id
+
 ## 0.6.1
 
 - Improve performance
