@@ -55,5 +55,4 @@ export class Line extends Shape implements Required<LineOptions> {
         }
     }
 
-
 }

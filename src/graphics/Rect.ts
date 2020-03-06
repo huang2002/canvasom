@@ -66,5 +66,4 @@ export class Rect extends Shape implements Required<RectOptions> {
         }
     }
 
-
 }

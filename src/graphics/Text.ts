@@ -90,5 +90,4 @@ export class Text extends Node implements Required<TextOptions> {
         Utils.renderNodes(this.childNodes, context);
     }
 
-
 }

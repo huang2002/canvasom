@@ -87,5 +87,4 @@ export abstract class Shape extends Node implements Required<ShapeOptions> {
         }
     }
 
-
 }

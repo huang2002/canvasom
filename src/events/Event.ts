@@ -64,5 +64,4 @@ export class Event<T> {
         (this.propagationStopped as boolean) = true;
     }
 
-
 }

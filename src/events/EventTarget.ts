@@ -116,5 +116,4 @@ export class EventTarget {
         return event.defaultPrevented;
     }
 
-
 }

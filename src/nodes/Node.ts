@@ -404,5 +404,4 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         return animation;
     }
 
-
 }

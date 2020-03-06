@@ -73,5 +73,4 @@ export class Center extends Node implements Required<CenterOptions> {
         Utils.renderNodes(this.childNodes, context);
     }
 
-
 }

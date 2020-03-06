@@ -17,5 +17,4 @@ export class Group extends Node {
         Utils.renderNodes(this.childNodes, context);
     }
 
-
 }

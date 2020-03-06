@@ -97,5 +97,4 @@ export class Bounds {
             && this.bottom > bounds.top;
     }
 
-
 }

@@ -458,5 +458,4 @@ export class Root extends Node implements Required<RootOptions> {
         }
     }
 
-
 }

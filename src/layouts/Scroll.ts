@@ -191,5 +191,4 @@ export class Scroll extends Node implements Required<ScrollOptions> {
         this._isDragging = false;
     }
 
-
 }

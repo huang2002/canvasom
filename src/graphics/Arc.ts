@@ -48,5 +48,4 @@ export class Arc extends Shape implements Required<ArcOptions> {
         context.arc(radius, radius, radius, this.startAngle, this.endAngle, this.anticlockwise);
     }
 
-
 }

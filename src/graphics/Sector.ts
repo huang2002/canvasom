@@ -49,5 +49,4 @@ export class Sector extends Shape implements Required<SectorOptions> {
         context.arc(radius, radius, radius, this.startAngle, this.endAngle, this.anticlockwise);
     }
 
-
 }

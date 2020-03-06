@@ -115,5 +115,4 @@ export class Image extends Node implements Required<ImageOptions> {
         Utils.renderNodes(this.childNodes, context);
     }
 
-
 }

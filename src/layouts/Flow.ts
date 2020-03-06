@@ -60,5 +60,4 @@ export class Flow extends Node implements Required<FlowOptions> {
         Utils.renderNodes(this.childNodes, context);
     }
 
-
 }
