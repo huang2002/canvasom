@@ -1,7 +1,8 @@
 const WIDTH = 800,
     HEIGHT = 600,
     PADDING = 60,
-    RATIO = 2;
+    RATIO = 2,
+    INNER_WIDTH = WIDTH - PADDING * 2;
 
 const commonShadowStyle = {
     shadowColor: '#BBC',
