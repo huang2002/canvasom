@@ -12,7 +12,9 @@ const Shapes = () => (
             y: 10
         }, [
             // fill with stroke (splitted)
-            COM.create('center', {
+            COM.create('align', {
+                positionX: 'center',
+                positionY: 'middle',
                 x: 50,
                 y: 50,
                 direction: 'both'
@@ -46,7 +48,9 @@ const Shapes = () => (
                 })
             ]),
             // stroke without fill
-            COM.create('center', {
+            COM.create('align', {
+                positionX: 'center',
+                positionY: 'middle',
                 x: 50,
                 y: 50,
                 direction: 'both'
@@ -75,7 +79,9 @@ const Shapes = () => (
                 })
             ]),
             // fill without stroke
-            COM.create('center', {
+            COM.create('align', {
+                positionX: 'center',
+                positionY: 'middle',
                 x: 50,
                 y: 50,
                 direction: 'both'
@@ -103,7 +109,9 @@ const Shapes = () => (
                 })
             ]),
             // fill with stroke
-            COM.create('center', {
+            COM.create('align', {
+                positionX: 'center',
+                positionY: 'middle',
                 x: 50,
                 y: 50,
                 direction: 'both'
@@ -149,7 +157,6 @@ const Shapes = () => (
             // cross solid 8px square-cap transparent
             COM.create('group', {
                 x: 60,
-                direction: 'both'
             }, [
                 COM.create('line', {
                     deltaX: 100,

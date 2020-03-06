@@ -26,5 +26,5 @@ export * from './graphics/Text';
 export * from './graphics/Image';
 
 export * from './layouts/Scroll';
-export * from './layouts/Center';
+export * from './layouts/Align';
 export * from './layouts/Flow';

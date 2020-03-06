@@ -8,7 +8,7 @@ import { Root } from './Root';
 import { Group } from './Group';
 import { Image } from '../graphics/Image';
 import { Scroll } from '../layouts/Scroll';
-import { Center } from '../layouts/Center';
+import { Align } from '../layouts/Align';
 import { Flow } from '../layouts/Flow';
 
 export type NodeConstructor<T extends Node, U> = new (options: U) => T;
@@ -25,7 +25,7 @@ export type NodeConstructor<T extends Node, U> = new (options: U) => T;
  * - 'root' -> Root
  * - 'group' -> Group
  * - 'scroll' -> Scroll
- * - 'center' -> Center
+ * - 'align' -> Align
  * - 'flow' -> Flow
  */
 export const registry = new Map<string, NodeConstructor<any, any>>([
@@ -38,7 +38,7 @@ export const registry = new Map<string, NodeConstructor<any, any>>([
     ['root', Root],
     ['group', Group],
     ['scroll', Scroll],
-    ['center', Center],
+    ['align', Align],
     ['flow', Flow],
 ]);
 /** dts2md break */

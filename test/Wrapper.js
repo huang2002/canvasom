@@ -19,7 +19,9 @@ const Wrapper = childNodes => (
             offsetHeight: 800,
             vertical: true
         }, [
-            COM.create(COM.Center, {
+            COM.create(COM.Align, {
+                positionX: 'center',
+                positionY: 'middle',
                 width: WIDTH - PADDING * 2
             }, [
                 COM.create('rect', {
@@ -36,7 +38,8 @@ const Wrapper = childNodes => (
                     }
                 }, childNodes)
             ]),
-            COM.create(COM.Center, {
+            COM.create(COM.Align, {
+                positionY: 'middle',
                 direction: 'y'
             }, [
                 Label()
