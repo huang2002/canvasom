@@ -5,7 +5,7 @@
 const Label = () => (
     COM.create('rect', {
         classNames: ['label'],
-        x: 30,
+        x: -25,
         width: 140,
         height: 60,
         radius: -10,

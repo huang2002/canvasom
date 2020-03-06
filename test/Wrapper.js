@@ -14,7 +14,7 @@ const Wrapper = childNodes => (
         COM.create(COM.Scroll, {
             x: PADDING,
             y: PADDING,
-            width: WIDTH - PADDING * 2,
+            width: INNER_WIDTH,
             height: HEIGHT - PADDING * 2,
             offsetHeight: 800,
             vertical: true
@@ -22,11 +22,11 @@ const Wrapper = childNodes => (
             COM.create(COM.Align, {
                 positionX: 'center',
                 positionY: 'middle',
-                width: WIDTH - PADDING * 2
+                width: INNER_WIDTH
             }, [
                 COM.create('rect', {
                     interactive: true,
-                    width: WIDTH - PADDING * 2,
+                    width: INNER_WIDTH,
                     height: 800,
                     radius: 10,
                     style: {
@@ -39,8 +39,10 @@ const Wrapper = childNodes => (
                 }, childNodes)
             ]),
             COM.create(COM.Align, {
+                positionX: 'right',
                 positionY: 'middle',
-                direction: 'y'
+                width: INNER_WIDTH,
+                direction: 'both',
             }, [
                 Label()
             ])
