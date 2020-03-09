@@ -10,7 +10,8 @@ export interface EventOptions<T> {
 export class Event<T> {
 
     /** dts2md break */
-    constructor(readonly type: string, options?: EventOptions<T>) {
+    constructor(type: string, options?: EventOptions<T>) {
+        this.type = type;
         if (options) {
             this.cancelable = !!options.cancelable;
             this.bubbles = !!options.bubbles;
@@ -23,6 +24,9 @@ export class Event<T> {
             this.target = null;
         }
     }
+
+    /** dts2md break */
+    readonly type: string;
 
     /** dts2md break */
     /**
