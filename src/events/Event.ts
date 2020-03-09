@@ -36,6 +36,7 @@ export class Event<T> {
      * @default false
      */
     readonly bubbles: boolean;
+    /** dts2md break */
     readonly target: EventTarget | null;
     /** dts2md break */
     readonly data!: Readonly<T>;
