@@ -84,14 +84,23 @@ export class Animation<T extends Node> extends EventTarget
     /**
      * The animation target
      * (the animation won't work without a target)
+     * @default null
      */
     target!: T | null;
     /** dts2md break */
     /**
-     * Animation parameters
+     * @default 1000
      */
     duration!: number;
+    /** dts2md break */
+    /**
+     * @default 0
+     */
     delay!: number;
+    /** dts2md break */
+    /**
+     * @default Timing.linear
+     */
     timing!: TimingFunction;
     private _states!: AnimationStates<T>;
     private _pauseDelay = 0;

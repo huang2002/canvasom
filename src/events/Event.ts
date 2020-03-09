@@ -27,11 +27,13 @@ export class Event<T> {
     /** dts2md break */
     /**
      * Whether the default action can be canceled
+     * @default false
      */
     readonly cancelable: boolean;
     /** dts2md break */
     /**
      * Whether the event bubbles
+     * @default false
      */
     readonly bubbles: boolean;
     readonly target: EventTarget | null;
