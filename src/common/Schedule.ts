@@ -69,10 +69,11 @@ export namespace Schedule {
         });
 
         /* resolve nextTick callbacks */
-        _nextTickCallbacks.forEach(callback => {
+        const callbacks = _nextTickCallbacks.slice(0);
+        _nextTickCallbacks.length = 0;
+        callbacks.forEach(callback => {
             callback();
         });
-        _nextTickCallbacks.length = 0;
 
     };
 
