@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7.1
+
+- Fix issues with `Schedule.nextTick`
+- Improve docs
+
 ## 0.7.0
 
 - Replace `Center` with `Align`
