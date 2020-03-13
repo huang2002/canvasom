@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.0
+
+- Add `Draggable`
+- Fix missing docs for event types
+
 ## 0.7.1
 
 - Fix issues with `Schedule.nextTick`
