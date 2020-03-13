@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.2
+
+- Fix `DraggableOptions`
+
 ## 0.8.1
 
 - Fix missing docs for `node._flexible`
