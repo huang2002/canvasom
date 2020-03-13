@@ -126,6 +126,10 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     style: Partial<CanvasStyle> = {};
     /** dts2md break */
     protected _parent: Node | null = null;
+    /** dts2md break */
+    /**
+     * Whether the bounds should contain the child nodes'
+     */
     protected _flexible = false;
     private _x0 = 0;
     private _y0 = 0;
