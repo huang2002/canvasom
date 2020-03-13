@@ -5,6 +5,7 @@ export * from './common/Schedule';
 
 export * from './events/Event';
 export * from './events/EventTarget';
+export * from './events/Draggable';
 
 export * from './animation/Timing';
 export * from './animation/Animation';

@@ -3,11 +3,7 @@
 /// <reference path="./common.js" />
 /// <reference path="./root.js" />
 
-let isDragging = false,
-    dragOffsetX = 0,
-    dragOffsetY = 0;
-
-const draggable = COM.create('rect', {
+const draggableTarget = COM.create('rect', {
     id: 'draggable',
     interactive: true,
     x: 535,
@@ -19,18 +15,6 @@ const draggable = COM.create('rect', {
         fillStyle: '#FFF',
         strokeStyle: '#444',
         ...commonShadowStyle
-    },
-    listeners: {
-        /**
-         * @param {COM.Rect} this
-         * @param {COM.PointerEvent} event
-         */
-        pointerdown(event) {
-            event.preventDefault();
-            isDragging = true;
-            dragOffsetX = event.data.x - this.x;
-            dragOffsetY = event.data.y - this.y;
-        }
     }
 }, [
     COM.create('text', {
@@ -46,21 +30,9 @@ const draggable = COM.create('rect', {
     })
 ]);
 
-root.addListener(
-    'pointermove',
-    /**
-     * @param {COM.PointerEvent} event
-     */
-    event => {
-        if (isDragging) {
-            draggable.update({
-                x: event.data.x - dragOffsetX,
-                y: event.data.y - dragOffsetY
-            });
-        }
-    }
-).addListener('pointerup', () => {
-    isDragging = false;
+const draggable = new COM.Draggable({
+    target: draggableTarget,
+    root,
 });
 
 const scrollView = root.selectClass('wrapper')[0].selectTag('scroll')[0];
@@ -70,15 +42,15 @@ scrollView.addListener(
      * @param {COM.ScrollEvent} event
      */
     event => {
-        if (isDragging) {
+        if (draggable.isDragging) {
             const { data: { deltaX, deltaY } } = event;
-            dragOffsetX -= deltaX;
-            dragOffsetY -= deltaY;
-            draggable.update({
-                x: draggable.x + deltaX,
-                y: draggable.y + deltaY
+            draggable.offsetX -= deltaX;
+            draggable.offsetY -= deltaY;
+            draggableTarget.update({
+                x: draggableTarget.x + deltaX,
+                y: draggableTarget.y + deltaY
             });
         }
     }
 );
-scrollView.insertBefore(draggable, scrollView.childNodes[1]);
+scrollView.insertBefore(draggableTarget, scrollView.childNodes[1]);
