@@ -12,7 +12,7 @@ export interface AnimationUpdateEventData<T extends Node> {
 }
 /** dts2md break */
 /**
- * Emits on updating animations
+ * Emits on updating animations (event type: 'update')
  */
 export type AnimationUpdateEvent<T extends Node> = Event<AnimationUpdateEventData<T>>;
 /** dts2md break */
@@ -21,7 +21,7 @@ export interface AnimationStopEventData {
 }
 /** dts2md break */
 /**
- * Emits on animation stopping
+ * Emits on animation stopping (event type: 'stop')
  */
 export type AnimationStopEvent = Event<AnimationStopEventData>;
 /** dts2md break */

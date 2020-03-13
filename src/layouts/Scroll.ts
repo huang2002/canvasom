@@ -10,6 +10,7 @@ export interface ScrollEventData {
 /** dts2md break */
 /**
  * Emits on the scroll view that is scrolling
+ * (event type: 'scroll')
  */
 export type ScrollEvent = Event<ScrollEventData>;
 /** dts2md break */
