@@ -1,7 +1,7 @@
 import { Event } from './Event';
 import { Node } from '../nodes/Node';
 import { PointerEvent, PointerEventData } from '../nodes/Root';
-import { EventTarget } from './EventTarget';
+import { EventTarget, EventTargetOptions } from './EventTarget';
 
 /**
  * Emits on Draggable instances when dragging states change
@@ -11,7 +11,7 @@ import { EventTarget } from './EventTarget';
  */
 export type DragEvent = Event<PointerEventData>;
 /** dts2md break */
-export type DraggableOptions = Partial<{
+export type DraggableOptions = EventTargetOptions & Partial<{
     active: boolean;
     target: Node | null;
     control: Node | null;
