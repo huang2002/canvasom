@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.0
+
+- Remove `Utils.getRoots`
+- Add `Utils.getPath`
+- Add `root.boundsStyle`
+- Make `node.align` public
+- Refactor layout computing
+- Fix some bugs
+
 ## 0.8.2
 
 - Fix `DraggableOptions`
