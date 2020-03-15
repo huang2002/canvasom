@@ -17,7 +17,7 @@ const root = COM.create(COM.Root, {
         ratio: RATIO
     },
     boundsStyle: {
-        strokeStyle: 'rgba(0,255,0,.5)',
+        strokeStyle: 'rgba(0,255,0,.2)',
         lineWidth: 2,
     },
 }, [
