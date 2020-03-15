@@ -1,5 +1,6 @@
 import { Node } from '../nodes/Node';
 import { Root } from '../nodes/Root';
+import { CanvasStyle } from './Style';
 
 export namespace Utils {
     /** dts2md break */
@@ -170,6 +171,29 @@ export namespace Utils {
             }
             timer = setTimeout(callback, delay, args);
         };
+    };
+
+    export const renderBounds = (
+        nodes: Node[],
+        context: CanvasRenderingContext2D,
+        style?: Partial<CanvasStyle>
+    ) => {
+        if (style) {
+            Object.assign(context, style);
+        }
+        for (let i = 0; i < nodes.length; i++) {
+            const node = nodes[i],
+                { bounds } = node;
+            context.strokeRect(
+                bounds.left,
+                bounds.top,
+                bounds.width,
+                bounds.height
+            );
+            if (node.childNodes.length) {
+                renderBounds(node.childNodes, context);
+            }
+        }
     };
 
 }

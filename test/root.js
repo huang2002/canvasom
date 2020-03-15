@@ -15,7 +15,11 @@ const root = COM.create(COM.Root, {
     style: {
         fillStyle: '#CCC',
         ratio: RATIO
-    }
+    },
+    boundsStyle: {
+        strokeStyle: 'rgba(0,255,0,.5)',
+        lineWidth: 2,
+    },
 }, [
     Wrapper([
         Shapes(),

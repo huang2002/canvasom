@@ -4,6 +4,7 @@ import { Event } from '../events/Event';
 import { detectTarget } from './detectTarget';
 import { SizingStrategy, Sizing } from './Sizing';
 import { Schedule } from '../common/Schedule';
+import { CanvasStyle } from '../common/Style';
 
 export interface PointerEventData {
     /**
@@ -70,6 +71,7 @@ export type RootOptions = NodeOptions & Partial<{
     sizing: SizingStrategy | null;
     sizingDelay: number;
     margin: number;
+    boundsStyle: Partial<CanvasStyle> | null;
 }>;
 /** dts2md break */
 export class Root extends Node implements Required<RootOptions> {
@@ -78,7 +80,8 @@ export class Root extends Node implements Required<RootOptions> {
     static defaults: RootOptions = {
         sizing: Sizing.Contain,
         sizingDelay: 200,
-        margin: 0
+        margin: 0,
+        boundsStyle: null,
     };
 
     /** dts2md break */
@@ -207,6 +210,12 @@ export class Root extends Node implements Required<RootOptions> {
      * The margin of the canvas (used by sizing strategy)
      */
     margin!: number;
+    /** dts2md break */
+    /**
+     * When set, render the bounds of all descendant nodes
+     * (useful for debugging)
+     */
+    boundsStyle!: Partial<CanvasStyle> | null;
     private _scale = 1;
     private _listenerAttached = false;
     private _clientX = 0;
@@ -291,6 +300,9 @@ export class Root extends Node implements Required<RootOptions> {
         }
         context.translate(-left, -top);
         Utils.renderNodes(this.childNodes, context);
+        if (this.boundsStyle) {
+            Utils.renderBounds(this.childNodes, context, this.boundsStyle);
+        }
     }
 
     private _emit(type: string, clientX: number, clientY: number, data: object) {
