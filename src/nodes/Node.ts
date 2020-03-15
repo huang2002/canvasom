@@ -135,6 +135,8 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     private _y0 = 0;
     private _left = 0;
     private _top = 0;
+    private _width = 0;
+    private _height = 0;
 
     /** dts2md break */
     /**
@@ -266,15 +268,16 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
      * implementions if you need to override this)
      */
     protected _compute?(): void;
+
     /** dts2md break */
     /**
      * A layout hook
      * (you can refer to the source code of
      * implementions if you need to override this)
      */
-    protected _align?(): void;
+    align?(): void;
 
-    private _locate() {
+    locate() {
         const { _parent, childNodes } = this;
         if (_parent) {
             const dx = _parent.left - this._x0,
@@ -288,7 +291,7 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
             this._top = this.top;
         }
         for (let i = 0; i < childNodes.length; i++) {
-            childNodes[i]._locate();
+            childNodes[i].locate();
         }
     }
 
@@ -325,17 +328,40 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         if (this._compute) {
             this._compute();
         }
+        this._width = bounds.width;
+        this._height = bounds.height;
         bounds.moveTo(this.left, this.top);
         for (let i = 0; i < childNodes.length; i++) {
             childNodes[i].compute();
         }
-        if (this._align) {
-            this._align();
+        if (this.align) {
+            this.align();
             for (let i = 0; i < childNodes.length; i++) {
-                childNodes[i]._locate();
+                childNodes[i].locate();
             }
         }
         if (this._flexible) {
+            this.bounds.contain(childNodes);
+        }
+    }
+
+    /** dts2md break */
+    adjustLayout() {
+        const { childNodes } = this;
+        for (let i = 0; i < childNodes.length; i++) {
+            childNodes[i].adjustLayout();
+        }
+        if (this.align) {
+            this.align();
+        }
+        for (let i = 0; i < childNodes.length; i++) {
+            childNodes[i].locate();
+        }
+        if (this._flexible) {
+            const { bounds } = this;
+            bounds.moveTo(this.left, this.top);
+            bounds.width = this._width;
+            bounds.height = this._height;
             bounds.contain(childNodes);
         }
     }

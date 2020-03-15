@@ -9,8 +9,12 @@ export class Group extends Node {
 
     /** dts2md break */
     readonly tag = 'group';
-    penetrable = true;
     protected _flexible = true;
+
+    /** dts2md break */
+    containsPoint(x: number, y: number) {
+        return this.bounds.containsPoint(x, y);
+    }
 
     /** dts2md break */
     protected _render(context: CanvasRenderingContext2D) {

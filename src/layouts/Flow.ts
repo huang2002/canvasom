@@ -41,7 +41,7 @@ export class Flow extends Node implements Required<FlowOptions> {
     }
 
     /** dts2md break */
-    protected _align() {
+    align() {
         let { left, top } = this;
         if (this.direction === 'x') {
             this.childNodes.forEach(childNode => {

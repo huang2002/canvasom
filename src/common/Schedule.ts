@@ -23,6 +23,9 @@ export namespace Schedule {
         /* filter child nodes */
         const _nodes = new Array<Node | null>();
         _expiredNodes.forEach(current => {
+            if (!current.visible) {
+                return;
+            }
             for (let i = 0; i < _nodes.length; i++) {
                 const node = _nodes[i];
                 if (!node) {
@@ -45,23 +48,38 @@ export namespace Schedule {
         });
         _expiredNodes.length = 0;
 
-        /* get actual nodes */
-        const nodes = _nodes.filter(Boolean) as Node[];
+        /* get actual nodes and their paths */
+        const nodes = _nodes.filter(Boolean) as Node[],
+            paths = nodes.map(Utils.getPath);
 
         /* update nodes */
         nodes.forEach(node => {
             node.compute();
         });
 
+        /* update layout */
+        for (let i = 0; i < paths.length; i++) {
+            const path = paths[i];
+            for (let j = 1; j < path.length; j++) {
+                const node = path[j];
+                if (node.align) {
+                    node.adjustLayout();
+                    break;
+                }
+            }
+        }
+
         /* compose roots in ascending order */
         const roots = new Array<Root>();
-        nodes.forEach(node => {
-            Utils.getRoots(node).forEach(root => {
-                if (!roots.includes(root)) {
-                    roots.push(root);
+        for (let i = 0; i < paths.length; i++) {
+            const path = paths[i];
+            for (let j = 0; j < path.length; j++) {
+                const node = path[j];
+                if (node instanceof Root && !roots.includes(node)) {
+                    roots.push(node);
                 }
-            });
-        });
+            }
+        }
         roots.sort(
             (rootA, rootB) => rootB.contains(rootA) ? -1 : 1
         ).forEach(root => {

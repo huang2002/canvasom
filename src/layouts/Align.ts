@@ -67,7 +67,7 @@ export class Align extends Node implements Required<AlignOptions> {
     }
 
     /** dts2md break */
-    protected _align() {
+    align() {
         const { direction, childNodes } = this,
             alignX = direction === 'x' || direction === 'both',
             alignY = direction === 'y' || direction === 'both';

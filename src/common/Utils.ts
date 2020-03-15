@@ -1,5 +1,4 @@
 import { Node } from '../nodes/Node';
-import { Root } from '../nodes/Root';
 import { CanvasStyle } from './Style';
 
 export namespace Utils {
@@ -114,18 +113,16 @@ export namespace Utils {
 
     /** dts2md break */
     /**
-     * Get all the roots of the given node
+     * Get the path from the given node to its root
      */
-    export const getRoots = (node: Node) => {
-        const roots = [];
+    export const getPath = (node: Node) => {
+        const path = [];
         let current: Node | null = node;
         while (current) {
-            if (current instanceof Root) {
-                roots.push(current);
-            }
+            path.push(current);
             current = current.parentNode;
         }
-        return roots;
+        return path;
     };
 
     /** dts2md break */
