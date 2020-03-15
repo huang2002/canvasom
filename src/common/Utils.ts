@@ -170,6 +170,9 @@ export namespace Utils {
         };
     };
 
+    /**
+     * Render the bounds of the nodes
+     */
     export const renderBounds = (
         nodes: Node[],
         context: CanvasRenderingContext2D,

@@ -265,7 +265,7 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     /**
      * A computing hook
      * (you can refer to the source code of
-     * implementions if you need to override this)
+     * implementions if you need to implement this)
      */
     protected _compute?(): void;
 
@@ -273,9 +273,14 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     /**
      * A layout hook
      * (you can refer to the source code of
-     * implementions if you need to override this)
+     * implementions if you need to implement this)
      */
     align?(): void;
+
+    /** dts2md break */
+    /**
+     * Internal methods used to update nodes
+     */
 
     locate() {
         const { _parent, childNodes } = this;
@@ -295,20 +300,6 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         }
     }
 
-    /** dts2md break */
-    /**
-     * Used internally to compute node states
-     * (you can invoke this to compute node states
-     * synchronously if needed; an example is given below)
-     * @example
-     * ```js
-     * // use `update/updateStyle` instead unless you have to
-     *
-     * setPropertiesDirectly(node); // set some properties directly
-     * node.compute(); // compute the states synchronously
-     * COM.Schedule.unmark(node); // unmark the node to avoid extra compution
-     * ```
-     */
     compute() {
         const { bounds, _parent, x, y, childNodes } = this;
         if (_parent) {
@@ -345,7 +336,6 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         }
     }
 
-    /** dts2md break */
     adjustLayout() {
         const { childNodes } = this;
         for (let i = 0; i < childNodes.length; i++) {
