@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.0
+
+- Remove `root.boundsStyle` & `Utils.renderBounds`
+- Add bounds style properties to `style`
+- Fix node computing and rendering issues
+
 ## 0.9.0
 
 - Remove `Utils.getRoots`
