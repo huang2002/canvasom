@@ -313,12 +313,12 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
             (this.top as number) = y;
             Style.compute(this.computedStyle, Style.defaults, this.style);
         }
-        this._left = this.left;
-        this._top = this.top;
         bounds.width = bounds.height = 0;
         if (this._compute) {
             this._compute();
         }
+        this._left = this.left;
+        this._top = this.top;
         this._width = bounds.width;
         this._height = bounds.height;
         bounds.moveTo(this.left, this.top);
@@ -383,8 +383,19 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         if (!this.visible) {
             return;
         }
-        Style.apply(context, this.computedStyle);
+        const { computedStyle } = this;
+        Style.apply(context, computedStyle);
         this._render(context);
+        if (computedStyle.boundsStyle) {
+            const { bounds } = this;
+            Style.applyBounds(context, computedStyle);
+            context.strokeRect(
+                bounds.left,
+                bounds.top,
+                bounds.width,
+                bounds.height
+            );
+        }
     }
 
     /** dts2md break */

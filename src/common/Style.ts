@@ -77,6 +77,32 @@ export interface CanvasStyle {
      * @default window.devicePixelRatio
      */
     ratio: number;
+    /**
+     * When this is set, the bounds of the node will be rendered
+     * (useful for debugging)
+     * @default null
+     */
+    boundsStyle: null | string | CanvasGradient | CanvasPattern;
+    /**
+     * @default 1
+     */
+    boundsWidth: number;
+    /**
+     * @default 'miter'
+     */
+    boundsJoin: CanvasLineJoin;
+    /**
+     * @default 0
+     */
+    boundsDashOffset: number;
+    /**
+     * @default null
+     */
+    boundsDash: null | number[];
+    /**
+     * @default 1
+     */
+    boundsOpacity: number;
 }
 
 export namespace Style {
@@ -108,10 +134,18 @@ export namespace Style {
         opacity: 1,
         ratio: window.devicePixelRatio || 1,
 
+        boundsStyle: null,
+        boundsWidth: 1,
+        boundsJoin: 'miter',
+        boundsDashOffset: 0,
+        boundsDash: null,
+        boundsOpacity: 1,
+
     };
 
     /**
      * Apply the style to the canvas context
+     * (bounds styles are ignored; use `Style.applyBounds` if needed)
      */
     export const apply = (context: CanvasRenderingContext2D, style: CanvasStyle) => {
         if (style.fillStyle) {
@@ -147,6 +181,25 @@ export namespace Style {
     };
 
     /**
+     * Apply bounds style to the canvas context
+     */
+    export const applyBounds = (context: CanvasRenderingContext2D, style: CanvasStyle) => {
+        if (style.boundsStyle) {
+            context.strokeStyle = style.boundsStyle;
+            context.lineWidth = style.boundsWidth;
+            context.lineJoin = style.boundsJoin;
+            if (style.boundsDash) {
+                context.setLineDash(style.boundsDash);
+                context.lineDashOffset = style.boundsDashOffset;
+            } else {
+                context.setLineDash([]);
+            }
+            context.shadowColor = Utils.Const.TRANSPARENT;
+            context.globalAlpha = style.boundsOpacity;
+        }
+    };
+
+    /**
      * Compute the style properties from the child's and its parent's styles
      */
     export const compute = (
@@ -157,12 +210,12 @@ export namespace Style {
 
         output.fillStyle = Utils.pick(childStyle.fillStyle, defaults.fillStyle);
         output.strokeStyle = Utils.pick(childStyle.strokeStyle, defaults.strokeStyle);
-        output.lineWidth = childStyle.lineWidth || defaults.lineWidth;
-        output.lineCap = childStyle.lineCap || defaults.lineCap;
-        output.lineJoin = childStyle.lineJoin || defaults.lineJoin;
-        output.miterLimit = Utils.pick(childStyle.miterLimit, defaults.miterLimit);
-        output.lineDashOffset = Utils.pick(childStyle.lineDashOffset, defaults.lineDashOffset);
-        output.lineDash = childStyle.lineDash || defaults.lineDash;
+        output.lineWidth = childStyle.lineWidth || parentStyle.lineWidth;
+        output.lineCap = childStyle.lineCap || parentStyle.lineCap;
+        output.lineJoin = childStyle.lineJoin || parentStyle.lineJoin;
+        output.miterLimit = Utils.pick(childStyle.miterLimit, parentStyle.miterLimit);
+        output.lineDashOffset = Utils.pick(childStyle.lineDashOffset, parentStyle.lineDashOffset);
+        output.lineDash = childStyle.lineDash || parentStyle.lineDash;
 
         output.font = childStyle.font || parentStyle.font;
         output.direction = childStyle.direction || parentStyle.direction;
@@ -174,8 +227,15 @@ export namespace Style {
         output.shadowOffsetX = Utils.pick(childStyle.shadowOffsetX, defaults.shadowOffsetX);
         output.shadowOffsetY = Utils.pick(childStyle.shadowOffsetY, defaults.shadowOffsetY);
 
-        output.opacity = Utils.pick(childStyle.opacity, defaults.opacity);
+        output.opacity = Utils.pick(childStyle.opacity, parentStyle.opacity);
         output.ratio = childStyle.ratio || parentStyle.ratio;
+
+        output.boundsStyle = childStyle.boundsStyle || parentStyle.boundsStyle;
+        output.boundsWidth = childStyle.boundsWidth || parentStyle.boundsWidth;
+        output.boundsJoin = childStyle.boundsJoin || parentStyle.boundsJoin;
+        output.boundsDashOffset = Utils.pick(childStyle.boundsDashOffset, parentStyle.boundsDashOffset);
+        output.boundsDash = childStyle.boundsDash || parentStyle.boundsDash;
+        output.boundsOpacity = Utils.pick(childStyle.boundsOpacity, parentStyle.boundsOpacity);
 
     };
 

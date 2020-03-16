@@ -14,11 +14,10 @@ const root = COM.create(COM.Root, {
     height: HEIGHT,
     style: {
         fillStyle: '#CCC',
-        ratio: RATIO
-    },
-    boundsStyle: {
-        strokeStyle: 'rgba(0,255,0,.2)',
-        lineWidth: 2,
+        ratio: RATIO,
+        boundsStyle: '#0F0',
+        boundsWidth: 2,
+        boundsOpacity: .2,
     },
 }, [
     Wrapper([

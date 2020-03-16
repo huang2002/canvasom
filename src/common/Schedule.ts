@@ -57,20 +57,8 @@ export namespace Schedule {
             node.compute();
         });
 
-        /* update layout */
-        for (let i = 0; i < paths.length; i++) {
-            const path = paths[i];
-            for (let j = 1; j < path.length; j++) {
-                const node = path[j];
-                if (node.align) {
-                    node.adjustLayout();
-                    break;
-                }
-            }
-        }
-
-        /* compose roots in ascending order */
-        const roots = new Array<Root>();
+        /* get root and sort them in ascending order */
+        let roots = new Array<Root>();
         for (let i = 0; i < paths.length; i++) {
             const path = paths[i];
             for (let j = 0; j < path.length; j++) {
@@ -80,11 +68,19 @@ export namespace Schedule {
                 }
             }
         }
-        roots.sort(
+        roots = roots.sort(
             (rootA, rootB) => rootB.contains(rootA) ? -1 : 1
-        ).forEach(root => {
-            root.compose();
-        });
+        );
+
+        /* update layout */
+        for (let i = 0; i < roots.length; i++) {
+            roots[i].adjustLayout();
+        }
+
+        /* compose roots */
+        for (let i = 0; i < roots.length; i++) {
+            roots[i].compose();
+        }
 
         /* resolve nextTick callbacks */
         const callbacks = _nextTickCallbacks.slice(0);
