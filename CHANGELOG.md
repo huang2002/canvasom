@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.0
+
+- Add `style.compositeOperation`
+
 ## 0.10.0
 
 - Remove `root.boundsStyle` & `Utils.renderBounds`
