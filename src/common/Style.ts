@@ -73,6 +73,10 @@ export interface CanvasStyle {
      */
     opacity: number;
     /**
+     * @default 'source-over'
+     */
+    compositeOperation: string;
+    /**
      * The canvas pixel ratio
      * @default window.devicePixelRatio
      */
@@ -132,6 +136,7 @@ export namespace Style {
         shadowOffsetY: 0,
 
         opacity: 1,
+        compositeOperation: 'source-over',
         ratio: window.devicePixelRatio || 1,
 
         boundsStyle: null,
@@ -178,6 +183,7 @@ export namespace Style {
             context.shadowColor = Utils.Const.TRANSPARENT;
         }
         context.globalAlpha = style.opacity;
+        context.globalCompositeOperation = style.compositeOperation;
     };
 
     /**
@@ -196,6 +202,7 @@ export namespace Style {
             }
             context.shadowColor = Utils.Const.TRANSPARENT;
             context.globalAlpha = style.boundsOpacity;
+            context.globalCompositeOperation = 'source-over';
         }
     };
 
@@ -228,6 +235,7 @@ export namespace Style {
         output.shadowOffsetY = Utils.pick(childStyle.shadowOffsetY, defaults.shadowOffsetY);
 
         output.opacity = Utils.pick(childStyle.opacity, parentStyle.opacity);
+        output.compositeOperation = childStyle.compositeOperation || parentStyle.compositeOperation;
         output.ratio = childStyle.ratio || parentStyle.ratio;
 
         output.boundsStyle = childStyle.boundsStyle || parentStyle.boundsStyle;

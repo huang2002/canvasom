@@ -6,6 +6,7 @@
 /// <reference path="./Button.js" />
 /// <reference path="./StopPropagation.js" />
 /// <reference path="./MyImage.js" />
+/// <reference path="./Composition.js" />
 
 const root = COM.create(COM.Root, {
     id: 'root',
@@ -24,7 +25,8 @@ const root = COM.create(COM.Root, {
         Shapes(),
         Button(),
         StopPropagation(),
-        MyImage()
+        MyImage(),
+        Composition(),
     ]),
     // invisible text
     COM.create('text', {

@@ -285,6 +285,7 @@ export class Root extends Node implements Required<RootOptions> {
         context.setTransform(computedStyle.ratio, 0, 0, computedStyle.ratio, 0, 0);
         if (computedStyle.fillStyle) {
             context.globalAlpha = 1;
+            context.globalCompositeOperation = 'source-over';
             context.fillStyle = computedStyle.fillStyle;
             context.fillRect(0, 0, width, height);
         } else {
