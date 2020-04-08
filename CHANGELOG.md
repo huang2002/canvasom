@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.0
+
+- Add `scroll.scrollMode`
+
 ## 0.11.0
 
 - Add `style.compositeOperation`
