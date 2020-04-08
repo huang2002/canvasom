@@ -9,6 +9,15 @@ export interface ScrollEventData {
 }
 /** dts2md break */
 /**
+ * The mode that tells how to interact with the scroll view
+ * - 'wheel' - using `wheel` events
+ * - 'drag' - using pointer events
+ * - 'both' - both `wheel` events and pointer events
+ * @default 'both'
+ */
+export type ScrollMode = 'wheel' | 'drag' | 'both';
+/** dts2md break */
+/**
  * Emits on the scroll view that is scrolling
  * (event type: 'scroll')
  */
@@ -21,6 +30,7 @@ export interface ScrollOptions extends NodeOptions {
     height: number;
     offsetWidth?: number;
     offsetHeight?: number;
+    scrollMode?: ScrollMode;
     pixelScale?: number;
     lineScale?: number;
     pageScale?: number;
@@ -38,6 +48,7 @@ export class Scroll extends Node implements Required<ScrollOptions> {
         vertical: false,
         offsetWidth: 0,
         offsetHeight: 0,
+        scrollMode: 'both',
         pixelScale: 1,
         lineScale: 25,
         pageScale: 300,
@@ -47,13 +58,10 @@ export class Scroll extends Node implements Required<ScrollOptions> {
     constructor(options: Readonly<ScrollOptions>) {
         super();
         Object.assign(this, Scroll.defaults, options);
-        if (Utils.Const.IS_TOUCH_MODE) {
-            this.addListener('pointerdown', this._onPointerDown.bind(this));
-            this.addListener('pointermove', this._onPointerMove.bind(this));
-            this.addListener('pointerup', this._onPointerUp.bind(this));
-        } else {
-            this.addListener('wheel', this._onWheel.bind(this));
-        }
+        this.addListener('pointerdown', this._onPointerDown.bind(this));
+        this.addListener('pointermove', this._onPointerMove.bind(this));
+        this.addListener('pointerup', this._onPointerUp.bind(this));
+        this.addListener('wheel', this._onWheel.bind(this));
     }
 
     /** dts2md break */
@@ -85,6 +93,11 @@ export class Scroll extends Node implements Required<ScrollOptions> {
      */
     offsetWidth!: number;
     offsetHeight!: number;
+    /** dts2md break */
+    /**
+     * The scroll mode (see type definition above)
+     */
+    scrollMode!: ScrollMode;
     /** dts2md break */
     /**
      * The scrolling scale of different scrolling modes
@@ -143,7 +156,7 @@ export class Scroll extends Node implements Required<ScrollOptions> {
     }
 
     private _onWheel(event: WheelEvent) {
-        if (event.defaultPrevented) {
+        if (event.defaultPrevented || this.scrollMode === 'drag') {
             return;
         }
         const { deltaX, deltaY } = event.data;
@@ -169,7 +182,7 @@ export class Scroll extends Node implements Required<ScrollOptions> {
     }
 
     private _onPointerDown(event: PointerEvent) {
-        if (!event.defaultPrevented) {
+        if (!event.defaultPrevented || this.scrollMode === 'wheel') {
             this._isDragging = true;
             this._lastX = event.data.x;
             this._lastY = event.data.y;
