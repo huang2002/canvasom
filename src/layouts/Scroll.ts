@@ -30,7 +30,7 @@ export interface ScrollOptions extends NodeOptions {
     height: number;
     offsetWidth?: number;
     offsetHeight?: number;
-    scrollMode?: ScrollMode;
+    mode?: ScrollMode;
     pixelScale?: number;
     lineScale?: number;
     pageScale?: number;
@@ -48,7 +48,7 @@ export class Scroll extends Node implements Required<ScrollOptions> {
         vertical: false,
         offsetWidth: 0,
         offsetHeight: 0,
-        scrollMode: 'both',
+        mode: 'both',
         pixelScale: 1,
         lineScale: 25,
         pageScale: 300,
@@ -97,7 +97,7 @@ export class Scroll extends Node implements Required<ScrollOptions> {
     /**
      * The scroll mode (see type definition above)
      */
-    scrollMode!: ScrollMode;
+    mode!: ScrollMode;
     /** dts2md break */
     /**
      * The scrolling scale of different scrolling modes
@@ -156,7 +156,7 @@ export class Scroll extends Node implements Required<ScrollOptions> {
     }
 
     private _onWheel(event: WheelEvent) {
-        if (event.defaultPrevented || this.scrollMode === 'drag') {
+        if (event.defaultPrevented || this.mode === 'drag') {
             return;
         }
         const { deltaX, deltaY } = event.data;
@@ -182,7 +182,7 @@ export class Scroll extends Node implements Required<ScrollOptions> {
     }
 
     private _onPointerDown(event: PointerEvent) {
-        if (!event.defaultPrevented || this.scrollMode === 'wheel') {
+        if (!event.defaultPrevented || this.mode === 'wheel') {
             this._isDragging = true;
             this._lastX = event.data.x;
             this._lastY = event.data.y;
