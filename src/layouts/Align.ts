@@ -137,6 +137,7 @@ export class Align extends Node implements Required<AlignOptions> {
         }
     }
 
+    /** dts2md break */
     protected _render(context: CanvasRenderingContext2D) {
         Utils.renderNodes(this.childNodes, context);
     }

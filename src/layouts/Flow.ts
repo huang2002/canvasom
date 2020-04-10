@@ -56,6 +56,7 @@ export class Flow extends Node implements Required<FlowOptions> {
         }
     }
 
+    /** dts2md break */
     protected _render(context: CanvasRenderingContext2D) {
         Utils.renderNodes(this.childNodes, context);
     }
