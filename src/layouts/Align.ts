@@ -77,7 +77,7 @@ export class Align extends Node implements Required<AlignOptions> {
                 case 'left': {
                     for (let i = 0; i < childNodes.length; i++) {
                         const childNode = childNodes[i];
-                        (childNode.left as number) = left + childNode.x;
+                        childNode.left = left + childNode.x;
                     }
                     break;
                 }
@@ -85,9 +85,7 @@ export class Align extends Node implements Required<AlignOptions> {
                     const center = left + this.width / 2;
                     for (let i = 0; i < childNodes.length; i++) {
                         const childNode = childNodes[i];
-                        (childNode.left as number) = center
-                            - childNode.bounds.width / 2
-                            + childNode.x;
+                        childNode.left = center - childNode.bounds.width / 2 + childNode.x;
                     }
                     break;
                 }
@@ -95,9 +93,7 @@ export class Align extends Node implements Required<AlignOptions> {
                     const right = left + this.width;
                     for (let i = 0; i < childNodes.length; i++) {
                         const childNode = childNodes[i];
-                        (childNode.left as number) = right
-                            - childNode.bounds.width
-                            + childNode.x;
+                        childNode.left = right - childNode.bounds.width + childNode.x;
                     }
                     break;
                 }
@@ -109,7 +105,7 @@ export class Align extends Node implements Required<AlignOptions> {
                 case 'top': {
                     for (let i = 0; i < childNodes.length; i++) {
                         const childNode = childNodes[i];
-                        (childNode.top as number) = top + childNode.y;
+                        childNode.top = top + childNode.y;
                     }
                     break;
                 }
@@ -117,9 +113,7 @@ export class Align extends Node implements Required<AlignOptions> {
                     const middle = top + this.height / 2;
                     for (let i = 0; i < childNodes.length; i++) {
                         const childNode = childNodes[i];
-                        (childNode.top as number) = middle
-                            - childNode.bounds.height / 2
-                            + childNode.y;
+                        childNode.top = middle - childNode.bounds.height / 2 + childNode.y;
                     }
                     break;
                 }
@@ -127,9 +121,7 @@ export class Align extends Node implements Required<AlignOptions> {
                     const bottom = top + this.height;
                     for (let i = 0; i < childNodes.length; i++) {
                         const childNode = childNodes[i];
-                        (childNode.top as number) = bottom
-                            - childNode.bounds.height
-                            + childNode.y;
+                        childNode.top = bottom - childNode.bounds.height + childNode.y;
                     }
                     break;
                 }

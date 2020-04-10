@@ -117,8 +117,8 @@ export class Scroll extends Node implements Required<ScrollOptions> {
         const { bounds } = this;
         bounds.width = this.width;
         bounds.height = this.height;
-        (this.left as number) -= this.offsetX;
-        (this.top as number) -= this.offsetY;
+        this.left -= this.offsetX;
+        this.top -= this.offsetY;
     }
 
     /** dts2md break */

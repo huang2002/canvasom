@@ -45,12 +45,12 @@ export class Flow extends Node implements Required<FlowOptions> {
         let { left, top } = this;
         if (this.direction === 'x') {
             this.childNodes.forEach(childNode => {
-                (childNode.left as number) = (left += childNode.x);
+                childNode.left = (left += childNode.x);
                 left += childNode.bounds.width;
             });
         } else {
             this.childNodes.forEach(childNode => {
-                (childNode.top as number) = (top += childNode.y);
+                childNode.top = (top += childNode.y);
                 top += childNode.bounds.height;
             });
         }

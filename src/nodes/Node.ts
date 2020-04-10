@@ -69,17 +69,6 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     readonly bounds = new Bounds();
     /** dts2md break */
     /**
-     * The computed left/top position of the node
-     * (differs from `bounds.left/top`; These two
-     * properties are computed automatically and
-     * used as the initial left/top of the bounds;
-     * use these two as the reference point of your
-     * rendering instead of `bounds.left/top`)
-     */
-    readonly left: number = 0;
-    readonly top: number = 0;
-    /** dts2md break */
-    /**
      * The computed style properties
      * (use this in your rendering instead of using `style`)
      */
@@ -87,6 +76,17 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
         Object.create(null),
         Style.defaults
     );
+    /** dts2md break */
+    /**
+     * The computed left/top position of the node
+     * (differs from `bounds.left/top`; These two
+     * properties are computed automatically and
+     * used as the initial left/top of the bounds;
+     * use these two as the reference point of your
+     * rendering instead of `bounds.left/top`)
+     */
+    left: number = 0;
+    top: number = 0;
     /** dts2md break */
     /**
      * Whether the node is visible
@@ -290,8 +290,8 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
             this._x0 = _parent.left;
             this._y0 = _parent.top;
             this.bounds.move(dx + this.left - this._left, dy + this.top - this._top);
-            (this.left as number) += dx;
-            (this.top as number) += dy;
+            this.left += dx;
+            this.top += dy;
             this._left = this.left;
             this._top = this.top;
         }
@@ -303,14 +303,14 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
     compute() {
         const { bounds, _parent, x, y, childNodes } = this;
         if (_parent) {
-            (this.left as number) = _parent.left + x;
-            (this.top as number) = _parent.top + y;
+            this.left = _parent.left + x;
+            this.top = _parent.top + y;
             this._x0 = _parent.left;
             this._y0 = _parent.top;
             Style.compute(this.computedStyle, _parent.computedStyle, this.style);
         } else {
-            (this.left as number) = x;
-            (this.top as number) = y;
+            this.left = x;
+            this.top = y;
             Style.compute(this.computedStyle, Style.defaults, this.style);
         }
         bounds.width = bounds.height = 0;
