@@ -10,6 +10,7 @@ import { Image } from '../graphics/Image';
 import { Scroll } from '../layouts/Scroll';
 import { Align } from '../layouts/Align';
 import { Flow } from '../layouts/Flow';
+import { Grid } from '../layouts/Grid';
 
 export type NodeConstructor<T extends Node, U> = new (options: U) => T;
 /** dts2md break */
@@ -27,6 +28,7 @@ export type NodeConstructor<T extends Node, U> = new (options: U) => T;
  * - 'scroll' -> Scroll
  * - 'align' -> Align
  * - 'flow' -> Flow
+ * - 'grid' -> Grid
  */
 export const registry = new Map<string, NodeConstructor<any, any>>([
     ['arc', Arc],
@@ -40,6 +42,7 @@ export const registry = new Map<string, NodeConstructor<any, any>>([
     ['scroll', Scroll],
     ['align', Align],
     ['flow', Flow],
+    ['grid', Grid],
 ]);
 /** dts2md break */
 /**

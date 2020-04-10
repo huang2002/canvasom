@@ -29,3 +29,4 @@ export * from './graphics/Image';
 export * from './layouts/Scroll';
 export * from './layouts/Align';
 export * from './layouts/Flow';
+export * from './layouts/Grid';
