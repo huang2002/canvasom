@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.0
+
+- Add `Grid` layout
+- Make `node.left/top` writable
+
 ## 0.12.0
 
 - Add `scroll.scrollMode`
