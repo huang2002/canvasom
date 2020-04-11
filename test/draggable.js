@@ -15,6 +15,14 @@ const draggableTarget = COM.create('rect', {
         fillStyle: '#FFF',
         strokeStyle: '#444',
         ...commonShadowStyle
+    },
+    listeners: {
+        /**
+         * @param {COM.PointerEvent} event
+         */
+        pointerdown(event) {
+            event.preventDefault(); // prevent scrolling
+        }
     }
 }, [
     COM.create('text', {
