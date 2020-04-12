@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.14.0
+
+- Refactor pointer events
+- Remove `draggable.root`
+- Replace `draggable.reset` with `draggable.setControl`
+
 ## 0.13.0
 
 - Add `Grid` layout
