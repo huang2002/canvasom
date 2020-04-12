@@ -17,11 +17,11 @@
 
 ```js
 const root = COM.create('root', {
-    id: 'root',
     width: 480,
     height: 320,
 }, [
     COM.create('text', {
+        id: 'text',
         data: 'Hello, world!',
         x: 240,
         y: 160,
