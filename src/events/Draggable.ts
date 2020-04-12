@@ -15,7 +15,6 @@ export type DraggableOptions = EventTargetOptions & Partial<{
     active: boolean;
     target: Node | null;
     control: Node | null;
-    root: Node | null;
 }>;
 /** dts2md break */
 export class Draggable extends EventTarget implements Required<DraggableOptions> {
@@ -24,7 +23,6 @@ export class Draggable extends EventTarget implements Required<DraggableOptions>
         active: true,
         target: null,
         control: null,
-        root: null,
     };
     /** dts2md break */
     constructor(options?: Readonly<DraggableOptions>) {
@@ -39,23 +37,16 @@ export class Draggable extends EventTarget implements Required<DraggableOptions>
             (this.control as Node | null) = control;
         }
         if (control) {
-            this._attach(control, this.root);
+            this._attach(control);
         }
     }
 
     /** dts2md break */
     /**
-     * The control node to which `pointerdown` listeners are attached
+     * The control node to which pointer event listeners are attached
      * @default target
      */
     readonly control!: Node | null;
-    /** dts2md break */
-    /**
-     * The root node to which `pointermove`
-     * and `pointerup` listeners are attached
-     * @default control
-     */
-    readonly root!: Node | null;
     /** dts2md break */
     /**
      * The target node to which dragging applies
@@ -135,35 +126,30 @@ export class Draggable extends EventTarget implements Required<DraggableOptions>
         );
     }
 
-    private _attach(control: Node, root: Node | null) {
-        let _root = root;
-        if (_root === null) {
-            _root = control;
-            (this.root as Node | null) = _root;
-        }
+    private _attach(control: Node) {
         control.addListener('pointerdown', this.onPointerDown);
-        _root.addListener('pointermove', this.onPointerMove);
-        _root.addListener('pointerup', this.onPointerUp);
+        control.addListener('pointermove', this.onPointerMove);
+        control.addListener('pointerup', this.onPointerUp);
     }
 
     private _detach() {
-        this.control!.removeListener('pointerdown', this.onPointerDown);
-        this.root!.removeListener('pointermove', this.onPointerMove);
-        this.root!.removeListener('pointerup', this.onPointerUp);
+        const { control } = this;
+        control!.removeListener('pointerdown', this.onPointerDown);
+        control!.removeListener('pointermove', this.onPointerMove);
+        control!.removeListener('pointerup', this.onPointerUp);
     }
 
     /** dts2md break */
     /**
      * Set the dragging control
      */
-    reset(control: Node | null, root: Node | null) {
+    setControl(control: Node | null) {
         if (this.control) {
             this._detach();
         }
         (this.control as Node | null) = control;
-        (this.root as Node | null) = root;
         if (control) {
-            this._attach(control, root);
+            this._attach(control);
         }
     }
 

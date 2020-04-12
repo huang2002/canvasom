@@ -23,13 +23,23 @@ export interface PointerEventData {
      * (equals the `timeStamp` property of corresponding native event)
      */
     timeStamp: number;
+    /**
+     * Whether the pointer hits the target
+     * (unlike that in DOM, the same series of pointer events(`pointerdown`,
+     * `pointermove`, `pointerup`) always share the same target, which is
+     * the one of `pointerdown` event, so that some interaction can be
+     * easier to handle, but when you need to find out whether the pointer
+     * is still in the same node, you have to check this property)
+     */
+    hit: boolean;
 }
 /** dts2md break */
 /**
  * Pointer events are emitted on nodes which are supposed to
  * interact with the pointer(mouse/touch), like those in DOM.
  * (You must set `interactive` properties to true on a node and
- * all its parent nodes to let it receive related pointer events)
+ * all its parent nodes to let it receive related pointer events;
+ * the `target` of pointer events should always exists)
  *
  * Currently supported types of pointer events:
  * - pointerdown
@@ -122,18 +132,18 @@ export class Root extends Node implements Required<RootOptions> {
         }).addListener('pointerup', (event: PointerEvent) => {
             const { data } = event,
                 init = this.pointerInit.get(data.id);
-            if (init) {
-                if (
-                    !init.defaultPrevented
-                    && event.target === init.target
-                ) {
-                    Schedule.nextTick(() => {
-                        if (!event.defaultPrevented) {
-                            event.target!.dispatchEvent(new Event('click', event));
-                        }
-                    });
-                }
-                this.pointerInit.delete(data.id);
+            this.pointerInit.delete(data.id);
+            if (!init) {
+                return;
+            }
+            if (!init.defaultPrevented && data.hit) {
+                Schedule.nextTick(() => {
+                    if (!event.defaultPrevented) {
+                        event.target!.dispatchEvent(
+                            new Event('click', event)
+                        );
+                    }
+                });
             }
         });
 
@@ -295,125 +305,157 @@ export class Root extends Node implements Required<RootOptions> {
         Utils.renderNodes(this.childNodes, context);
     }
 
-    private _emit(type: string, clientX: number, clientY: number, data: object) {
+    private _emit(
+        type: string,
+        clientX: number,
+        clientY: number,
+        data: object,
+        target?: Node | null
+    ) {
         const { _scale } = this,
             x = (clientX - this._clientX) / _scale,
-            y = (clientY - this._clientY) / _scale,
+            y = (clientY - this._clientY) / _scale;
+        if (target === undefined) {
             target = detectTarget(this.childNodes, x, y, true);
-        if (target && target.interactive) {
-            target.dispatchEvent(
-                new Event(type, {
-                    target,
-                    cancelable: true,
-                    bubbles: true,
-                    data: Object.assign(data, { x, y })
-                })
-            );
+        } else if (target && (data as PointerEventData).hit) {
+            (data as PointerEventData).hit = target.containsPoint!(x, y);
         }
+        if (!target) { // null
+            target = this;
+        }
+        target.dispatchEvent(
+            new Event(type, {
+                target,
+                cancelable: true,
+                bubbles: true,
+                data: Object.assign(data, { x, y })
+            })
+        );
     }
 
     private _onMouseDown(event: MouseEvent) {
-        if (this.interactive) {
-            this._emit(
-                'pointerdown',
-                event.clientX,
-                event.clientY,
-                {
-                    id: event.button,
-                    timeStamp: event.timeStamp
-                }
-            );
+        if (!this.interactive) {
+            return;
         }
+        this._emit(
+            'pointerdown',
+            event.clientX,
+            event.clientY,
+            {
+                id: event.button,
+                timeStamp: event.timeStamp,
+                hit: true,
+            }
+        );
     }
 
     private _onMouseMove(event: MouseEvent) {
-        if (this.interactive) {
-            this._emit(
-                'pointermove',
-                event.clientX,
-                event.clientY,
-                {
-                    id: event.button,
-                    timeStamp: event.timeStamp
-                }
-            );
+        if (!this.interactive) {
+            return;
         }
+        const init = this.pointerInit.get(event.button);
+        this._emit(
+            'pointermove',
+            event.clientX,
+            event.clientY,
+            {
+                id: event.button,
+                timeStamp: event.timeStamp,
+                hit: true,
+            },
+            init ? init.target as Node : null
+        );
     }
 
     private _onMouseUp(event: MouseEvent) {
-        if (this.interactive) {
-            this._emit(
-                'pointerup',
-                event.clientX,
-                event.clientY,
-                {
-                    id: event.button,
-                    timeStamp: event.timeStamp
-                }
-            );
+        if (!this.interactive) {
+            return;
         }
+        const init = this.pointerInit.get(event.button);
+        this._emit(
+            'pointerup',
+            event.clientX,
+            event.clientY,
+            {
+                id: event.button,
+                timeStamp: event.timeStamp,
+                hit: true,
+            },
+            init ? init.target as Node : null
+        );
     }
 
     private _onTouchStart(event: TouchEvent) {
-        if (this.interactive) {
-            const touch = event.changedTouches[0];
-            this._emit(
-                'pointerdown',
-                touch.clientX,
-                touch.clientY,
-                {
-                    id: touch.identifier,
-                    timeStamp: event.timeStamp
-                }
-            );
+        if (!this.interactive) {
+            return;
         }
+        const touch = event.changedTouches[0];
+        this._emit(
+            'pointerdown',
+            touch.clientX,
+            touch.clientY,
+            {
+                id: touch.identifier,
+                timeStamp: event.timeStamp,
+                hit: true,
+            }
+        );
     }
 
     private _onTouchMove(event: TouchEvent) {
-        if (this.interactive) {
-            const touch = event.changedTouches[0];
-            this._emit(
-                'pointermove',
-                touch.clientX,
-                touch.clientY,
-                {
-                    id: touch.identifier,
-                    timeStamp: event.timeStamp
-                }
-            );
+        if (!this.interactive) {
+            return;
         }
+        const touch = event.changedTouches[0],
+            init = this.pointerInit.get(touch.identifier);
+        this._emit(
+            'pointermove',
+            touch.clientX,
+            touch.clientY,
+            {
+                id: touch.identifier,
+                timeStamp: event.timeStamp,
+                hit: true,
+            },
+            init ? init.target as Node : null
+        );
     }
 
     private _onTouchEnd(event: TouchEvent) {
-        if (this.interactive) {
-            const touch = event.changedTouches[0];
-            this._emit(
-                'pointerup',
-                touch.clientX,
-                touch.clientY,
-                {
-                    id: touch.identifier,
-                    timeStamp: event.timeStamp
-                }
-            );
+        if (!this.interactive) {
+            return;
         }
+        const touch = event.changedTouches[0],
+            init = this.pointerInit.get(touch.identifier);
+        this._emit(
+            'pointerup',
+            touch.clientX,
+            touch.clientY,
+            {
+                id: touch.identifier,
+                timeStamp: event.timeStamp,
+                hit: true,
+            },
+            init ? init.target as Node : null
+        );
     }
 
     private _onWheel(event: globalThis.WheelEvent) {
-        if (this.interactive) {
-            this._emit(
-                'wheel',
-                event.clientX,
-                event.clientY,
-                {
-                    deltaX: event.deltaX,
-                    deltaY: event.deltaY,
-                    deltaZ: event.deltaZ,
-                    deltaMode: event.deltaMode,
-                    timeStamp: event.timeStamp
-                }
-            );
+        if (!this.interactive) {
+            return;
         }
+        this._emit(
+            'wheel',
+            event.clientX,
+            event.clientY,
+            {
+                deltaX: event.deltaX,
+                deltaY: event.deltaY,
+                deltaZ: event.deltaZ,
+                deltaMode: event.deltaMode,
+                timeStamp: event.timeStamp
+            }
+        );
     }
 
     /** dts2md break */

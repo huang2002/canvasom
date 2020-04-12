@@ -40,7 +40,6 @@ const draggableTarget = COM.create('rect', {
 
 const draggable = new COM.Draggable({
     target: draggableTarget,
-    root,
 });
 
 const scrollView = root.selectClass('wrapper')[0].selectTag('scroll')[0];
