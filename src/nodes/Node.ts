@@ -368,6 +368,14 @@ export abstract class Node extends EventTarget implements Required<NodeOptions> 
 
     /** dts2md break */
     /**
+     * Tells whether the bounds of the nodes overlap
+     */
+    overlaps(node: Node) {
+        return this.bounds.overlaps(node.bounds);
+    }
+
+    /** dts2md break */
+    /**
      * A rendering hook that extended classes must implement
      * (when implementing your own node type, remember that
      * `this.left/top` is the right start point; you can refer
