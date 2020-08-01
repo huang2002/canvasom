@@ -8,6 +8,7 @@
 /// <reference path="./MyImage.js" />
 /// <reference path="./Composition.js" />
 /// <reference path="./LongSentence.js" />
+/// <reference path="./overlapTest.js" />
 
 const root = COM.create(COM.Root, {
     id: 'root',
@@ -29,6 +30,7 @@ const root = COM.create(COM.Root, {
         MyImage(),
         Composition(),
         LongSentence(),
+        overlapTest,
     ]),
     // invisible text
     COM.create('text', {

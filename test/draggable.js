@@ -2,6 +2,7 @@
 /// <reference types=".." />
 /// <reference path="./common.js" />
 /// <reference path="./root.js" />
+/// <reference path="./overlapTest.js" />
 
 const draggableTarget = COM.create('rect', {
     id: 'draggable',
@@ -42,6 +43,12 @@ const draggable = new COM.Draggable({
     target: draggableTarget,
 });
 
+draggable.addListener('drag', () => {
+    COM.Schedule.nextTick(() => {
+        testOverlap(draggableTarget);
+    });
+});
+
 const scrollView = root.selectClass('wrapper')[0].selectTag('scroll')[0];
 scrollView.addListener(
     'scroll',
@@ -56,6 +63,9 @@ scrollView.addListener(
             draggableTarget.update({
                 x: draggableTarget.x + deltaX,
                 y: draggableTarget.y + deltaY
+            });
+            COM.Schedule.nextTick(() => {
+                testOverlap(draggableTarget);
             });
         }
     }
