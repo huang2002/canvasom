@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.15.0
+
+- Add `node.overlaps`
+- Fix `bounds.overlaps`
+
 ## 0.14.0
 
 - Refactor pointer events
