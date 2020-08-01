@@ -91,7 +91,7 @@ export class Bounds {
      * Tells whether the given bounds overlaps this bounds
      */
     overlaps(bounds: Bounds) {
-        return this.left < bounds.left
+        return this.left < bounds.right
             && this.right > bounds.left
             && this.top < bounds.bottom
             && this.bottom > bounds.top;
