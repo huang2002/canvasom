@@ -1,24 +1,26 @@
-import rollupPluginBabel from 'rollup-plugin-babel';
+import babel from "@rollup/plugin-babel";
 
-const input = 'js/index.js';
+const input = './js/index.js';
 
 export default [
     {
         input,
         plugins: [
-            rollupPluginBabel()
+            babel({
+                babelHelpers: 'bundled'
+            })
         ],
         output: {
             format: 'umd',
             name: 'COM',
-            file: 'dist/canvasom.umd.js'
+            file: './dist/canvasom.umd.js'
         }
     },
     {
         input,
         output: {
             format: 'esm',
-            file: 'dist/canvasom.js'
+            file: './dist/canvasom.js'
         }
     }
 ];

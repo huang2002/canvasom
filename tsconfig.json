@@ -3,15 +3,13 @@
         "target": "ESNext",
         "module": "ESNext",
         "declaration": true,
-        "declarationDir": "./typings",
+        "declarationDir": "./types",
         "outDir": "./js",
         "rootDir": "./src",
         "strict": true,
         "noUnusedLocals": true,
         "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "incremental": true,
-        "tsBuildInfoFile": ".tsbuildinfo"
+        "esModuleInterop": true
     },
     "include": [
         "src"

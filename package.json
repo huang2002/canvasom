@@ -1,46 +1,40 @@
 {
-    "name": "canvasom",
-    "description": "A canvas object model lib.",
-    "version": "0.15.0",
-    "main": "dist/canvasom.umd.min.js",
-    "module": "dist/canvasom.min.js",
-    "types": "index.d.ts",
-    "scripts": {
-        "prebuild": "tsc",
-        "build": "rollup -c",
-        "postbuild": "terser dist/canvasom.js --config-file terser.json --module -o dist/canvasom.min.js && terser dist/canvasom.umd.js --config-file terser.json -o dist/canvasom.umd.min.js && node stat",
-        "docs": "dts2md \"**\" \"!index.d.ts\" -i typings -o docs -lI API.md",
-        "eslint": "eslint ./src/**/*.ts"
-    },
-    "license": "MIT",
-    "author": "3h",
-    "repository": "huang2002/canvasom",
-    "bugs": {
-        "url": "https://github.com/huang2002/canvasom/issues"
-    },
-    "homepage": "https://github.com/huang2002/canvasom#readme",
-    "keywords": [
-        "canvas",
-        "object",
-        "model",
-        "com",
-        "3h"
-    ],
-    "files": [
-        "dist",
-        "typings",
-        "index.d.ts"
-    ],
-    "devDependencies": {
-        "@babel/core": "^7.11.0",
-        "@babel/preset-env": "^7.11.0",
-        "@typescript-eslint/eslint-plugin": "^2.34.0",
-        "@typescript-eslint/parser": "^2.34.0",
-        "dts2md": "^0.4.2",
-        "eslint": "^7.6.0",
-        "rollup": "^2.23.0",
-        "rollup-plugin-babel": "^4.4.0",
-        "terser": "^4.8.0",
-        "typescript": "^3.9.7"
-    }
+  "name": "canvasom",
+  "version": "0.16.0",
+  "description": "Canvas Object Model.",
+  "module": "./dist/canvasom.min.js",
+  "main": "./dist/canvasom.umd.min.js",
+  "types": "./index.d.ts",
+  "author": "3h",
+  "license": "MIT",
+  "scripts": {
+    "prebuild": "tsc",
+    "build": "rollup -c",
+    "postbuild": "terser dist/canvasom.js --config-file terser.json --module -o dist/canvasom.min.js && terser dist/canvasom.umd.js --config-file terser.json -o dist/canvasom.umd.min.js && node stat",
+    "docs": "dts2md \"**\" \"!index.d.ts\" -i ./types -o ./docs -l -I Home.md",
+    "test": "tsc ./test/index.js --allowJs --noEmit --lib esnext && node ./test/index.js"
+  },
+  "repository": "huang2002/canvasom",
+  "keywords": [
+    "canvas",
+    "object",
+    "model",
+    "com",
+    "3h"
+  ],
+  "files": [
+    "dist",
+    "types",
+    "index.d.ts"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.10.0",
+    "@babel/preset-env": "^7.10.0",
+    "@rollup/plugin-babel": "^5.2.0",
+    "3h-test": "^0.6.0",
+    "dts2md": "^0.4.3",
+    "rollup": "^2.26.0",
+    "terser": "^5.2.0",
+    "typescript": "^4.0.0"
+  }
 }
