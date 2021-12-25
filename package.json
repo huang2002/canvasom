@@ -33,6 +33,7 @@
     "@rollup/plugin-node-resolve": "^13.1.1",
     "3h-event": "^0.1.1",
     "3h-test": "^0.6.0",
+    "3h-utils": "^0.1.0",
     "dts2md": "^0.4.3",
     "rollup": "^2.26.0",
     "terser": "^5.2.0",
