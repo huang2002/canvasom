@@ -1,3 +1,3 @@
-export as namespace HEvent;
+export as namespace COM;
 
 export * from "./types/index";
