@@ -10,6 +10,11 @@ export default [
             nodeResolve(),
             babel({
                 babelHelpers: 'bundled',
+                presets: [
+                    ['@babel/preset-env', {
+                        loose: true,
+                    }],
+                ],
             }),
         ],
         output: {
