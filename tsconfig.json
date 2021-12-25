@@ -7,6 +7,9 @@
         "outDir": "./js",
         "rootDir": "./src",
         "paths": {
+            "3h-utils": [
+                "./node_modules/3h-utils/index.d.ts"
+            ],
             "3h-event": [
                 "./node_modules/3h-event/index.d.ts"
             ]
