@@ -1,6 +1,6 @@
 import { ShapeNode, ShapeNodeOptions } from "./ShapeNode";
 import { Utils } from "../common/Utils";
-import { Event } from '3h-event';
+import { CanvasNodeEvent } from '../core/CanvasNode';
 
 /**
  * Type of `RectNode` options.
@@ -25,7 +25,7 @@ export interface RectNodeOptions extends ShapeNodeOptions {
 /**
  * Class of rectangle nodes.
  */
-export class RectNode<EventType extends Event = Event>
+export class RectNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     extends ShapeNode<EventType> {
     /** dts2md break */
     /**

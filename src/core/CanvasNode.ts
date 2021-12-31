@@ -5,6 +5,45 @@ import { type Renderer } from './Renderer';
 import { Bounds } from '../common/Bounds';
 
 /**
+ * Type of data of pinter events on canvas nodes.
+ */
+export interface CanvasNodePointerEventData {
+    /**
+     * Pointer id.
+     */
+    id: number;
+    /**
+     * The x-offset of the pointer in current view.
+     */
+    x: number;
+    /**
+     * The y-offset of the pointer in current view.
+     */
+    y: number;
+}
+/** dts2md break */
+/**
+ * Event names of pointer events on canvas nodes.
+ */
+export type CanvasNodePointerEventName =
+    | 'pointerstart'
+    | 'pointermove'
+    | 'pointerend'
+    | 'wheel';
+/** dts2md break */
+/**
+ * Type of pointer events on canvas nodes.
+ */
+export type CanvasNodePointerEvent =
+    Event<CanvasNodePointerEventName, CanvasNodePointerEventData>;
+/** dts2md break */
+/**
+ * Type of events on canvas nodes.
+ */
+export type CanvasNodeEvent =
+    | CanvasNodePointerEvent;
+/** dts2md break */
+/**
  * Type of position parameters of canvas nodes.
  * 'relative' - Relative to the parent node.
  * 'absolute' - Relative to the root node.
@@ -39,6 +78,12 @@ export type CanvasNodeOptions = Partial<{
      */
     interactive: boolean;
     /**
+     * Whether to skip to child nodes directly
+     * when detecting interaction target.
+     * @default false
+     */
+    penetrable: boolean;
+    /**
      * The style of the node.
      */
     style: Partial<CanvasStyle>;
@@ -52,7 +97,7 @@ export type CanvasNodeOptions = Partial<{
 /**
  * Class of canvas object nodes.
  */
-export class CanvasNode<EventType extends Event = Event>
+export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     extends EventEmitter<EventType> {
     /** dts2md break */
     /**
@@ -65,6 +110,7 @@ export class CanvasNode<EventType extends Event = Event>
         this.position = options?.position ?? 'relative';
         this.visibility = options?.visibility ?? true;
         this.interactive = options?.interactive ?? false;
+        this.penetrable = options?.penetrable ?? false;
         this.style = options?.style ?? (Object.create(null) as {});
         this.noUpdate = options?.noUpdate ?? false;
     }
@@ -100,6 +146,13 @@ export class CanvasNode<EventType extends Event = Event>
      * @default false
      */
     interactive: boolean;
+    /** dts2md break */
+    /**
+     * Whether to skip to child nodes directly
+     * when detecting interaction target.
+     * @default false
+     */
+    penetrable: boolean;
     /** dts2md break */
     /**
      * The style of the node.
@@ -439,6 +492,14 @@ export class CanvasNode<EventType extends Event = Event>
             context.strokeRect(bounds.left, bounds.top, bounds.width, bounds.height);
         }
 
+    }
+    /** dts2md break */
+    /**
+     * Returns `true` if (x, y) is inside the bounds of this node.
+     * (You can override this to achieve more precise detection.)
+     */
+    containsPoint(x: number, y: number) {
+        return this.bounds.containsPoint(x, y);
     }
 
 }

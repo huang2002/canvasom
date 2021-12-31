@@ -1,5 +1,4 @@
-import { Event } from '3h-event';
-import { CanvasNode, CanvasNodeOptions } from '../core/CanvasNode';
+import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions } from '../core/CanvasNode';
 
 /**
  * Type of align parameter.
@@ -35,7 +34,7 @@ export type AlignNodeOptions = CanvasNodeOptions & Partial<{
 /**
  * Class of container nodes that align child nodes.
  */
-export class AlignNode<EventType extends Event = Event>
+export class AlignNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     extends CanvasNode<EventType> {
     /** dts2md break */
     /**
@@ -72,6 +71,12 @@ export class AlignNode<EventType extends Event = Event>
      * @default 'begin'
      */
     alignY: AlignMode;
+    /** dts2md break */
+    /**
+     * @override CanvasNode.penetrable
+     * @default true
+     */
+    penetrable = true;
     /** dts2md break */
     /**
      * @override CanvasNode.beforeUpdate

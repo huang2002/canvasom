@@ -1,7 +1,6 @@
 import { Renderer } from '../core/Renderer';
 import { Utils } from '../common/Utils';
-import { CanvasNode, CanvasNodeOptions } from '../core/CanvasNode';
-import { Event } from '3h-event';
+import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions } from '../core/CanvasNode';
 
 /**
  * Type of `ShapeNode` options.
@@ -22,7 +21,7 @@ export type ShapeNodeOptions = CanvasNodeOptions & Partial<{
 /**
  * Class of shape nodes.
  */
-export abstract class ShapeNode<EventType extends Event = Event>
+export abstract class ShapeNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     extends CanvasNode<EventType> {
     /** dts2md break */
     /**

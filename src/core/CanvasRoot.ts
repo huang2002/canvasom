@@ -1,5 +1,4 @@
-import { Event } from '3h-event';
-import { CanvasNode, CanvasNodeOptions } from './CanvasNode';
+import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions } from './CanvasNode';
 import { Renderer } from './Renderer';
 import { Utils } from "../common/Utils";
 
@@ -34,7 +33,7 @@ export type CanvasRootOptions = CanvasNodeOptions & Partial<{
 /**
  * Class of canvas-object-model roots.
  */
-export class CanvasRoot<EventType extends Event = Event>
+export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     extends CanvasNode<EventType> {
     /** dts2md break */
     /**
