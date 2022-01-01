@@ -14,5 +14,6 @@ export * from './graphic/RectNode';
 export * from './graphic/TextNode';
 
 export * from './layout/AlignNode';
+export * from './layout/FlowNode';
 
 export * from './utils/create';

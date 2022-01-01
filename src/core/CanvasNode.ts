@@ -594,7 +594,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
         const { _computedStyle, bounds } = this;
         const { context } = renderer;
 
-        Style.apply(_computedStyle, context);
+        Style.applyCommon(_computedStyle, context);
         this.renderSelf?.(renderer);
 
         if (!this.noChildRender) {

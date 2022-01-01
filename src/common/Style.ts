@@ -153,10 +153,11 @@ export namespace Style {
     };
     /** dts2md break */
     /**
-     * Apply style properties to canvas context.
-     * (Use `Style.applyBounds` to apply bounds styles.)
+     * Apply common style properties to canvas context.
+     * (Use `Style.applyText` to apply text style
+     * and `Style.applyBounds` to apply bounds style.)
      */
-    export const apply = (
+    export const applyCommon = (
         style: CanvasStyle,
         context: CanvasRenderingContext2D,
     ) => {
@@ -176,10 +177,6 @@ export namespace Style {
                 context.setLineDash([]);
             }
         }
-        context.font = style.font;
-        context.direction = style.direction;
-        context.textAlign = style.textAlign;
-        context.textBaseline = style.textBaseline;
         if (style.shadowColor) {
             const { ratio } = style;
             context.shadowColor = style.shadowColor;
@@ -191,6 +188,19 @@ export namespace Style {
         }
         context.globalAlpha = style.opacity;
         context.globalCompositeOperation = style.compositeOperation;
+    };
+    /** dts2md break */
+    /**
+     * Apply text style properties to canvas context.
+     */
+    export const applyText = (
+        style: CanvasStyle,
+        context: CanvasRenderingContext2D,
+    ) => {
+        context.font = style.font;
+        context.direction = style.direction;
+        context.textAlign = style.textAlign;
+        context.textBaseline = style.textBaseline;
     };
     /** dts2md break */
     /**

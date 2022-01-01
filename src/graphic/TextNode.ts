@@ -1,3 +1,4 @@
+import { Style } from '../common/Style';
 import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions } from '../core/CanvasNode';
 import type { Renderer } from '../core/Renderer';
 
@@ -39,14 +40,24 @@ export class TextNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
      * @override CanvasNode.renderSelf
      */
     protected renderSelf(renderer: Renderer) {
+
         const { context } = renderer;
         const { computedStyle, content, x, y } = this;
+
+        if (!computedStyle.fillStyle && !computedStyle.strokeStyle) {
+            return;
+        }
+
+        Style.applyText(computedStyle, context);
+
         if (computedStyle.fillStyle) {
             context.fillText(content, x, y);
         }
+
         if (computedStyle.strokeStyle) {
             context.strokeText(content, x, y);
         }
+
     }
 
 }
