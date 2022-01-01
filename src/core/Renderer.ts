@@ -1,5 +1,5 @@
 /**
- * Type of `Renderer` options.
+ * Type of options of {@link Renderer}.
  */
 export type RendererOptions = Partial<{
     /**

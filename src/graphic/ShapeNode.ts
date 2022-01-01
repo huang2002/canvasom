@@ -3,7 +3,7 @@ import { Utils } from '../common/Utils';
 import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions } from '../core/CanvasNode';
 
 /**
- * Type of `ShapeNode` options.
+ * Type of options of {@link ShapeNode}.
  */
 export type ShapeNodeOptions<EventType extends CanvasNodeEvent> = (
     & CanvasNodeOptions<EventType>
@@ -38,7 +38,7 @@ export abstract class ShapeNode<EventType extends CanvasNodeEvent = CanvasNodeEv
     static readonly _context = ShapeNode._canvas.getContext('2d')!;
     /** dts2md break */
     /**
-     * Constructor of `ShapeNode`.
+     * Constructor of {@link ShapeNode}.
      */
     constructor(options?: ShapeNodeOptions<EventType>) {
         super(options);
@@ -83,7 +83,7 @@ export abstract class ShapeNode<EventType extends CanvasNodeEvent = CanvasNodeEv
     }
     /** dts2md break */
     /**
-     * @override CanvasNode.render
+     * @override CanvasNode.renderSelf
      */
     protected renderSelf(renderer: Renderer) {
 

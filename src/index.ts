@@ -11,6 +11,7 @@ export * from './core/CanvasRoot';
 
 export * from './graphic/ShapeNode';
 export * from './graphic/RectNode';
+export * from './graphic/TextNode';
 
 export * from './layout/AlignNode';
 

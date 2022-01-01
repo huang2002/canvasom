@@ -36,7 +36,7 @@ export class State<DataType = unknown>
     extends EventEmitter<StateEvent<DataType>> {
     /** dts2md break */
     /**
-     * Constructor of `State`.
+     * Constructor of {@link State}.
      */
     constructor(initialValue: DataType) {
         super();

@@ -6,7 +6,7 @@ import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions } from '../core/CanvasNo
 export type AlignMode = 'begin' | 'center' | 'end';
 /** dts2md break */
 /**
- * Type of `AlignNode` options.
+ * Type of options of {@link AlignNode}.
  */
 export type AlignNodeOptions<EventType extends CanvasNodeEvent> = (
     & CanvasNodeOptions<EventType>
@@ -41,7 +41,7 @@ export class AlignNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     extends CanvasNode<EventType> {
     /** dts2md break */
     /**
-     * Constructor of `AlignNode`.
+     * Constructor of {@link AlignNode}.
      */
     constructor(options?: AlignNodeOptions<EventType>) {
         super(options);

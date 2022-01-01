@@ -83,7 +83,7 @@ export type CanvasNodeEvent = (
 export type CanvasNodePosition = 'relative' | 'absolute';
 /** dts2md break */
 /**
- * Type of `CanvasNode` options.
+ * Type of options of {@link CanvasNode}.
  */
 export type CanvasNodeOptions<EventType extends CanvasNodeEvent> = Partial<{
     /**
@@ -149,7 +149,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     extends EventEmitter<EventType> {
     /** dts2md break */
     /**
-     * Constructor of `CanvasNode`.
+     * Constructor of {@link CanvasNode}.
      */
     constructor(options?: CanvasNodeOptions<EventType>) {
         super();
@@ -338,12 +338,14 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
             throw new Error('accept a child node of this node');
         }
 
-        const index = this._childNodes.indexOf(node);
+        const { _childNodes } = this;
+
+        const index = _childNodes.indexOf(node);
         if (index === -1) {
             throw new Error('failed to find the child node');
         }
 
-        removeElements(this._childNodes, index, 1);
+        removeElements(_childNodes, index, 1);
         node._parentNode = null;
 
     }
@@ -372,6 +374,41 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     }
     /** dts2md break */
     /**
+     * Replace an old child node with a new one.
+     */
+    replaceChild(oldNode: CanvasNode, newNode: CanvasNode) {
+
+        if (newNode.isRoot) {
+            throw new TypeError('root nodes can not have parent nodes');
+        }
+
+        const { _childNodes } = this;
+
+        const index = _childNodes.indexOf(oldNode);
+        if (index === -1) {
+            throw new Error('failed to find the old node');
+        }
+
+        if (oldNode === newNode) {
+            return this;
+        }
+
+        if (newNode._parentNode) {
+            if (newNode._parentNode === (this as any)) {
+                return this;
+            }
+            newNode._parentNode.removeChild(newNode);
+        }
+
+        oldNode._parentNode = null;
+        _childNodes[index] = newNode;
+        newNode._parentNode = this as unknown as CanvasNode;
+
+        return this;
+
+    }
+    /** dts2md break */
+    /**
      * Insert a new child node before the reference one.
      */
     insertBefore(referenceNode: CanvasNode | null, newNode: CanvasNode) {
@@ -380,9 +417,11 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
             throw new TypeError('root nodes can not have parent nodes');
         }
 
+        const { _childNodes } = this;
+
         const index = referenceNode
-            ? this._childNodes.indexOf(referenceNode)
-            : this._childNodes.length;
+            ? _childNodes.indexOf(referenceNode)
+            : _childNodes.length;
         if (index === -1) {
             throw new Error('failed to find the reference node');
         }
@@ -398,7 +437,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
             newNode._parentNode.removeChild(newNode);
         }
 
-        insertElement(this._childNodes, index, newNode);
+        insertElement(_childNodes, index, newNode);
         newNode._parentNode = this as unknown as CanvasNode;
 
         return this;
@@ -544,7 +583,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /** dts2md break */
     /**
      * Render the node and its child nodes.
-     * (Invokes `renderSelf` internally.)
+     * (Invokes {@link renderSelf} internally.)
      */
     render(renderer: Renderer) {
 

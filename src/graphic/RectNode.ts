@@ -3,25 +3,29 @@ import { Utils } from "../common/Utils";
 import { CanvasNodeEvent } from '../core/CanvasNode';
 
 /**
- * Type of `RectNode` options.
+ * Type of options of {@link RectNode}.
  */
-export interface RectNodeOptions<EventType extends CanvasNodeEvent>
-    extends ShapeNodeOptions<EventType> {
-    /**
-     * The width of the rectangle.
-     */
-    width: number;
-    /**
-     * The height of the rectangle.
-     */
-    height: number;
-    /**
-     * The radius of the corners.
-     * (Try negative value!)
-     * @default 0
-     */
-    radius?: number;
-}
+export type RectNodeOptions<EventType extends CanvasNodeEvent> = (
+    & ShapeNodeOptions<EventType>
+    & Partial<{
+        /**
+         * The width of the rectangle.
+         * @default 0
+         */
+        width: number;
+        /**
+         * The height of the rectangle.
+         * @default 0
+         */
+        height: number;
+        /**
+         * The radius of the corners.
+         * (Try negative value!)
+         * @default 0
+         */
+        radius: number;
+    }>
+);
 /** dts2md break */
 /**
  * Class of rectangle nodes.
@@ -30,13 +34,13 @@ export class RectNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     extends ShapeNode<EventType> {
     /** dts2md break */
     /**
-     * Constructor of `RectNode`.
+     * Constructor of {@link RectNode}.
      */
-    constructor(options: RectNodeOptions<EventType>) {
+    constructor(options?: RectNodeOptions<EventType>) {
         super(options);
-        this.width = options.width;
-        this.height = options.height;
-        this.radius = options.radius ?? 0;
+        this.width = options?.width ?? 0;
+        this.height = options?.height ?? 0;
+        this.radius = options?.radius ?? 0;
     }
     /** dts2md break */
     /**
@@ -57,7 +61,7 @@ export class RectNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     radius: number;
     /** dts2md break */
     /**
-     * @override CanvasNode.update
+     * @override CanvasNode.beforeUpdate
      */
     protected beforeUpdate() {
         const { bounds } = this;

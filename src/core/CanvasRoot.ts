@@ -10,7 +10,7 @@ import { Event } from '3h-event';
 export type PointerType = 'mouse' | 'touch';
 /** dts2md break */
 /**
- * Type of `CanvasRoot` options.
+ * Type of options of {@link CanvasRoot}.
  */
 export type CanvasRootOptions<EventType extends CanvasNodeEvent> = (
     & CanvasNodeOptions<EventType>
@@ -47,7 +47,7 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     static mouseId = -1;
     /** dts2md break */
     /**
-     * Constructor of `CanvasRoot`.
+     * Constructor of {@link CanvasRoot}.
      */
     constructor(options?: CanvasRootOptions<EventType>) {
 
@@ -105,7 +105,7 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     }
     /** dts2md break */
     /**
-     * @override CanvasNode.update
+     * @override CanvasNode.beforeUpdate
      */
     protected beforeUpdate() {
         const { bounds, renderer } = this;
