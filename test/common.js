@@ -15,4 +15,5 @@ const renderer = new COM.Renderer({
  */
 const root = COM.create(COM.CanvasRoot, {
     renderer,
+    interactive: true,
 });

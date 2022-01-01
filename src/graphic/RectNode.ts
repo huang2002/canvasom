@@ -5,7 +5,8 @@ import { CanvasNodeEvent } from '../core/CanvasNode';
 /**
  * Type of `RectNode` options.
  */
-export interface RectNodeOptions extends ShapeNodeOptions {
+export interface RectNodeOptions<EventType extends CanvasNodeEvent>
+    extends ShapeNodeOptions<EventType> {
     /**
      * The width of the rectangle.
      */
@@ -31,7 +32,7 @@ export class RectNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /**
      * Constructor of `RectNode`.
      */
-    constructor(options: RectNodeOptions) {
+    constructor(options: RectNodeOptions<EventType>) {
         super(options);
         this.width = options.width;
         this.height = options.height;

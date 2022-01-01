@@ -24,9 +24,10 @@ export type StateAfterChangeEvent<DataType> =
 /**
  * Type of state events.
  */
-export type StateEvent<DataType> =
+export type StateEvent<DataType> = (
     | StateBeforeChangeEvent<DataType>
-    | StateAfterChangeEvent<DataType>;
+    | StateAfterChangeEvent<DataType>
+);
 /** dts2md break */
 /**
  * Class of state objects.
@@ -47,7 +48,7 @@ export class State<DataType = unknown>
     /**
      * Get the current value.
      */
-    get currentValue() {
+    get value() {
         return this._value;
     }
     /** dts2md break */
@@ -55,36 +56,36 @@ export class State<DataType = unknown>
      * Set the current value.
      * (Emits `beforeChange` and `afterChange` events.)
      */
-    set currentValue(value: DataType) {
+    set value(newValue: DataType) {
 
         const { _value: previousValue } = this;
 
-        const willChangeEvent: StateBeforeChangeEvent<DataType> = new Event({
+        const beforeChangeEvent: StateBeforeChangeEvent<DataType> = new Event({
             name: 'beforeChange',
             stoppable: true,
             cancelable: true,
             data: {
                 previousValue,
-                currentValue: value,
+                currentValue: newValue,
             },
         });
 
-        this.emit(willChangeEvent);
-        if (willChangeEvent.canceled) {
+        this.emit(beforeChangeEvent);
+        if (beforeChangeEvent.canceled) {
             return;
         }
 
-        this._value = value;
+        this._value = newValue;
 
-        const changedEvent: StateAfterChangeEvent<DataType> = new Event({
+        const afterChangeEvent: StateAfterChangeEvent<DataType> = new Event({
             name: 'afterChange',
             stoppable: true,
             data: {
                 previousValue,
-                currentValue: value,
+                currentValue: newValue,
             },
         });
-        this.emit(changedEvent);
+        this.emit(afterChangeEvent);
 
     }
 

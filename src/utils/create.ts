@@ -1,4 +1,4 @@
-import { CanvasNode } from '../core/CanvasNode';
+import type { CanvasNode } from '../core/CanvasNode';
 
 /**
  * Type of node constructors.

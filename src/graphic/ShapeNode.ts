@@ -5,18 +5,21 @@ import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions } from '../core/CanvasNo
 /**
  * Type of `ShapeNode` options.
  */
-export type ShapeNodeOptions = CanvasNodeOptions & Partial<{
-    /**
-     * Whether to clip the content.
-     * @default false
-     */
-    clipContent: boolean;
-    /**
-     * Whether to close the path automatically.
-     * @default false
-     */
-    closePath: boolean;
-}>;
+export type ShapeNodeOptions<EventType extends CanvasNodeEvent> = (
+    & CanvasNodeOptions<EventType>
+    & Partial<{
+        /**
+         * Whether to clip the content.
+         * @default false
+         */
+        clipContent: boolean;
+        /**
+         * Whether to close the path automatically.
+         * @default false
+         */
+        closePath: boolean;
+    }>
+);
 /** dts2md break */
 /**
  * Class of shape nodes.
@@ -37,7 +40,7 @@ export abstract class ShapeNode<EventType extends CanvasNodeEvent = CanvasNodeEv
     /**
      * Constructor of `ShapeNode`.
      */
-    constructor(options?: ShapeNodeOptions) {
+    constructor(options?: ShapeNodeOptions<EventType>) {
         super(options);
         this.clipContent = options?.clipContent ?? false;
         this.closePath = options?.closePath ?? false;

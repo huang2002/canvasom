@@ -1,4 +1,4 @@
-import { CanvasNode } from '../core/CanvasNode';
+import type { CanvasNode } from '../core/CanvasNode';
 
 /**
  * Detects the interaction target and returns an array
@@ -11,9 +11,8 @@ export const detectTarget = (
     y: number,
 ): CanvasNode[] => {
 
-    const { childNodes } = rootNode;
-
     if (rootNode.penetrable) {
+        const { childNodes } = rootNode;
         for (let i = childNodes.length - 1; i >= 0; i--) {
             const path = detectTarget(childNodes[i], x, y);
             if (path.length) {
@@ -31,11 +30,13 @@ export const detectTarget = (
     const targetPath: CanvasNode[] = [];
     let currentNode: CanvasNode | null = rootNode;
     let nextNode: CanvasNode | null = null;
+    let childNodes;
 
     while (currentNode) {
 
         targetPath.push(currentNode);
 
+        childNodes = currentNode.childNodes;
         nextNode = null;
 
         if (childNodes.length) {

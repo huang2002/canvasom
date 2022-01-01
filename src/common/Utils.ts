@@ -1,3 +1,6 @@
+import { Event, EventListener, ListenerRecord, SelectEvent } from '3h-event';
+import type { CanvasNode, CanvasNodeEvent } from '../core/CanvasNode';
+
 /**
  * Utilities.
  */
@@ -34,5 +37,32 @@ export namespace Utils {
         export const SUPPORTS_TOUCH_EVENTS = navigator.maxTouchPoints > 0;
 
     }
+    /** dts2md break */
+    /**
+     * Map the given event type to a listener description dict.
+     */
+    export type EventListeners<EventType extends Event> = {
+        [Name in EventType['name']]: (
+            | EventListener<SelectEvent<EventType, Name>>
+            | ListenerRecord<SelectEvent<EventType, Name>>
+        );
+    };
+    /** dts2md break */
+    /**
+     * Emits an event following the given target path.
+     * (From the last one to the first one;
+     * stops if the event is stopped by `event.stop`.)
+     */
+    export const bubbleEvent = (
+        event: CanvasNodeEvent,
+        targetPath: CanvasNode[],
+    ) => {
+        for (let i = targetPath.length - 1; i >= 0; i--) {
+            targetPath[i].emit(event);
+            if (event.stopped) {
+                break;
+            }
+        }
+    };
 
 }

@@ -3,11 +3,12 @@ import { insertElement, removeElements } from "3h-utils";
 import { CanvasStyle, Style } from '../common/Style';
 import { type Renderer } from './Renderer';
 import { Bounds } from '../common/Bounds';
+import { Utils } from "../common/Utils";
 
 /**
  * Type of data of pinter events on canvas nodes.
  */
-export interface CanvasNodePointerEventData {
+export interface CanvasPointerEventData {
     /**
      * Pointer id.
      */
@@ -20,28 +21,59 @@ export interface CanvasNodePointerEventData {
      * The y-offset of the pointer in current view.
      */
     y: number;
+    /**
+     * The interaction target.
+     */
+    target: CanvasNode;
+    /**
+     * The original DOM event.
+     */
+    rawEvent: MouseEvent | TouchEvent;
 }
-/** dts2md break */
-/**
- * Event names of pointer events on canvas nodes.
- */
-export type CanvasNodePointerEventName =
-    | 'pointerstart'
-    | 'pointermove'
-    | 'pointerend'
-    | 'wheel';
 /** dts2md break */
 /**
  * Type of pointer events on canvas nodes.
  */
-export type CanvasNodePointerEvent =
-    Event<CanvasNodePointerEventName, CanvasNodePointerEventData>;
+export type CanvasPointerEvent = (
+    | Event<'pointerstart', CanvasPointerEventData>
+    | Event<'pointermove', CanvasPointerEventData>
+    | Event<'pointerend', CanvasPointerEventData>
+);
+/** dts2md break */
+/**
+ * Type of data of wheel events on canvas nodes.
+ */
+export type CanvasWheelEventData = CanvasPointerEventData & {
+    /**
+     * Delta x in canvas view.
+     */
+    deltaX: number;
+    /**
+     * Delta y in canvas view.
+     */
+    deltaY: number;
+    /**
+     * Delta mode derived from original DOM event.
+     */
+    deltaMode: number;
+    /**
+     * The original DOM event.
+     */
+    rawEvent: WheelEvent;
+};
+/** dts2md break */
+/**
+ * Type of wheel events on canvas nodes.
+ */
+export type CanvasWheelEvent = Event<'wheel', CanvasWheelEventData>;
 /** dts2md break */
 /**
  * Type of events on canvas nodes.
  */
-export type CanvasNodeEvent =
-    | CanvasNodePointerEvent;
+export type CanvasNodeEvent = (
+    | CanvasPointerEvent
+    | CanvasWheelEvent
+);
 /** dts2md break */
 /**
  * Type of position parameters of canvas nodes.
@@ -53,7 +85,7 @@ export type CanvasNodePosition = 'relative' | 'absolute';
 /**
  * Type of `CanvasNode` options.
  */
-export type CanvasNodeOptions = Partial<{
+export type CanvasNodeOptions<EventType extends CanvasNodeEvent> = Partial<{
     /**
      * The x-offset of this node.
      */
@@ -92,8 +124,24 @@ export type CanvasNodeOptions = Partial<{
      * @default false
      */
     noUpdate: boolean;
+    /**
+     * eventName -> listener | listenerRecord
+     * @example
+     * ```js
+     * COM.create(COM.Rect, {
+     *     // ...
+     *     listeners: {
+     *         click: clickListener,
+     *         pointerstart: {
+     *             listener: pointerStartListener,
+     *             once: true,
+     *         },
+     *     },
+     * });
+     * ```
+     */
+    listeners: Partial<Utils.EventListeners<EventType>>;
 }>;
-/** dts2md break */
 /**
  * Class of canvas object nodes.
  */
@@ -103,7 +151,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /**
      * Constructor of `CanvasNode`.
      */
-    constructor(options?: CanvasNodeOptions) {
+    constructor(options?: CanvasNodeOptions<EventType>) {
         super();
         this.offsetX = options?.offsetX ?? 0;
         this.offsetY = options?.offsetY ?? 0;
@@ -113,6 +161,9 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
         this.penetrable = options?.penetrable ?? false;
         this.style = options?.style ?? (Object.create(null) as {});
         this.noUpdate = options?.noUpdate ?? false;
+        if (options?.listeners) {
+            this.listeners = options.listeners;
+        }
     }
     /** dts2md break */
     /**
@@ -233,8 +284,34 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
         return this._y;
     }
     /** dts2md break */
+    /**
+     * Get computed style properties.
+     */
     get computedStyle() {
         return this._computedStyle;
+    }
+    /** dts2md break */
+    /**
+     * @see CanvasNodeOptions.listeners
+     */
+    set listeners(listeners: Partial<Utils.EventListeners<EventType>>) {
+        let value;
+        Object.getOwnPropertyNames(listeners).forEach(name => {
+            value = listeners[name as keyof typeof listeners]!;
+            if (typeof value === 'function') {
+                this.addListener(name as EventType['name'], value);
+            } else {
+                this.addListener(name as EventType['name'], value.listener, value.once);
+            }
+        });
+        Object.getOwnPropertySymbols(listeners).forEach(symbol => {
+            value = listeners[symbol as unknown as keyof typeof listeners]!;
+            if (typeof value === 'function') {
+                this.addListener(symbol as unknown as EventType['name'], value);
+            } else {
+                this.addListener(symbol as unknown as EventType['name'], value.listener, value.once);
+            }
+        });
     }
     /** dts2md break */
     /**

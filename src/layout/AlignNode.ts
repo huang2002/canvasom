@@ -8,28 +8,31 @@ export type AlignMode = 'begin' | 'center' | 'end';
 /**
  * Type of `AlignNode` options.
  */
-export type AlignNodeOptions = CanvasNodeOptions & Partial<{
-    /**
-     * The width of this node.
-     * @default 0
-     */
-    width: number;
-    /**
-     * The height of this node.
-     * @default 0
-     */
-    height: number;
-    /**
-     * Horizontal align.
-     * @default 'begin'
-     */
-    alignX: AlignMode;
-    /**
-     * Vertical align.
-     * @default 'begin'
-     */
-    alignY: AlignMode;
-}>;
+export type AlignNodeOptions<EventType extends CanvasNodeEvent> = (
+    & CanvasNodeOptions<EventType>
+    & Partial<{
+        /**
+         * The width of this node.
+         * @default 0
+         */
+        width: number;
+        /**
+         * The height of this node.
+         * @default 0
+         */
+        height: number;
+        /**
+         * Horizontal align.
+         * @default 'begin'
+         */
+        alignX: AlignMode;
+        /**
+         * Vertical align.
+         * @default 'begin'
+         */
+        alignY: AlignMode;
+    }>
+);
 /** dts2md break */
 /**
  * Class of container nodes that align child nodes.
@@ -40,7 +43,7 @@ export class AlignNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /**
      * Constructor of `AlignNode`.
      */
-    constructor(options?: AlignNodeOptions) {
+    constructor(options?: AlignNodeOptions<EventType>) {
         super(options);
         this.alignX = options?.alignX ?? 'begin';
         this.alignY = options?.alignY ?? 'begin';

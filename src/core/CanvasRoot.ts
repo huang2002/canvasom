@@ -1,6 +1,8 @@
-import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions } from './CanvasNode';
+import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions, CanvasPointerEventData, CanvasWheelEventData } from './CanvasNode';
 import { Renderer } from './Renderer';
 import { Utils } from "../common/Utils";
+import { detectTarget } from '../interaction/detectTarget';
+import { Event } from '3h-event';
 
 /**
  * The type of pointer.
@@ -10,25 +12,28 @@ export type PointerType = 'mouse' | 'touch';
 /**
  * Type of `CanvasRoot` options.
  */
-export type CanvasRootOptions = CanvasNodeOptions & Partial<{
-    /**
-     * Renderer instance to use.
-     * (If this is omitted, one will be created internally.)
-     */
-    renderer: Renderer;
-    /**
-     * Whether to always clear the canvas before rendering.
-     * (The canvas will be automatically cleared
-     * if `this.style.fillStyle === null`.)
-     * @default false
-     */
-    forceClear: boolean;
-    /**
-     * The type of the pointer.
-     * @default Utils.Constants.SUPPORTS_TOUCH_EVENTS ? 'touch' : 'mouse'
-     */
-    pointerType: PointerType;
-}>;
+export type CanvasRootOptions<EventType extends CanvasNodeEvent> = (
+    & CanvasNodeOptions<EventType>
+    & Partial<{
+        /**
+         * Renderer instance to use.
+         * (If this is omitted, one will be created internally.)
+         */
+        renderer: Renderer;
+        /**
+         * Whether to always clear the canvas before rendering.
+         * (The canvas will be automatically cleared
+         * if `this.style.fillStyle === null`.)
+         * @default false
+         */
+        forceClear: boolean;
+        /**
+         * The type of the pointer.
+         * @default Utils.Constants.SUPPORTS_TOUCH_EVENTS ? 'touch' : 'mouse'
+         */
+        pointerType: PointerType;
+    }>
+);
 /** dts2md break */
 /**
  * Class of canvas-object-model roots.
@@ -37,9 +42,14 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     extends CanvasNode<EventType> {
     /** dts2md break */
     /**
+     * The id used for mouses.
+     */
+    static mouseId = -1;
+    /** dts2md break */
+    /**
      * Constructor of `CanvasRoot`.
      */
-    constructor(options?: CanvasRootOptions) {
+    constructor(options?: CanvasRootOptions<EventType>) {
 
         super(options);
 
@@ -123,102 +133,244 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
         this.render();
     }
 
-    private _pointerStart(id: number, clientX: number, clientY: number) {
+    private _pointerStart(
+        id: number,
+        clientX: number,
+        clientY: number,
+        rawEvent: MouseEvent | TouchEvent,
+    ) {
 
-    }
+        const { renderer } = this;
+        const x = renderer.toViewX(clientX);
+        const y = renderer.toViewY(clientY);
+        const targetPath = detectTarget(this as unknown as CanvasNode, x, y);
 
-    private _pointerMove(id: number, clientX: number, clientY: number) {
-
-    }
-
-    private _pointerEnd(id: number, clientX: number, clientY: number) {
-
-    }
-
-    private _onMouseDown(event: MouseEvent) {
-        if (!this.interactive) {
-            return;
-        }
-        event.preventDefault();
-        this._pointerStart(-1, event.clientX, event.clientY);
-    }
-
-    private _onMouseMove(event: MouseEvent) {
-        if (!this.interactive) {
-            return;
-        }
-        event.preventDefault();
-        this._pointerMove(-1, event.clientX, event.clientY);
-    }
-
-    private _onMouseUp(event: MouseEvent) {
-        if (!this.interactive) {
-            return;
-        }
-        event.preventDefault();
-        this._pointerEnd(-1, event.clientX, event.clientY);
-    }
-
-    private _onTouchStart(event: TouchEvent) {
-
-        if (!this.interactive) {
+        if (!targetPath.length) {
             return;
         }
 
-        event.preventDefault();
+        const pointerEvent = new Event<'pointerstart', CanvasPointerEventData>({
+            name: 'pointerstart',
+            stoppable: true,
+            cancelable: true,
+            data: {
+                id,
+                x,
+                y,
+                target: targetPath[targetPath.length - 1],
+                rawEvent,
+            },
+        });
 
-        const { changedTouches } = event;
+        Utils.bubbleEvent(pointerEvent, targetPath);
+
+    }
+
+    private _pointerMove(
+        id: number,
+        clientX: number,
+        clientY: number,
+        rawEvent: MouseEvent | TouchEvent,
+    ) {
+
+        const { renderer } = this;
+        const x = renderer.toViewX(clientX);
+        const y = renderer.toViewY(clientY);
+        const targetPath = detectTarget(this as unknown as CanvasNode, x, y);
+
+        if (!targetPath.length) {
+            return;
+        }
+
+        const pointerEvent = new Event<'pointermove', CanvasPointerEventData>({
+            name: 'pointermove',
+            stoppable: true,
+            cancelable: true,
+            data: {
+                id,
+                x,
+                y,
+                target: targetPath[targetPath.length - 1],
+                rawEvent,
+            },
+        });
+
+        Utils.bubbleEvent(pointerEvent, targetPath);
+
+    }
+
+    private _pointerEnd(
+        id: number,
+        clientX: number,
+        clientY: number,
+        rawEvent: MouseEvent | TouchEvent,
+    ) {
+
+        const { renderer } = this;
+        const x = renderer.toViewX(clientX);
+        const y = renderer.toViewY(clientY);
+        const targetPath = detectTarget(this as unknown as CanvasNode, x, y);
+
+        if (!targetPath.length) {
+            return;
+        }
+
+        const pointerEvent = new Event<'pointerend', CanvasPointerEventData>({
+            name: 'pointerend',
+            stoppable: true,
+            cancelable: true,
+            data: {
+                id,
+                x,
+                y,
+                target: targetPath[targetPath.length - 1],
+                rawEvent,
+            },
+        });
+
+        Utils.bubbleEvent(pointerEvent, targetPath);
+
+    }
+
+    private _onMouseDown(rawEvent: MouseEvent) {
+        if (!this.interactive) {
+            return;
+        }
+        rawEvent.preventDefault();
+        this._pointerStart(
+            CanvasRoot.mouseId,
+            rawEvent.clientX,
+            rawEvent.clientY,
+            rawEvent,
+        );
+    }
+
+    private _onMouseMove(rawEvent: MouseEvent) {
+        if (!this.interactive) {
+            return;
+        }
+        rawEvent.preventDefault();
+        this._pointerMove(
+            CanvasRoot.mouseId,
+            rawEvent.clientX,
+            rawEvent.clientY,
+            rawEvent,
+        );
+    }
+
+    private _onMouseUp(rawEvent: MouseEvent) {
+        if (!this.interactive) {
+            return;
+        }
+        rawEvent.preventDefault();
+        this._pointerEnd(
+            CanvasRoot.mouseId,
+            rawEvent.clientX,
+            rawEvent.clientY,
+            rawEvent,
+        );
+    }
+
+    private _onTouchStart(rawEvent: TouchEvent) {
+
+        if (!this.interactive) {
+            return;
+        }
+
+        rawEvent.preventDefault();
+
+        const { changedTouches } = rawEvent;
         let touch;
         for (let i = 0; i < changedTouches.length; i++) {
             touch = changedTouches[i];
-            this._pointerStart(touch.identifier, touch.clientX, touch.clientY);
+            this._pointerStart(
+                touch.identifier,
+                touch.clientX,
+                touch.clientY,
+                rawEvent,
+            );
         }
 
     }
 
-    private _onTouchMove(event: TouchEvent) {
+    private _onTouchMove(rawEvent: TouchEvent) {
 
         if (!this.interactive) {
             return;
         }
 
-        event.preventDefault();
+        rawEvent.preventDefault();
 
-        const { changedTouches } = event;
+        const { changedTouches } = rawEvent;
         let touch;
         for (let i = 0; i < changedTouches.length; i++) {
             touch = changedTouches[i];
-            this._pointerMove(touch.identifier, touch.clientX, touch.clientY);
+            this._pointerMove(
+                touch.identifier,
+                touch.clientX,
+                touch.clientY,
+                rawEvent,
+            );
         }
 
     }
 
-    private _onTouchEnd(event: TouchEvent) {
+    private _onTouchEnd(rawEvent: TouchEvent) {
 
         if (!this.interactive) {
             return;
         }
 
-        event.preventDefault();
+        rawEvent.preventDefault();
 
-        const { changedTouches } = event;
+        const { changedTouches } = rawEvent;
         let touch;
         for (let i = 0; i < changedTouches.length; i++) {
             touch = changedTouches[i];
-            this._pointerEnd(touch.identifier, touch.clientX, touch.clientY);
+            this._pointerEnd(
+                touch.identifier,
+                touch.clientX,
+                touch.clientY,
+                rawEvent,
+            );
         }
 
     }
 
-    private _onWheel(event: WheelEvent) {
+    private _onWheel(rawEvent: WheelEvent) {
 
         if (!this.interactive) {
             return;
         }
 
-        event.preventDefault();
+        rawEvent.preventDefault();
 
-        // TODO:
+        const { renderer } = this;
+        const x = renderer.toViewX(rawEvent.clientX);
+        const y = renderer.toViewY(rawEvent.clientY);
+        const targetPath = detectTarget(this as unknown as CanvasNode, x, y);
+
+        if (!targetPath.length) {
+            return;
+        }
+
+        const wheelEvent = new Event<'wheel', CanvasWheelEventData>({
+            name: 'wheel',
+            stoppable: true,
+            cancelable: true,
+            data: {
+                id: CanvasRoot.mouseId,
+                x,
+                y,
+                target: targetPath[targetPath.length - 1],
+                deltaX: rawEvent.deltaX / renderer.ratio,
+                deltaY: rawEvent.deltaY / renderer.ratio,
+                deltaMode: rawEvent.deltaMode,
+                rawEvent,
+            },
+        });
+
+        Utils.bubbleEvent(wheelEvent, targetPath);
 
     }
 
