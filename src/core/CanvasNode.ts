@@ -95,6 +95,14 @@ export type CanvasNodeOptions<EventType extends CanvasNodeEvent> = Partial<{
      */
     offsetY: number;
     /**
+     * Set `bounds.width`.
+     */
+    boundsWidth: number;
+    /**
+     * Set `bounds.height`.
+     */
+    boundsHeight: number;
+    /**
      * The positioning mode of this node.
      * @default 'relative'
      */
@@ -125,14 +133,15 @@ export type CanvasNodeOptions<EventType extends CanvasNodeEvent> = Partial<{
      */
     noUpdate: boolean;
     /**
-     * eventName -> listener | listenerRecord
+     * Set a few event listeners.
+     * (eventName -> listener | listenerRecord)
      * @example
      * ```js
      * COM.create(COM.Rect, {
      *     // ...
      *     listeners: {
-     *         click: clickListener,
-     *         pointerstart: {
+     *         click: clickListener, // listener
+     *         pointerstart: { // listenerRecord
      *             listener: pointerStartListener,
      *             once: true,
      *         },
@@ -162,7 +171,13 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
         this.style = options?.style ?? (Object.create(null) as {});
         this.noUpdate = options?.noUpdate ?? false;
         if (options?.listeners) {
-            this.listeners = options.listeners;
+            this.setListeners(options.listeners);
+        }
+        if (options?.boundsWidth) {
+            this.bounds.width = options.boundsWidth;
+        }
+        if (options?.boundsHeight) {
+            this.bounds.height = options.boundsHeight;
         }
     }
     /** dts2md break */
@@ -294,7 +309,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /**
      * @see CanvasNodeOptions.listeners
      */
-    set listeners(listeners: Partial<Utils.EventListeners<EventType>>) {
+    setListeners(listeners: Partial<Utils.EventListeners<EventType>>) {
         let value;
         Object.getOwnPropertyNames(listeners).forEach(name => {
             value = listeners[name as keyof typeof listeners]!;

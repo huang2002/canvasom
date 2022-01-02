@@ -12,16 +12,6 @@ export type FlowNodeOptions<EventType extends CanvasNodeEvent> = (
     & CanvasNodeOptions<EventType>
     & Partial<{
         /**
-         * The width of this node.
-         * @default 0
-         */
-        width: number;
-        /**
-         * The height of this node.
-         * @default 0
-         */
-        height: number;
-        /**
          * Flow direction.
          * @default 'x'
          */
@@ -45,23 +35,9 @@ export class FlowNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
      */
     constructor(options?: FlowNodeOptions<EventType>) {
         super(options);
-        this.width = options?.width ?? 0;
-        this.height = options?.height ?? 0;
         this.direction = options?.direction ?? 'x';
         this.gap = options?.gap ?? 0;
     }
-    /** dts2md break */
-    /**
-     * The width of the bounds.
-     * @default 0
-     */
-    width: number;
-    /** dts2md break */
-    /**
-     * The height of the bounds.
-     * @default 0
-     */
-    height: number;
     /** dts2md break */
     /**
      * Flow direction.
@@ -80,15 +56,6 @@ export class FlowNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
      * @default true
      */
     penetrable = true;
-    /** dts2md break */
-    /**
-     * @override CanvasNode.beforeUpdate
-     */
-    protected beforeUpdate() {
-        const { bounds } = this;
-        bounds.width = this.width;
-        bounds.height = this.height;
-    }
     /** dts2md break */
     /**
      * @override CanvasNode.updateLayout

@@ -1,99 +1,65 @@
 // @ts-check
 /// <reference types=".." />
 /// <reference path="./common.js" />
+const MENU_WIDTH = 150;
+const MENU_HEIGHT = 50;
+
+/**
+ * @param {string} text
+ * @param {COM.EventListener<COM.CanvasPointerEvent>} callback
+ */
+const MenuButton = (text, callback) => (
+    COM.create(COM.RectNode, {
+        width: MENU_WIDTH,
+        height: MENU_HEIGHT,
+        radius: 10,
+        interactive: true,
+        style: {
+            strokeStyle: '#111',
+            lineWidth: 2,
+        },
+        listeners: {
+            pointerstart: callback,
+        },
+    }, [
+        COM.create(COM.AlignNode, {
+            alignX: 'center',
+            alignY: 'center',
+            boundsWidth: MENU_WIDTH,
+            boundsHeight: MENU_HEIGHT,
+        }, [
+            COM.create(COM.TextNode, {
+                content: text,
+                style: {
+                    fillStyle: '#000',
+                    textAlign: 'center',
+                    textBaseline: 'middle',
+                },
+            }),
+        ]),
+    ])
+);
+
 const startView = COM.create(COM.AlignNode, {
     offsetY: 50,
-    width: root.width,
-    height: root.height,
+    boundsWidth: root.width,
     alignX: 'center',
     interactive: true,
 }, [
     COM.create(COM.FlowNode, {
-        width: 300,
-        height: 200,
+        boundsWidth: MENU_WIDTH,
         direction: 'y',
         gap: 20,
     }, [
+        MenuButton('shape test', () => {
 
-        COM.create(COM.RectNode, { // outer rect 0
-            width: 300,
-            height: 200,
-            radius: 16,
-            clipContent: true,
-            interactive: true,
-            style: {
-                fillStyle: '#FF0',
-                strokeStyle: '#00F',
-                lineWidth: 6,
-            },
-            listeners: {
-                pointerstart(event) {
-                    alert('Oops!');
-                    console.log(event);
-                },
-            },
-        }, [
-
-            COM.create(COM.AlignNode, {
-                width: 300,
-                height: 200,
-                alignX: 'end',
-                alignY: 'end',
-                interactive: true,
-            }, [
-                COM.create(COM.RectNode, { // inner rect
-                    offsetY: 50,
-                    width: 150,
-                    height: 100,
-                    interactive: true,
-                    style: {
-                        fillStyle: '#F00',
-                        boundsStyle: '#0F0C',
-                        boundsWidth: 15,
-                        boundsJoin: 'round',
-                    },
-                    listeners: {
-                        pointerstart(event) {
-                            event.stop();
-                            alert('hello!');
-                            console.log(event);
-                        },
-                    },
-                }),
-            ]),
-
-            COM.create(COM.AlignNode, {
-                width: 300,
-                height: 200,
-                alignX: 'center',
-                alignY: 'center',
-            }, [
-                COM.create(COM.TextNode, {
-                    content: 'hello world',
-                    style: {
-                        fillStyle: '#000',
-                        font: 'bold 25px Consolas',
-                        textAlign: 'center',
-                        textBaseline: 'middle',
-                    },
-                }),
-            ]),
-
-        ]),
-
-        COM.create(COM.RectNode, { // outer rect 1
-            width: 300,
-            height: 200,
-            radius: 16,
-            clipContent: true,
-            interactive: true,
-            style: {
-                fillStyle: '#0F0',
-                strokeStyle: '#00F',
-                lineWidth: 6,
-            },
         }),
+        MenuButton('layout test', () => {
 
+        }),
+        MenuButton('interaction test', () => {
+
+        }),
     ]),
 ]);
 

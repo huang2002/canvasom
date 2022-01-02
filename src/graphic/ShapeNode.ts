@@ -66,6 +66,7 @@ export abstract class ShapeNode<EventType extends CanvasNodeEvent = CanvasNodeEv
     /** dts2md break */
     /**
      * Returns `true` if (x, y) is the path of the shape.
+     * @override CanvasNode.containsPoint
      */
     containsPoint(x: number, y: number) {
 
