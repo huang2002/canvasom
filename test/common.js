@@ -1,5 +1,8 @@
 // @ts-check
 /// <reference types=".." />
+const BACK_BUTTON_WIDTH = 100;
+const BACK_BUTTON_HEIGHT = 50;
+
 const canvas = /** @type {HTMLCanvasElement} */(
     document.getElementById('canvas')
 );
@@ -18,21 +21,46 @@ const root = COM.create(COM.CanvasRoot, {
     interactive: true,
 });
 
-const createBackButton = () => (
+const BackButton = () => (
     COM.create(COM.AlignNode, {
+        boundsWidth: root.width,
+        boundsHeight: root.height,
         alignX: 'center',
         alignY: 'end',
+        interactive: true,
     }, [
         COM.create(COM.RectNode, {
-            width: 100,
-            height: 50,
+            offsetY: -50,
+            width: BACK_BUTTON_WIDTH,
+            height: BACK_BUTTON_HEIGHT,
             radius: 8,
+            interactive: true,
             style: {
                 strokeStyle: '#111',
+                lineWidth: 2,
             },
             listeners: {
-
+                pointerstart() {
+                    root.replaceChild(root.childNodes[0], startView);
+                    root.updateAndRender();
+                },
             },
-        }),
+        }, [
+            COM.create(COM.AlignNode, {
+                alignX: 'center',
+                alignY: 'center',
+                boundsWidth: BACK_BUTTON_WIDTH,
+                boundsHeight: BACK_BUTTON_HEIGHT,
+            }, [
+                COM.create(COM.TextNode, {
+                    content: 'back',
+                    style: {
+                        fillStyle: '#000',
+                        textAlign: 'center',
+                        textBaseline: 'middle',
+                    },
+                }),
+            ]),
+        ]),
     ])
 );

@@ -41,17 +41,34 @@ export const detectTarget = (
 
         if (childNodes.length) {
 
-            const checkChildNodes = (childNode: CanvasNode) => {
+            const checkChildNode = (childNode: CanvasNode) => {
+
+                if (nextNode) {
+                    return;
+                }
+
                 if (childNode.penetrable) {
-                    if (childNode.childNodes.length) {
-                        childNode.childNodes.forEach(checkChildNodes);
+
+                    const { childNodes: childChildNodes } = childNode;
+                    for (let i = childChildNodes.length - 1; i >= 0; i--) {
+                        checkChildNode(childChildNodes[i]);
+                        if (nextNode) {
+                            break;
+                        }
                     }
+
                 } else if (childNode.interactive && childNode.containsPoint(x, y)) {
                     nextNode = childNode;
                 }
+
             };
 
-            childNodes.forEach(checkChildNodes);
+            for (let i = childNodes.length - 1; i >= 0; i--) {
+                checkChildNode(childNodes[i]);
+                if (nextNode) {
+                    break;
+                }
+            }
 
         }
 
