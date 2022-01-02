@@ -53,6 +53,7 @@ export const detectTarget = (
                     for (let i = childChildNodes.length - 1; i >= 0; i--) {
                         checkChildNode(childChildNodes[i]);
                         if (nextNode) {
+                            targetPath.push(childNode);
                             break;
                         }
                     }
