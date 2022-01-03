@@ -40,7 +40,7 @@ const BackButton = () => (
                 lineWidth: 2,
             },
             listeners: {
-                pointerstart() {
+                click() {
                     root.replaceChild(root.childNodes[0], startView);
                     root.updateAndRender();
                 },

@@ -1,4 +1,4 @@
-import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions, CanvasPointerEventData, CanvasWheelEventData } from './CanvasNode';
+import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions, CanvasPointerEvent, CanvasPointerEventData, CanvasWheelEventData } from './CanvasNode';
 import { Renderer } from './Renderer';
 import { Utils } from "../common/Utils";
 import { detectTarget } from '../interaction/detectTarget';
@@ -32,6 +32,12 @@ export type CanvasRootOptions<EventType extends CanvasNodeEvent> = (
          * @default Utils.Constants.SUPPORTS_TOUCH_EVENTS ? 'touch' : 'mouse'
          */
         pointerType: PointerType;
+        /**
+         * Ignore pointer move events
+         * that are not started on the canvas.
+         * @default true
+         */
+        ignoreHover: boolean;
     }>
 );
 /** dts2md break */
@@ -56,6 +62,7 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
         this.isRoot = true;
         this.renderer = options?.renderer ?? new Renderer();
         this.forceClear = options?.forceClear ?? false;
+        this.ignoreHover = options?.ignoreHover ?? true;
         this.pointerType = options?.pointerType
             ?? (Utils.Constants.SUPPORTS_TOUCH_EVENTS ? 'touch' : 'mouse');
 
@@ -85,10 +92,22 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     forceClear: boolean;
     /** dts2md break */
     /**
+     * Ignore pointer move events
+     * that are not started on the canvas.
+     * @default true
+     */
+    ignoreHover: boolean;
+    /** dts2md break */
+    /**
      * The type of the pointer.
      * @default Utils.Constants.SUPPORTS_TOUCH_EVENTS ? 'touch' : 'mouse'
      */
     readonly pointerType: PointerType;
+    /** dts2md break */
+    /**
+     * pointerId -> startEvent
+     */
+    readonly pointerStart = new Map<number, CanvasPointerEvent | null>();
     /** dts2md break */
     /**
      * Returns `this.renderer.width`.
@@ -140,16 +159,18 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
         rawEvent: MouseEvent | TouchEvent,
     ) {
 
-        const { renderer } = this;
+        const { renderer, pointerStart } = this;
         const x = renderer.toViewX(clientX);
         const y = renderer.toViewY(clientY);
         const targetPath = detectTarget(this as unknown as CanvasNode, x, y);
 
         if (!targetPath.length) {
+            pointerStart.set(id, null);
             return;
         }
 
-        const pointerEvent = new Event<'pointerstart', CanvasPointerEventData>({
+        const target = targetPath[targetPath.length - 1];
+        const pointerStartEvent = new Event<'pointerstart', CanvasPointerEventData>({
             name: 'pointerstart',
             stoppable: true,
             cancelable: true,
@@ -157,12 +178,13 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
                 id,
                 x,
                 y,
-                target: targetPath[targetPath.length - 1],
+                target,
                 rawEvent,
             },
         });
 
-        Utils.bubbleEvent(pointerEvent, targetPath);
+        pointerStart.set(id, pointerStartEvent);
+        Utils.bubbleEvent(pointerStartEvent, targetPath);
 
     }
 
@@ -173,6 +195,11 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
         rawEvent: MouseEvent | TouchEvent,
     ) {
 
+        const { pointerStart } = this;
+        if (this.ignoreHover && !pointerStart.has(id)) {
+            return;
+        }
+
         const { renderer } = this;
         const x = renderer.toViewX(clientX);
         const y = renderer.toViewY(clientY);
@@ -182,7 +209,8 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
             return;
         }
 
-        const pointerEvent = new Event<'pointermove', CanvasPointerEventData>({
+        const target = targetPath[targetPath.length - 1];
+        const pointerMoveEvent = new Event<'pointermove', CanvasPointerEventData>({
             name: 'pointermove',
             stoppable: true,
             cancelable: true,
@@ -190,12 +218,12 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
                 id,
                 x,
                 y,
-                target: targetPath[targetPath.length - 1],
+                target,
                 rawEvent,
             },
         });
 
-        Utils.bubbleEvent(pointerEvent, targetPath);
+        Utils.bubbleEvent(pointerMoveEvent, targetPath);
 
     }
 
@@ -206,16 +234,18 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
         rawEvent: MouseEvent | TouchEvent,
     ) {
 
-        const { renderer } = this;
+        const { renderer, pointerStart } = this;
         const x = renderer.toViewX(clientX);
         const y = renderer.toViewY(clientY);
         const targetPath = detectTarget(this as unknown as CanvasNode, x, y);
 
         if (!targetPath.length) {
+            pointerStart.delete(id);
             return;
         }
 
-        const pointerEvent = new Event<'pointerend', CanvasPointerEventData>({
+        const target = targetPath[targetPath.length - 1];
+        const pointerEndEvent = new Event<'pointerend', CanvasPointerEventData>({
             name: 'pointerend',
             stoppable: true,
             cancelable: true,
@@ -223,17 +253,45 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
                 id,
                 x,
                 y,
-                target: targetPath[targetPath.length - 1],
+                target,
                 rawEvent,
             },
         });
 
-        Utils.bubbleEvent(pointerEvent, targetPath);
+        Utils.bubbleEvent(pointerEndEvent, targetPath);
+
+        const pointerStartEvent = pointerStart.get(id);
+
+        if (
+            pointerStartEvent
+            && (pointerStartEvent.data.target === target)
+            && !pointerStartEvent.canceled
+            && !pointerEndEvent.canceled
+        ) {
+
+            const clickEvent = new Event<'click', CanvasPointerEventData>({
+                name: 'click',
+                stoppable: true,
+                cancelable: true,
+                data: {
+                    id,
+                    x,
+                    y,
+                    target,
+                    rawEvent,
+                },
+            });
+
+            Utils.bubbleEvent(clickEvent, targetPath);
+
+        }
+
+        pointerStart.delete(id);
 
     }
 
     private _onMouseDown(rawEvent: MouseEvent) {
-        if (!this.interactive) {
+        if (!this.interactive || (rawEvent.target !== this.renderer.canvas)) {
             return;
         }
         rawEvent.preventDefault();

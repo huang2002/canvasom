@@ -33,11 +33,16 @@ export interface CanvasPointerEventData {
 /** dts2md break */
 /**
  * Type of pointer events on canvas nodes.
+ * - `pointerstart` - Emits when pointer interactions start.
+ * - `pointermove` - Emits when pointers move.
+ * - `pointerend` - Emits when pointer interactions end.
+ * - `click` - Emits when a click interaction is detected.
  */
 export type CanvasPointerEvent = (
     | Event<'pointerstart', CanvasPointerEventData>
     | Event<'pointermove', CanvasPointerEventData>
     | Event<'pointerend', CanvasPointerEventData>
+    | Event<'click', CanvasPointerEventData>
 );
 /** dts2md break */
 /**

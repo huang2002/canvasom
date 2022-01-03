@@ -20,7 +20,7 @@ const MenuButton = (text, callback) => (
             lineWidth: 2,
         },
         listeners: {
-            pointerstart: callback,
+            click: callback,
         },
     }, [
         COM.create(COM.AlignNode, {
