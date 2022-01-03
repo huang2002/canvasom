@@ -2,9 +2,7 @@
 /// <reference types=".." />
 /// <reference path="./common.js" />
 const shapeView = COM.create(COM.CanvasNode, {
-    boundsWidth: root.width,
-    boundsHeight: root.height,
-    interactive: true,
+    penetrable: true,
 }, [
 
     COM.create(COM.CanvasNode, { // shapes

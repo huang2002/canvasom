@@ -166,7 +166,9 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
      * Constructor of {@link CanvasNode}.
      */
     constructor(options?: CanvasNodeOptions<EventType>) {
+
         super();
+
         this.offsetX = options?.offsetX ?? 0;
         this.offsetY = options?.offsetY ?? 0;
         this.position = options?.position ?? 'relative';
@@ -175,15 +177,21 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
         this.penetrable = options?.penetrable ?? false;
         this.style = options?.style ?? (Object.create(null) as {});
         this.noUpdate = options?.noUpdate ?? false;
+
         if (options?.listeners) {
             this.setListeners(options.listeners);
         }
+
         if (options?.boundsWidth) {
             this.bounds.width = options.boundsWidth;
         }
         if (options?.boundsHeight) {
             this.bounds.height = options.boundsHeight;
         }
+
+        this.update = this.update.bind(this);
+        this.render = this.render.bind(this);
+
     }
     /** dts2md break */
     /**
@@ -583,6 +591,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
      *     - Invoke `updateLayout` on this node;
      *     - repeat on child nodes;
      * 3. Invoke `afterUpdate` on this node and child nodes.
+     * (This method is bound to the instance automatically.)
      */
     update() {
         if (this.noUpdate) {
@@ -603,7 +612,8 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /** dts2md break */
     /**
      * Render the node and its child nodes.
-     * (Invokes {@link renderSelf} internally.)
+     * (Invokes {@link renderSelf} internally
+     * and is bound to the instance automatically.)
      */
     render(renderer: Renderer) {
 

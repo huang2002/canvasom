@@ -66,6 +66,8 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
         this.pointerType = options?.pointerType
             ?? (Utils.Constants.SUPPORTS_TOUCH_EVENTS ? 'touch' : 'mouse');
 
+        this.render = this.render.bind(this);
+        this.updateAndRender = this.updateAndRender.bind(this);
         this._onMouseDown = this._onMouseDown.bind(this);
         this._onMouseMove = this._onMouseMove.bind(this);
         this._onMouseUp = this._onMouseUp.bind(this);
@@ -134,6 +136,7 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /** dts2md break */
     /**
      * Render the child nodes using `this.renderer`.
+     * (This method is bound to the instance automatically.)
      * @override CanvasNode.render
      */
     render() {
@@ -146,6 +149,7 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /** dts2md break */
     /**
      * Invokes `this.update` & `this.render`.
+     * (This method is bound to the instance automatically.)
      */
     updateAndRender() {
         this.update();

@@ -2,6 +2,7 @@
 /// <reference types=".." />
 /// <reference path="./common.js" />
 /// <reference path="./shape.js" />
+/// <reference path="./interaction.js" />
 const MENU_WIDTH = 150;
 const MENU_HEIGHT = 50;
 
@@ -57,10 +58,12 @@ const startView = COM.create(COM.AlignNode, {
             root.updateAndRender();
         }),
         MenuButton('layout test', () => {
-
+            // root.replaceChild(startView, layoutView);
+            root.updateAndRender();
         }),
         MenuButton('interaction test', () => {
-
+            root.replaceChild(startView, interactionView);
+            root.updateAndRender();
         }),
     ]),
 ]);
