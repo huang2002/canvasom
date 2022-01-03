@@ -47,17 +47,17 @@ export class RectNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
      * The width of the rectangle.
      */
     width: number;
+    /** dts2md break */
     /**
      * The height of the rectangle.
      */
-    /** dts2md break */
     height: number;
+    /** dts2md break */
     /**
      * The radius of the corners.
      * (Try negative value!)
      * @default 0
      */
-    /** dts2md break */
     radius: number;
     /** dts2md break */
     /**
