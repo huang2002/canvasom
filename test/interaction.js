@@ -57,7 +57,6 @@ const interactionView = COM.create(COM.CanvasNode, {
         alignX: 'center',
         interactive: true,
     }, [
-
         COM.create(COM.FlowNode, {
             boundsWidth: COUNTER_WIDTH,
             direction: 'y',
