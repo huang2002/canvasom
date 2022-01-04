@@ -277,6 +277,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
      * @default 0
      */
     protected layoutOffsetX = 0;
+    /** dts2md break */
     /**
      * The y offset in layout.
      * (This should be set by layout parent nodes.)
