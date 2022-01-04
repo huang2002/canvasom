@@ -440,6 +440,7 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /** dts2md break */
     /**
      * Attach event listeners to the canvas.
+     * (invoked automatically during instance creation)
      */
     attachListeners() {
 

@@ -48,7 +48,7 @@ export abstract class ShapeNode<EventType extends CanvasNodeEvent = CanvasNodeEv
     }
     /** dts2md break */
     /**
-     * Whether to clip the content.
+     * Whether to clip the content to the path.
      * @default false
      */
     clipContent: boolean;
@@ -65,7 +65,7 @@ export abstract class ShapeNode<EventType extends CanvasNodeEvent = CanvasNodeEv
     abstract path(context: CanvasRenderingContext2D): void;
     /** dts2md break */
     /**
-     * Returns `true` if (x, y) is the path of the shape.
+     * Returns `true` if (x, y) is in the path of the shape.
      * @override CanvasNode.containsPoint
      */
     containsPoint(x: number, y: number) {

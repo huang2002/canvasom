@@ -93,10 +93,12 @@ export type CanvasNodePosition = 'relative' | 'absolute';
 export type CanvasNodeOptions<EventType extends CanvasNodeEvent> = Partial<{
     /**
      * The x-offset of this node.
+     * @default 0
      */
     offsetX: number;
     /**
      * The y-offset of this node.
+     * @default 0
      */
     offsetY: number;
     /**
@@ -130,6 +132,7 @@ export type CanvasNodeOptions<EventType extends CanvasNodeEvent> = Partial<{
     penetrable: boolean;
     /**
      * The style of the node.
+     * @default {}
      */
     style: Partial<CanvasStyle>;
     /**
@@ -158,6 +161,9 @@ export type CanvasNodeOptions<EventType extends CanvasNodeEvent> = Partial<{
 }>;
 /**
  * Class of canvas object nodes.
+ * (This is the base class of all other nodes;
+ * you can also use this type of node
+ * as pure containers to group other nodes.)
  */
 export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     extends EventEmitter<EventType> {
@@ -201,11 +207,13 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /** dts2md break */
     /**
      * The x-offset of this node.
+     * @default 0
      */
     offsetX: number;
     /** dts2md break */
     /**
      * The y-offset of this node.
+     * @default 0
      */
     offsetY: number;
     /** dts2md break */
@@ -235,6 +243,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /** dts2md break */
     /**
      * The style of the node.
+     * @default {}
      */
     style: Partial<CanvasStyle>;
     /** dts2md break */
@@ -314,6 +323,8 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /** dts2md break */
     /**
      * Get computed style properties.
+     * (This is automatically computed when updating,
+     * from `this.style` and `parentNode.computedStyle`.)
      */
     get computedStyle() {
         return this._computedStyle;

@@ -3,8 +3,8 @@
  */
 export type RendererOptions = Partial<{
     /**
-     * If this is omitted, a canvas element
-     * will be created internally.
+     * The canvas element to use.
+     * (If this is omitted, one will be created internally.)
      */
     canvas?: HTMLCanvasElement;
     /**

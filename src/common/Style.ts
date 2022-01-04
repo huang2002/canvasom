@@ -115,8 +115,7 @@ export interface CanvasStyle {
 export namespace Style {
     /** dts2md break */
     /**
-     * The defaults of canvas style properties.
-     * (This is mutable.)
+     * Defaults of canvas style properties. (mutable)
      */
     export const defaults: CanvasStyle = {
 
@@ -228,7 +227,9 @@ export namespace Style {
     };
     /** dts2md break */
     /**
-     * Compute style properties from children's and parent's.
+     * Compute child style properties
+     * from child node's `style`
+     * and parent node's `computedStyle`.
      */
     export const compute = (
         output: CanvasStyle,
