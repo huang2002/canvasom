@@ -23,6 +23,7 @@ const root = COM.create(COM.CanvasRoot, {
 
 const BackButton = () => (
     COM.create(COM.AlignNode, {
+        position: 'absolute',
         boundsWidth: root.width,
         boundsHeight: root.height,
         alignX: 'center',

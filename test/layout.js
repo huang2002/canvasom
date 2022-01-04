@@ -16,12 +16,12 @@ const LayoutRect = () => (
 );
 
 const layoutView = COM.create(COM.CanvasNode, {
+    offsetY: 50,
     penetrable: true,
 }, [
 
     // outer container
     COM.create(COM.AlignNode, {
-        offsetY: 50,
         boundsWidth: root.width,
         boundsHeight: root.height - 50,
         alignX: 'center',

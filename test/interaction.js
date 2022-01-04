@@ -48,11 +48,11 @@ const InteractionCounter = (eventName) => {
 };
 
 const interactionView = COM.create(COM.CanvasNode, {
+    offsetY: 50,
     penetrable: true,
 }, [
 
     COM.create(COM.AlignNode, {
-        offsetY: 50,
         boundsWidth: root.width,
         alignX: 'center',
         interactive: true,
