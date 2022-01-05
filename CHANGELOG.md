@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.1
+
+- Fix background rendering
+
 ## 0.16.0
 
 - Rewrite
