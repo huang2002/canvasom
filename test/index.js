@@ -4,7 +4,7 @@
 /// <reference path="./shape.js" />
 /// <reference path="./layout.js" />
 /// <reference path="./interaction.js" />
-const MENU_WIDTH = 150;
+const MENU_WIDTH = 200;
 const MENU_HEIGHT = 50;
 
 /**
@@ -45,7 +45,7 @@ const MenuButton = (text, callback) => (
 );
 
 const startView = COM.create(COM.AlignNode, {
-    offsetY: 50,
+    offsetY: 60,
     boundsWidth: root.width,
     alignX: 'center',
     interactive: true,
@@ -65,6 +65,16 @@ const startView = COM.create(COM.AlignNode, {
         }),
         MenuButton('interaction test', () => {
             root.replaceChild(startView, interactionView);
+            root.updateAndRender();
+        }),
+        MenuButton('toggle background', () => {
+            if (root.computedStyle.fillStyle === null) {
+                root.style.fillStyle = 'rgba(255, 255, 0, .5)';
+                root.forceClear = true;
+            } else {
+                root.style.fillStyle = null;
+                root.forceClear = false;
+            }
             root.updateAndRender();
         }),
     ]),
