@@ -18,6 +18,7 @@ const MenuButton = (text, callback) => (
         radius: 10,
         interactive: true,
         style: {
+            fillStyle: '#FFF',
             strokeStyle: '#111',
             lineWidth: 2,
         },

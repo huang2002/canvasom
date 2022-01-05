@@ -135,16 +135,25 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     }
     /** dts2md break */
     /**
+     * @override CanvasNode.renderSelf
+     */
+    protected renderSelf(renderer: Renderer) {
+        const { computedStyle } = this;
+        if (!computedStyle.fillStyle || this.forceClear) {
+            renderer.context.clearRect(0, 0, renderer.width, renderer.height);
+        }
+        if (computedStyle.fillStyle) {
+            renderer.context.fillRect(0, 0, renderer.width, renderer.height);
+        }
+    }
+    /** dts2md break */
+    /**
      * Render the child nodes using `this.renderer`.
      * (This method is bound to the instance automatically.)
      * @override CanvasNode.render
      */
     render() {
-        const { renderer } = this;
-        if (!this.style.fillStyle || this.forceClear) {
-            renderer.context.clearRect(0, 0, renderer.width, renderer.height);
-        }
-        super.render(renderer);
+        super.render(this.renderer);
     }
     /** dts2md break */
     /**

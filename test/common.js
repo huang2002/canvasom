@@ -1,5 +1,6 @@
 // @ts-check
 /// <reference types=".." />
+/// <reference path="./index.js" />
 const BACK_BUTTON_WIDTH = 100;
 const BACK_BUTTON_HEIGHT = 50;
 
@@ -37,6 +38,7 @@ const BackButton = () => (
             radius: 8,
             interactive: true,
             style: {
+                fillStyle: '#FFF',
                 strokeStyle: '#111',
                 lineWidth: 2,
             },

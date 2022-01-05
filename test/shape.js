@@ -117,6 +117,46 @@ const shapeView = COM.create(COM.CanvasNode, {
 
     ]),
 
+    COM.create(COM.RectNode, {
+        offsetY: 390,
+        offsetX: 50,
+        width: 200,
+        height: 50,
+        radius: 8,
+        interactive: true,
+        style: {
+            fillStyle: '#FFF',
+            strokeStyle: '#111',
+            lineWidth: 2,
+        },
+        listeners: {
+            click() {
+                root.style.fillStyle = (
+                    root.computedStyle.fillStyle === null
+                        ? '#FFC'
+                        : null
+                );
+                root.updateAndRender();
+            },
+        },
+    }, [
+        COM.create(COM.AlignNode, {
+            alignX: 'center',
+            alignY: 'center',
+            boundsWidth: 200,
+            boundsHeight: 50,
+        }, [
+            COM.create(COM.TextNode, {
+                content: 'toggle background',
+                style: {
+                    fillStyle: '#000',
+                    textAlign: 'center',
+                    textBaseline: 'middle',
+                },
+            }),
+        ]),
+    ]),
+
     BackButton(),
 
 ]);
