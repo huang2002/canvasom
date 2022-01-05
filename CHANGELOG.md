@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.0
+
+- Rewrite
+
 ## 0.15.0
 
 - Add `node.overlaps`
