@@ -4,7 +4,7 @@ import type { CanvasNode } from '../core/CanvasNode';
  * Type of node constructors.
  */
 export type NodeConstructor<OptionType = any> =
-    new (options?: OptionType) => CanvasNode;
+    new (options?: OptionType) => CanvasNode<any>;
 /** dts2md break */
 /**
  * Extract type of parameters of the given node constructor.
@@ -18,7 +18,7 @@ export type NodeConstructorParameters<Constructor extends NodeConstructor> =
 export const create = <ConstructorType extends NodeConstructor = NodeConstructor>(
     constructor: ConstructorType,
     options?: NodeConstructorParameters<ConstructorType> | null,
-    childNodes?: CanvasNode[],
+    childNodes?: CanvasNode<any>[],
 ) => {
 
     const node = new constructor(options ?? undefined);
