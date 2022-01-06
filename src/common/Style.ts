@@ -237,8 +237,8 @@ export namespace Style {
         childStyle: Partial<CanvasStyle>,
     ) => {
 
-        output.fillStyle = childStyle.fillStyle ?? defaults.fillStyle;
-        output.strokeStyle = childStyle.strokeStyle ?? defaults.strokeStyle;
+        output.fillStyle = (childStyle.fillStyle !== undefined) ? childStyle.fillStyle : defaults.fillStyle;
+        output.strokeStyle = (childStyle.strokeStyle !== undefined) ? childStyle.strokeStyle : defaults.strokeStyle;
         output.lineWidth = childStyle.lineWidth || parentStyle.lineWidth;
         output.lineCap = childStyle.lineCap || parentStyle.lineCap;
         output.lineJoin = childStyle.lineJoin || parentStyle.lineJoin;
@@ -251,7 +251,7 @@ export namespace Style {
         output.textAlign = childStyle.textAlign || parentStyle.textAlign;
         output.textBaseline = childStyle.textBaseline || parentStyle.textBaseline;
 
-        output.shadowColor = childStyle.shadowColor || defaults.shadowColor;
+        output.shadowColor = (childStyle.shadowColor !== undefined) ? childStyle.shadowColor : defaults.shadowColor;
         output.shadowBlur = childStyle.shadowBlur ?? defaults.shadowBlur;
         output.shadowOffsetX = childStyle.shadowOffsetX ?? defaults.shadowOffsetX;
         output.shadowOffsetY = childStyle.shadowOffsetY ?? defaults.shadowOffsetY;
@@ -260,7 +260,7 @@ export namespace Style {
         output.compositeOperation = childStyle.compositeOperation || parentStyle.compositeOperation;
         output.ratio = childStyle.ratio || parentStyle.ratio;
 
-        output.boundsStyle = childStyle.boundsStyle || parentStyle.boundsStyle;
+        output.boundsStyle = (childStyle.boundsStyle !== undefined) ? childStyle.boundsStyle : parentStyle.boundsStyle;
         output.boundsWidth = childStyle.boundsWidth || parentStyle.boundsWidth;
         output.boundsJoin = childStyle.boundsJoin || parentStyle.boundsJoin;
         output.boundsDashOffset = childStyle.boundsDashOffset ?? parentStyle.boundsDashOffset;
