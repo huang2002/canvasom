@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.17.0
+
+- Update `3h-event` and fix type confusion
+
 ## 0.16.1
 
 - Fix background rendering
