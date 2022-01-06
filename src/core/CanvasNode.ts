@@ -89,6 +89,25 @@ export type CanvasWheelEventData = CanvasPointerEventData & {
 export type CanvasWheelEvent = Event<'wheel', CanvasWheelEventData>;
 /** dts2md break */
 /**
+ * Type of data of scroll event.
+ */
+export interface CanvasScrollEventData {
+    /**
+     * Scroll x. (clamped)
+     */
+    deltaX: number;
+    /**
+     * Scroll y. (clamped)
+     */
+    deltaY: number;
+}
+/** dts2md break */
+/**
+ * Type of scroll events on canvas nodes.
+ */
+export type CanvasScrollEvent = Event<'scroll', CanvasScrollEventData>;
+/** dts2md break */
+/**
  * Type map of events on canvas nodes.
  */
 export type CanvasNodeEvents = {
@@ -97,6 +116,7 @@ export type CanvasNodeEvents = {
     pointerend: CanvasPointerEndEvent;
     click: CanvasClickEvent;
     wheel: CanvasWheelEvent;
+    scroll: CanvasScrollEvent;
 };
 /** dts2md break */
 /**

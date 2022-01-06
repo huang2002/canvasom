@@ -18,5 +18,6 @@ export * from './graphic/TextNode';
 
 export * from './layout/AlignNode';
 export * from './layout/FlowNode';
+export * from './layout/ScrollNode';
 
 export * from './utils/create';
