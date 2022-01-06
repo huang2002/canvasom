@@ -38,6 +38,9 @@ export namespace Utils {
 
     }
     /** dts2md break */
+    /**
+     * Extract value types from specific map type.
+     */
     export type ValueType<T extends {}> = T[keyof T];
     /** dts2md break */
     /**
