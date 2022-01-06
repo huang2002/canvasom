@@ -1,4 +1,4 @@
-import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions } from '../core/CanvasNode';
+import { CanvasNode, CanvasNodeEvents, CanvasNodeOptions } from '../core/CanvasNode';
 
 /**
  * Type of flow direction.
@@ -8,8 +8,8 @@ export type FlowDirection = 'x' | 'y';
 /**
  * Type of options of {@link FlowNode}.
  */
-export type FlowNodeOptions<EventType extends CanvasNodeEvent> = (
-    & CanvasNodeOptions<EventType>
+export type FlowNodeOptions<Events extends CanvasNodeEvents> = (
+    & CanvasNodeOptions<Events>
     & Partial<{
         /**
          * Flow direction.
@@ -27,13 +27,13 @@ export type FlowNodeOptions<EventType extends CanvasNodeEvent> = (
 /**
  * Class of container nodes that make child nodes align like flows.
  */
-export class FlowNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
-    extends CanvasNode<EventType> {
+export class FlowNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
+    extends CanvasNode<Events> {
     /** dts2md break */
     /**
      * Constructor of {@link FlowNode}.
      */
-    constructor(options?: FlowNodeOptions<EventType>) {
+    constructor(options?: FlowNodeOptions<Events>) {
         super(options);
         this.direction = options?.direction ?? 'x';
         this.gap = options?.gap ?? 0;
@@ -70,7 +70,7 @@ export class FlowNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
                 let dx = 0;
                 childNodes.forEach(childNode => {
                     // narrow the type to access protected properties
-                    (childNode as FlowNode).layoutOffsetX = dx;
+                    (childNode as FlowNode<Events>).layoutOffsetX = dx;
                     dx += childNode.bounds.width + gap;
                 });
                 break;
@@ -80,7 +80,7 @@ export class FlowNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
                 let dy = 0;
                 childNodes.forEach(childNode => {
                     // narrow the type to access protected properties
-                    (childNode as FlowNode).layoutOffsetY = dy;
+                    (childNode as FlowNode<Events>).layoutOffsetY = dy;
                     dy += childNode.bounds.height + gap;
                 });
                 break;

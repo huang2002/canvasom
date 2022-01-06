@@ -1,11 +1,11 @@
 import { ShapeNode, ShapeNodeOptions } from "./ShapeNode";
-import { CanvasNodeEvent } from '../core/CanvasNode';
+import { CanvasNodeEvents } from '../core/CanvasNode';
 
 /**
  * Type of options of {@link SectorNode}.
  */
-export type SectorNodeOptions<EventType extends CanvasNodeEvent> = (
-    & ShapeNodeOptions<EventType>
+export type SectorNodeOptions<Events extends CanvasNodeEvents> = (
+    & ShapeNodeOptions<Events>
     & Partial<{
         /**
          * The start angle of the sector. (radian)
@@ -34,13 +34,13 @@ export type SectorNodeOptions<EventType extends CanvasNodeEvent> = (
 /**
  * Class of sector nodes.
  */
-export class SectorNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
-    extends ShapeNode<EventType> {
+export class SectorNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
+    extends ShapeNode<Events> {
     /** dts2md break */
     /**
      * Constructor of {@link SectorNode}.
      */
-    constructor(options?: SectorNodeOptions<EventType>) {
+    constructor(options?: SectorNodeOptions<Events>) {
         super(options);
         this.startAngle = options?.startAngle ?? 0;
         this.endAngle = options?.endAngle ?? 0;

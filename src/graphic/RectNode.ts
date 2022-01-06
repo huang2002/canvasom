@@ -1,12 +1,12 @@
 import { ShapeNode, ShapeNodeOptions } from "./ShapeNode";
 import { Utils } from "../common/Utils";
-import { CanvasNodeEvent } from '../core/CanvasNode';
+import { CanvasNodeEvents } from '../core/CanvasNode';
 
 /**
  * Type of options of {@link RectNode}.
  */
-export type RectNodeOptions<EventType extends CanvasNodeEvent> = (
-    & ShapeNodeOptions<EventType>
+export type RectNodeOptions<Events extends CanvasNodeEvents> = (
+    & ShapeNodeOptions<Events>
     & Partial<{
         /**
          * The width of the rectangle.
@@ -30,13 +30,13 @@ export type RectNodeOptions<EventType extends CanvasNodeEvent> = (
 /**
  * Class of rectangle nodes.
  */
-export class RectNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
-    extends ShapeNode<EventType> {
+export class RectNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
+    extends ShapeNode<Events> {
     /** dts2md break */
     /**
      * Constructor of {@link RectNode}.
      */
-    constructor(options?: RectNodeOptions<EventType>) {
+    constructor(options?: RectNodeOptions<Events>) {
         super(options);
         this.width = options?.width ?? 0;
         this.height = options?.height ?? 0;

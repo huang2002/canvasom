@@ -1,7 +1,6 @@
 export * from '3h-event';
 
 export * from './common/Utils';
-export * from './common/State';
 export * from './common/Bounds';
 export * from './common/Style';
 

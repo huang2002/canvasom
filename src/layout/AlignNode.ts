@@ -1,4 +1,4 @@
-import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions } from '../core/CanvasNode';
+import { CanvasNode, CanvasNodeEvents, CanvasNodeOptions } from '../core/CanvasNode';
 
 /**
  * Type of align parameter.
@@ -8,8 +8,8 @@ export type AlignMode = 'begin' | 'center' | 'end';
 /**
  * Type of options of {@link AlignNode}.
  */
-export type AlignNodeOptions<EventType extends CanvasNodeEvent> = (
-    & CanvasNodeOptions<EventType>
+export type AlignNodeOptions<Events extends CanvasNodeEvents> = (
+    & CanvasNodeOptions<Events>
     & Partial<{
         /**
          * Horizontal align.
@@ -27,13 +27,13 @@ export type AlignNodeOptions<EventType extends CanvasNodeEvent> = (
 /**
  * Class of container nodes that align child nodes.
  */
-export class AlignNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
-    extends CanvasNode<EventType> {
+export class AlignNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
+    extends CanvasNode<Events> {
     /** dts2md break */
     /**
      * Constructor of {@link AlignNode}.
      */
-    constructor(options?: AlignNodeOptions<EventType>) {
+    constructor(options?: AlignNodeOptions<Events>) {
         super(options);
         this.alignX = options?.alignX ?? 'begin';
         this.alignY = options?.alignY ?? 'begin';
@@ -72,7 +72,7 @@ export class AlignNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
                 this.childNodes.forEach(childNode => {
                     const { bounds: childBounds } = childNode;
                     // narrow the type to access protected properties
-                    (childNode as AlignNode).layoutOffsetX =
+                    (childNode as AlignNode<Events>).layoutOffsetX =
                         (width - childBounds.width) / 2;
                 });
                 break;
@@ -81,7 +81,7 @@ export class AlignNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
                 this.childNodes.forEach(childNode => {
                     const { bounds: childBounds } = childNode;
                     // narrow the type to access protected properties
-                    (childNode as AlignNode).layoutOffsetX =
+                    (childNode as AlignNode<Events>).layoutOffsetX =
                         (width - childBounds.width);
                 });
                 break;
@@ -99,7 +99,7 @@ export class AlignNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
                 this.childNodes.forEach(childNode => {
                     const { bounds: childBounds } = childNode;
                     // narrow the type to access protected properties
-                    (childNode as AlignNode).layoutOffsetY =
+                    (childNode as AlignNode<Events>).layoutOffsetY =
                         (height - childBounds.height) / 2;
                 });
                 break;
@@ -108,7 +108,7 @@ export class AlignNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
                 this.childNodes.forEach(childNode => {
                     const { bounds: childBounds } = childNode;
                     // narrow the type to access protected properties
-                    (childNode as AlignNode).layoutOffsetY =
+                    (childNode as AlignNode<Events>).layoutOffsetY =
                         (height - childBounds.height);
                 });
                 break;

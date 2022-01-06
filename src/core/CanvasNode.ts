@@ -32,17 +32,33 @@ export interface CanvasPointerEventData {
 }
 /** dts2md break */
 /**
+ * Emits when pointer interactions start.
+ */
+export type CanvasPointerStartEvent = Event<'pointerstart', CanvasPointerEventData>;
+/** dts2md break */
+/**
+ * Emits when pointers move.
+ */
+export type CanvasPointerMoveEvent = Event<'pointermove', CanvasPointerEventData>;
+/** dts2md break */
+/**
+ * Emits when pointer interactions end.
+ */
+export type CanvasPointerEndEvent = Event<'pointerend', CanvasPointerEventData>;
+/** dts2md break */
+/**
+ * Emits when a click interaction is detected.
+ */
+export type CanvasClickEvent = Event<'click', CanvasPointerEventData>;
+/** dts2md break */
+/**
  * Type of pointer events on canvas nodes.
- * - `pointerstart` - Emits when pointer interactions start.
- * - `pointermove` - Emits when pointers move.
- * - `pointerend` - Emits when pointer interactions end.
- * - `click` - Emits when a click interaction is detected.
  */
 export type CanvasPointerEvent = (
-    | Event<'pointerstart', CanvasPointerEventData>
-    | Event<'pointermove', CanvasPointerEventData>
-    | Event<'pointerend', CanvasPointerEventData>
-    | Event<'click', CanvasPointerEventData>
+    | CanvasPointerStartEvent
+    | CanvasPointerMoveEvent
+    | CanvasPointerEndEvent
+    | CanvasClickEvent
 );
 /** dts2md break */
 /**
@@ -73,12 +89,15 @@ export type CanvasWheelEventData = CanvasPointerEventData & {
 export type CanvasWheelEvent = Event<'wheel', CanvasWheelEventData>;
 /** dts2md break */
 /**
- * Type of events on canvas nodes.
+ * Type map of events on canvas nodes.
  */
-export type CanvasNodeEvent = (
-    | CanvasPointerEvent
-    | CanvasWheelEvent
-);
+export type CanvasNodeEvents = {
+    pointerstart: CanvasPointerStartEvent;
+    pointermove: CanvasPointerMoveEvent;
+    pointerend: CanvasPointerEndEvent;
+    click: CanvasClickEvent;
+    wheel: CanvasWheelEvent;
+};
 /** dts2md break */
 /**
  * Type of position parameters of canvas nodes.
@@ -90,7 +109,7 @@ export type CanvasNodePosition = 'relative' | 'absolute';
 /**
  * Type of options of {@link CanvasNode}.
  */
-export type CanvasNodeOptions<EventType extends CanvasNodeEvent> = Partial<{
+export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
     /**
      * The x-offset of this node.
      * @default 0
@@ -157,7 +176,7 @@ export type CanvasNodeOptions<EventType extends CanvasNodeEvent> = Partial<{
      * });
      * ```
      */
-    listeners: Partial<Utils.EventListeners<EventType>>;
+    listeners: Partial<Utils.EventListeners<Events>>;
 }>;
 /**
  * Class of canvas object nodes.
@@ -165,13 +184,13 @@ export type CanvasNodeOptions<EventType extends CanvasNodeEvent> = Partial<{
  * you can also use this type of node
  * as pure containers to group other nodes.)
  */
-export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
-    extends EventEmitter<EventType> {
+export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
+    extends EventEmitter<Events> {
     /** dts2md break */
     /**
      * Constructor of {@link CanvasNode}.
      */
-    constructor(options?: CanvasNodeOptions<EventType>) {
+    constructor(options?: CanvasNodeOptions<Events>) {
 
         super();
 
@@ -285,8 +304,8 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
      */
     protected layoutOffsetY = 0;
 
-    private _parentNode: CanvasNode | null = null;
-    private _childNodes: CanvasNode[] = [];
+    private _parentNode: CanvasNode<Events> | null = null;
+    private _childNodes: CanvasNode<Events>[] = [];
     private _x = 0;
     private _y = 0;
     private _computedStyle: CanvasStyle = Object.assign(
@@ -304,7 +323,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /**
      * An array that contains the child nodes.
      */
-    get childNodes(): readonly CanvasNode[] {
+    get childNodes(): readonly CanvasNode<Events>[] {
         return this._childNodes;
     }
     /** dts2md break */
@@ -334,22 +353,22 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /**
      * @see CanvasNodeOptions.listeners
      */
-    setListeners(listeners: Partial<Utils.EventListeners<EventType>>) {
+    setListeners(listeners: Partial<Utils.EventListeners<Events>>) {
         let value;
         Object.getOwnPropertyNames(listeners).forEach(name => {
-            value = listeners[name as keyof typeof listeners]!;
+            value = listeners[name as keyof Events]!;
             if (typeof value === 'function') {
-                this.addListener(name as EventType['name'], value);
+                this.addListener(name as keyof Events, value);
             } else {
-                this.addListener(name as EventType['name'], value.listener, value.once);
+                this.addListener(name as keyof Events, value.listener, value.once);
             }
         });
         Object.getOwnPropertySymbols(listeners).forEach(symbol => {
-            value = listeners[symbol as unknown as keyof typeof listeners]!;
+            value = listeners[symbol as keyof Events]!;
             if (typeof value === 'function') {
-                this.addListener(symbol as unknown as EventType['name'], value);
+                this.addListener(symbol as keyof Events, value);
             } else {
-                this.addListener(symbol as unknown as EventType['name'], value.listener, value.once);
+                this.addListener(symbol as keyof Events, value.listener, value.once);
             }
         });
     }
@@ -358,10 +377,10 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
      * Returns `(node === this) ||
      * (node.parentNode && this.containsChild(node.parentNode))`.
      */
-    containsChild(node: CanvasNode): boolean {
-        let currentNode: CanvasNode | null = node;
+    containsChild(node: CanvasNode<Events>): boolean {
+        let currentNode: CanvasNode<Events> | null = node;
         while (currentNode) {
-            if (currentNode === (this as unknown as CanvasNode)) {
+            if (currentNode === this) {
                 return true;
             }
             currentNode = currentNode._parentNode;
@@ -372,9 +391,9 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /**
      * Removes a child node.
      */
-    removeChild(node: CanvasNode) {
+    removeChild(node: CanvasNode<Events>) {
 
-        if (node._parentNode !== (this as unknown as CanvasNode)) {
+        if (node._parentNode !== this) {
             throw new Error('accept a child node of this node');
         }
 
@@ -393,21 +412,21 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /**
      * Append a new child node.
      */
-    appendChild(node: CanvasNode) {
+    appendChild(node: CanvasNode<Events>) {
 
         if (node.isRoot) {
             throw new TypeError('root nodes can not have parent nodes');
         }
 
         if (node._parentNode) {
-            if (node._parentNode === (this as any)) {
+            if (node._parentNode === this) {
                 return this;
             }
             node._parentNode.removeChild(node);
         }
 
         this._childNodes.push(node);
-        node._parentNode = this as unknown as CanvasNode;
+        node._parentNode = this as CanvasNode<Events>;
 
         return this;
 
@@ -416,7 +435,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /**
      * Replace an old child node with a new one.
      */
-    replaceChild(oldNode: CanvasNode, newNode: CanvasNode) {
+    replaceChild(oldNode: CanvasNode<Events>, newNode: CanvasNode<Events>) {
 
         if (newNode.isRoot) {
             throw new TypeError('root nodes can not have parent nodes');
@@ -434,7 +453,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
         }
 
         if (newNode._parentNode) {
-            if (newNode._parentNode === (this as any)) {
+            if (newNode._parentNode === this) {
                 return this;
             }
             newNode._parentNode.removeChild(newNode);
@@ -442,7 +461,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
 
         oldNode._parentNode = null;
         _childNodes[index] = newNode;
-        newNode._parentNode = this as unknown as CanvasNode;
+        newNode._parentNode = this as CanvasNode<Events>;
 
         return this;
 
@@ -451,7 +470,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /**
      * Insert a new child node before the reference one.
      */
-    insertBefore(referenceNode: CanvasNode | null, newNode: CanvasNode) {
+    insertBefore(referenceNode: CanvasNode<Events> | null, newNode: CanvasNode<Events>) {
 
         if (newNode.isRoot) {
             throw new TypeError('root nodes can not have parent nodes');
@@ -471,14 +490,14 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
         }
 
         if (newNode._parentNode) {
-            if (newNode._parentNode === (this as any)) {
+            if (newNode._parentNode === this) {
                 return this;
             }
             newNode._parentNode.removeChild(newNode);
         }
 
         insertElement(_childNodes, index, newNode);
-        newNode._parentNode = this as unknown as CanvasNode;
+        newNode._parentNode = this as CanvasNode<Events>;
 
         return this;
 
@@ -488,7 +507,7 @@ export class CanvasNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
      * Emit an event on this node
      * and repeat on child nodes.
      */
-    broadcast(event: EventType) {
+    broadcast(event: Utils.ValueType<Events>) {
         this.emit(event);
         this._childNodes.forEach(childNode => {
             childNode.broadcast(event);

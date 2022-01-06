@@ -1,5 +1,5 @@
-import { Event, EventListener, ListenerRecord, SelectEvent } from '3h-event';
-import type { CanvasNode, CanvasNodeEvent } from '../core/CanvasNode';
+import type { EventListener, EventMap, ListenerRecord } from '3h-event';
+import type { CanvasNode, CanvasNodeEvents } from '../core/CanvasNode';
 
 /**
  * Utilities.
@@ -38,13 +38,15 @@ export namespace Utils {
 
     }
     /** dts2md break */
+    export type ValueType<T extends {}> = T[keyof T];
+    /** dts2md break */
     /**
      * Map the given event type to a listener description dict.
      */
-    export type EventListeners<EventType extends Event> = {
-        [Name in EventType['name']]: (
-            | EventListener<SelectEvent<EventType, Name>>
-            | ListenerRecord<SelectEvent<EventType, Name>>
+    export type EventListeners<Events extends EventMap> = {
+        [Name in keyof Events]: (
+            | EventListener<Events[Name]>
+            | ListenerRecord<Events[Name]>
         );
     };
     /** dts2md break */
@@ -54,7 +56,7 @@ export namespace Utils {
      * stops if the event is stopped by `event.stop`.)
      */
     export const bubbleEvent = (
-        event: CanvasNodeEvent,
+        event: ValueType<CanvasNodeEvents>,
         targetPath: CanvasNode[],
     ) => {
         for (let i = targetPath.length - 1; i >= 0; i--) {

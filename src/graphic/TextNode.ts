@@ -1,12 +1,12 @@
 import { Style } from '../common/Style';
-import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions } from '../core/CanvasNode';
+import { CanvasNode, CanvasNodeEvents, CanvasNodeOptions } from '../core/CanvasNode';
 import type { Renderer } from '../core/Renderer';
 
 /**
  * Type of options of {@link TextNode}.
  */
-export type TextNodeOptions<EventType extends CanvasNodeEvent> = (
-    & CanvasNodeOptions<EventType>
+export type TextNodeOptions<Events extends CanvasNodeEvents> = (
+    & CanvasNodeOptions<Events>
     & Partial<{
         /**
          * The text content.
@@ -19,13 +19,13 @@ export type TextNodeOptions<EventType extends CanvasNodeEvent> = (
 /**
  * Class of text nodes.
  */
-export class TextNode<EventType extends CanvasNodeEvent = CanvasNodeEvent>
-    extends CanvasNode<EventType> {
+export class TextNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
+    extends CanvasNode<Events> {
     /** dts2md break */
     /**
      * Constructor of {@link TextNode}.
      */
-    constructor(options?: TextNodeOptions<EventType>) {
+    constructor(options?: TextNodeOptions<Events>) {
         super(options);
         this.content = options?.content ?? '';
     }

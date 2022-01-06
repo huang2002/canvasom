@@ -31,7 +31,7 @@
     "@babel/preset-env": "^7.10.0",
     "@rollup/plugin-babel": "^5.2.0",
     "@rollup/plugin-node-resolve": "^13.1.1",
-    "3h-event": "^0.2.0",
+    "3h-event": "^0.3.1",
     "3h-test": "^0.6.0",
     "3h-utils": "^0.1.0",
     "dts2md": "^0.4.3",

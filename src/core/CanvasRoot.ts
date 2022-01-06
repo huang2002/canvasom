@@ -1,4 +1,4 @@
-import { CanvasNode, CanvasNodeEvent, CanvasNodeOptions, CanvasPointerEvent, CanvasPointerEventData, CanvasWheelEventData } from './CanvasNode';
+import { CanvasNode, CanvasNodeEvents, CanvasNodeOptions, CanvasPointerEvent, CanvasPointerEventData, CanvasWheelEventData } from './CanvasNode';
 import { Renderer } from './Renderer';
 import { Utils } from "../common/Utils";
 import { detectTarget } from '../interaction/detectTarget';
@@ -12,8 +12,8 @@ export type PointerType = 'mouse' | 'touch';
 /**
  * Type of options of {@link CanvasRoot}.
  */
-export type CanvasRootOptions<EventType extends CanvasNodeEvent> = (
-    & CanvasNodeOptions<EventType>
+export type CanvasRootOptions<Events extends CanvasNodeEvents> = (
+    & CanvasNodeOptions<Events>
     & Partial<{
         /**
          * Renderer instance to use.
@@ -44,8 +44,8 @@ export type CanvasRootOptions<EventType extends CanvasNodeEvent> = (
 /**
  * Class of canvas-object-model roots.
  */
-export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
-    extends CanvasNode<EventType> {
+export class CanvasRoot<Events extends CanvasNodeEvents = CanvasNodeEvents>
+    extends CanvasNode<Events> {
     /** dts2md break */
     /**
      * The id used for mouses.
@@ -55,7 +55,7 @@ export class CanvasRoot<EventType extends CanvasNodeEvent = CanvasNodeEvent>
     /**
      * Constructor of {@link CanvasRoot}.
      */
-    constructor(options?: CanvasRootOptions<EventType>) {
+    constructor(options?: CanvasRootOptions<Events>) {
 
         super(options);
 
