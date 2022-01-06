@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.18.0
+
+- Add `ScrollNode`
+- Fix style computing
+- Fix some type issues
+
 ## 0.17.0
 
 - Update `3h-event` and fix type confusion
