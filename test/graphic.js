@@ -1,7 +1,7 @@
 // @ts-check
 /// <reference types=".." />
 /// <reference path="./common.js" />
-const shapeView = COM.create(COM.CanvasNode, {
+const graphicView = COM.create(COM.CanvasNode, {
     penetrable: true,
 }, [
 

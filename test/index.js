@@ -1,7 +1,7 @@
 // @ts-check
 /// <reference types=".." />
 /// <reference path="./common.js" />
-/// <reference path="./shape.js" />
+/// <reference path="./graphic.js" />
 /// <reference path="./layout.js" />
 /// <reference path="./interaction.js" />
 const MENU_WIDTH = 200;
@@ -55,8 +55,8 @@ const startView = COM.create(COM.AlignNode, {
         direction: 'y',
         gap: 20,
     }, [
-        MenuButton('shape test', () => {
-            root.replaceChild(startView, shapeView);
+        MenuButton('graphic test', () => {
+            root.replaceChild(startView, graphicView);
             root.updateAndRender();
         }),
         MenuButton('layout test', () => {
