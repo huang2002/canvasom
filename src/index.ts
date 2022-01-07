@@ -15,6 +15,7 @@ export * from './graphic/RectNode';
 export * from './graphic/ArcNode';
 export * from './graphic/SectorNode';
 export * from './graphic/TextNode';
+export * from './graphic/ImageNode';
 
 export * from './layout/AlignNode';
 export * from './layout/FlowNode';

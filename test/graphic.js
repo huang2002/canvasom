@@ -1,11 +1,24 @@
 // @ts-check
 /// <reference types=".." />
 /// <reference path="./common.js" />
+
+/**
+ * @param {string} source
+ */
+const createImageSource = (source) => {
+    const image = new Image();
+    image.src = source;
+    image.addEventListener('load', () => {
+        requestAnimationFrame(root.updateAndRender);
+    });
+    return image;
+};
+
 const graphicView = COM.create(COM.CanvasNode, {
     penetrable: true,
 }, [
 
-    COM.create(COM.CanvasNode, { // shapes
+    COM.create(COM.CanvasNode, { // container
         offsetY: 10,
         style: {
             boundsStyle: 'rgba(0, 255, 255, .5)',
@@ -114,6 +127,24 @@ const graphicView = COM.create(COM.CanvasNode, {
             style: {
                 fillStyle: '#0F0',
             },
+        }),
+
+        COM.create(COM.ImageNode, {
+            image: createImageSource('./face.png'),
+            offsetX: 50,
+            offsetY: 390,
+        }),
+
+        COM.create(COM.ImageNode, {
+            image: createImageSource('./face.png'),
+            offsetX: 290,
+            offsetY: 390,
+            sourceX: 100,
+            sourceY: 0,
+            sourceWidth: 100,
+            sourceHeight: 100,
+            destinationWidth: 100,
+            destinationHeight: 100,
         }),
 
     ]),
