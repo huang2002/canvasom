@@ -57,15 +57,15 @@ const startView = COM.create(COM.AlignNode, {
     }, [
         MenuButton('graphic test', () => {
             root.replaceChild(startView, graphicView);
-            root.updateAndRender();
+            COM.Schedule.updateAndRender(root);
         }),
         MenuButton('layout test', () => {
             root.replaceChild(startView, layoutView);
-            root.updateAndRender();
+            COM.Schedule.updateAndRender(root);
         }),
         MenuButton('interaction test', () => {
             root.replaceChild(startView, interactionView);
-            root.updateAndRender();
+            COM.Schedule.updateAndRender(root);
         }),
         MenuButton('toggle background', () => {
             if (root.computedStyle.fillStyle === null) {
@@ -75,10 +75,10 @@ const startView = COM.create(COM.AlignNode, {
                 root.style.fillStyle = null;
                 root.forceClear = false;
             }
-            root.updateAndRender();
+            COM.Schedule.updateAndRender(root);
         }),
     ]),
 ]);
 
 root.appendChild(startView);
-root.updateAndRender();
+COM.Schedule.updateAndRender(root);

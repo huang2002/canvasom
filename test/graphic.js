@@ -9,7 +9,7 @@ const createImageSource = (source) => {
     const image = new Image();
     image.src = source;
     image.addEventListener('load', () => {
-        requestAnimationFrame(root.updateAndRender);
+        COM.Schedule.render(root);
     });
     return image;
 };

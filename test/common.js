@@ -45,7 +45,7 @@ const BackButton = () => (
             listeners: {
                 click() {
                     root.replaceChild(root.childNodes[0], startView);
-                    root.updateAndRender();
+                    COM.Schedule.updateAndRender(root);
                 },
             },
         }, [
