@@ -3,7 +3,6 @@ export * from '3h-event';
 export * from './common/Utils';
 export * from './common/Bounds';
 export * from './common/Style';
-export * from './common/Schedule';
 
 export * from './interaction/detectTarget';
 
@@ -23,3 +22,4 @@ export * from './layout/FlowNode';
 export * from './layout/ScrollNode';
 
 export * from './utils/create';
+export * from './utils/Schedule';
