@@ -230,6 +230,8 @@ export namespace Style {
      * Compute child style properties
      * from child node's `style`
      * and parent node's `computedStyle`.
+     * (non-inheritable properties: `fillStyle`,
+     * `strokeStyle` and `shadowColor`)
      */
     export const compute = (
         output: CanvasStyle,
@@ -252,9 +254,9 @@ export namespace Style {
         output.textBaseline = childStyle.textBaseline || parentStyle.textBaseline;
 
         output.shadowColor = (childStyle.shadowColor !== undefined) ? childStyle.shadowColor : defaults.shadowColor;
-        output.shadowBlur = childStyle.shadowBlur ?? defaults.shadowBlur;
-        output.shadowOffsetX = childStyle.shadowOffsetX ?? defaults.shadowOffsetX;
-        output.shadowOffsetY = childStyle.shadowOffsetY ?? defaults.shadowOffsetY;
+        output.shadowBlur = childStyle.shadowBlur ?? parentStyle.shadowBlur;
+        output.shadowOffsetX = childStyle.shadowOffsetX ?? parentStyle.shadowOffsetX;
+        output.shadowOffsetY = childStyle.shadowOffsetY ?? parentStyle.shadowOffsetY;
 
         output.opacity = childStyle.opacity ?? parentStyle.opacity;
         output.compositeOperation = childStyle.compositeOperation || parentStyle.compositeOperation;
