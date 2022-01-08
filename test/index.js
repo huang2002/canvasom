@@ -4,6 +4,7 @@
 /// <reference path="./graphic.js" />
 /// <reference path="./layout.js" />
 /// <reference path="./interaction.js" />
+/// <reference path="./animation.js" />
 const MENU_WIDTH = 200;
 const MENU_HEIGHT = 50;
 
@@ -66,6 +67,10 @@ const startView = COM.create(COM.AlignNode, {
         }),
         MenuButton('interaction test', () => {
             root.replaceChild(startView, interactionView);
+            root.updateAndRender();
+        }),
+        MenuButton('animation test', () => {
+            root.replaceChild(startView, animationView);
             root.updateAndRender();
         }),
         MenuButton('invisible button', () => {

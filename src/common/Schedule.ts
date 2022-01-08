@@ -1,6 +1,7 @@
 import { removeElements } from '3h-utils';
 import type { CanvasNode } from '../core/CanvasNode';
 import type { CanvasRoot } from '../core/CanvasRoot';
+import type { Animation } from '../utils/Animation';
 
 /**
  * Type of time stamp getters.
@@ -9,6 +10,8 @@ export type TimeStampGetter = () => void;
 /** dts2md break */
 /**
  * Schedule-related APIs.
+ * (For each tick, update animations,
+ * update nodes, and render the roots.)
  */
 export namespace Schedule {
     /** dts2md break */
@@ -17,6 +20,7 @@ export namespace Schedule {
      */
     export let getTimeStamp = Date.now;
 
+    let _animationList: Animation[] = [];
     const _updateList: CanvasNode<any>[] = [];
     const _renderList: CanvasRoot<any>[] = [];
 
@@ -25,6 +29,10 @@ export namespace Schedule {
         _tickTimer = null;
 
         const timeStamp = getTimeStamp();
+
+        _animationList.forEach(animation => {
+            animation.update(timeStamp);
+        });
 
         _updateList.forEach(node => {
             node.updateSync(timeStamp);
@@ -35,6 +43,14 @@ export namespace Schedule {
             root.renderSync();
         });
         _renderList.length = 0;
+
+        _animationList = _animationList.filter(
+            animation => animation.active
+        );
+
+        if (_animationList.length) {
+            _requestTick();
+        }
 
     };
 
@@ -55,6 +71,29 @@ export namespace Schedule {
             cancelAnimationFrame(_tickTimer);
             _tickTimer = null;
         }
+    };
+    /** dts2md break */
+    /**
+     * Add the given animation to update list.
+     * (The animation will be updated asynchronously.)
+     */
+    export const animate = (animation: Animation) => {
+        if (!_animationList.includes(animation)) {
+            _animationList.push(animation);
+            _requestTick();
+        }
+    };
+    /** dts2md break */
+    /**
+     * Remove the given animation from update list.
+     */
+    export const cancelAnimation = (animation: Animation) => {
+        const index = _animationList.indexOf(animation);
+        if (index === -1) {
+            return;
+        }
+        removeElements(_animationList, index, 1);
+        _checkTick();
     };
     /** dts2md break */
     /**
