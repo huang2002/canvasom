@@ -33,7 +33,7 @@ const InteractionCounter = (eventName) => {
             [eventName]() {
                 count++;
                 textNode.content = `${eventName}: ${count}`;
-                COM.Schedule.updateAndRender(root);
+                root.updateAndRender();
             },
         },
     }, [

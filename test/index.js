@@ -58,15 +58,15 @@ const startView = COM.create(COM.AlignNode, {
     }, [
         MenuButton('graphic test', () => {
             root.replaceChild(startView, graphicView);
-            COM.Schedule.updateAndRender(root);
+            root.updateAndRender();
         }),
         MenuButton('layout test', () => {
             root.replaceChild(startView, layoutView);
-            COM.Schedule.updateAndRender(root);
+            root.updateAndRender();
         }),
         MenuButton('interaction test', () => {
             root.replaceChild(startView, interactionView);
-            COM.Schedule.updateAndRender(root);
+            root.updateAndRender();
         }),
         MenuButton('invisible button', () => {
             alert('How could you see me?');
@@ -79,10 +79,10 @@ const startView = COM.create(COM.AlignNode, {
                 root.style.fillStyle = null;
                 root.forceClear = false;
             }
-            COM.Schedule.updateAndRender(root);
+            root.updateAndRender();
         }),
     ]),
 ]);
 
 root.appendChild(startView);
-COM.Schedule.updateAndRender(root);
+root.updateAndRender();

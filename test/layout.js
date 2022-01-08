@@ -38,7 +38,7 @@ const layoutView = COM.create(COM.CanvasNode, {
             listeners: {
                 scroll(event) {
                     if (event.data.deltaY !== 0) {
-                        COM.Schedule.updateAndRender(root);
+                        root.updateAndRender();
                     }
                 },
             },
@@ -170,7 +170,7 @@ const layoutView = COM.create(COM.CanvasNode, {
                                 listeners: {
                                     scroll(event) {
                                         if (event.data.deltaX !== 0) {
-                                            COM.Schedule.updateAndRender(root);
+                                            root.updateAndRender();
                                         }
                                     },
                                 },
@@ -203,7 +203,7 @@ const layoutView = COM.create(COM.CanvasNode, {
                                 listeners: {
                                     scroll(event) {
                                         if (event.data.deltaY !== 0) {
-                                            COM.Schedule.updateAndRender(root);
+                                            root.updateAndRender();
                                         }
                                     },
                                 },
@@ -247,7 +247,7 @@ const layoutView = COM.create(COM.CanvasNode, {
                                     scroll(event) {
                                         const { data: { deltaX, deltaY } } = event;
                                         if ((deltaX !== 0) || (deltaY !== 0)) {
-                                            COM.Schedule.updateAndRender(root);
+                                            root.updateAndRender();
                                         }
                                     },
                                 },

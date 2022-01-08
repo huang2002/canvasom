@@ -4,6 +4,7 @@ import { CanvasStyle, Style } from '../common/Style';
 import { type Renderer } from './Renderer';
 import { Bounds } from '../common/Bounds';
 import { Utils } from "../common/Utils";
+import { Schedule } from '../common/Schedule';
 
 /**
  * Type of data of pinter events on canvas nodes.
@@ -233,9 +234,6 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         if (options?.boundsHeight) {
             this.bounds.height = options.boundsHeight;
         }
-
-        this.update = this.update.bind(this);
-        this.render = this.render.bind(this);
 
     }
     /** dts2md break */
@@ -635,22 +633,32 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     }
     /** dts2md break */
     /**
-     * Update this node following the procedures below:
+     * Update this node synchronously following the procedures below:
      * 1. Invoke `beforeUpdate` on this node and child nodes;
      * 2. Update layout:
      *     - Compute layout of this node;
      *     - Invoke `updateLayout` on this node;
      *     - repeat on child nodes;
      * 3. Invoke `afterUpdate` on this node and child nodes.
-     * (This method is bound to the instance automatically.)
      */
-    update(timeStamp: number) {
+    updateSync(timeStamp: number) {
         if (this.noUpdate) {
             return;
         }
         this._initUpdate(timeStamp);
         this._updateLayout(timeStamp);
         this._invokeAfterUpdate(timeStamp);
+    }
+    /** dts2md break */
+    /**
+     * Update this node asynchronously.
+     * (equal to `Schedule.update(thisNode)`)
+     */
+    update() {
+        if (this.noUpdate) {
+            return;
+        }
+        Schedule.update(this);
     }
     /** dts2md break */
     /**
@@ -662,11 +670,10 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     protected renderSelf?(renderer: Renderer): void;
     /** dts2md break */
     /**
-     * Render the node and its child nodes.
-     * (Invokes {@link renderSelf} internally
-     * and is bound to the instance automatically.)
+     * Render the node and its child nodes synchronously.
+     * (Invokes {@link renderSelf} internally.)
      */
-    render(renderer: Renderer) {
+    renderSync(renderer: Renderer) {
 
         if (!this.visible) {
             return;
@@ -680,7 +687,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
         if (!this.noChildRender) {
             this._childNodes.forEach(childNode => {
-                childNode.render(renderer);
+                childNode.renderSync(renderer);
             });
         }
 

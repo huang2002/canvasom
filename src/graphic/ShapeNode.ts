@@ -110,7 +110,7 @@ export abstract class ShapeNode<Events extends CanvasNodeEvents = CanvasNodeEven
             context.save();
             context.clip();
             childNodes.forEach(childNode => {
-                childNode.render(renderer);
+                childNode.renderSync(renderer);
             });
             context.restore();
         }
@@ -128,7 +128,7 @@ export abstract class ShapeNode<Events extends CanvasNodeEvents = CanvasNodeEven
 
         if (!clipContent) {
             this.childNodes.forEach(childNode => {
-                childNode.render(renderer);
+                childNode.renderSync(renderer);
             });
         }
 

@@ -3,6 +3,7 @@ import { Renderer } from './Renderer';
 import { Utils } from "../common/Utils";
 import { detectTarget } from '../interaction/detectTarget';
 import { Event } from '3h-event';
+import { Schedule } from '../common/Schedule';
 
 /**
  * The type of pointer.
@@ -66,8 +67,6 @@ export class CanvasRoot<Events extends CanvasNodeEvents = CanvasNodeEvents>
         this.pointerType = options?.pointerType
             ?? (Utils.Constants.SUPPORTS_TOUCH_EVENTS ? 'touch' : 'mouse');
 
-        this.render = this.render.bind(this);
-        this.updateAndRender = this.updateAndRender.bind(this);
         this._onMouseDown = this._onMouseDown.bind(this);
         this._onMouseMove = this._onMouseMove.bind(this);
         this._onMouseUp = this._onMouseUp.bind(this);
@@ -149,19 +148,36 @@ export class CanvasRoot<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /** dts2md break */
     /**
      * Render the child nodes using `this.renderer`.
-     * (This method is bound to the instance automatically.)
-     * @override CanvasNode.render
+     * @override CanvasNode.renderSync
+     */
+    renderSync() {
+        super.renderSync(this.renderer);
+    }
+    /** dts2md break */
+    /**
+     * Render this node asynchronously.
+     * (equal to `Schedule.render(thisNode)`)
      */
     render() {
-        super.render(this.renderer);
+        if (!this.visible) {
+            return;
+        }
+        Schedule.render(this);
+    }
+    /** dts2md break */
+    /**
+     * Invokes `this.updateSync` & `this.renderSync`.
+     */
+    updateAndRenderSync(timeStamp: number) {
+        this.updateSync(timeStamp);
+        this.renderSync();
     }
     /** dts2md break */
     /**
      * Invokes `this.update` & `this.render`.
-     * (This method is bound to the instance automatically.)
      */
-    updateAndRender(timeStamp: number) {
-        this.update(timeStamp);
+    updateAndRender() {
+        this.update();
         this.render();
     }
 

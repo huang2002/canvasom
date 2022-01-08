@@ -27,12 +27,12 @@ export namespace Schedule {
         const timeStamp = getTimeStamp();
 
         _updateList.forEach(node => {
-            node.update(timeStamp);
+            node.updateSync(timeStamp);
         });
         _updateList.length = 0;
 
         _renderList.forEach(root => {
-            root.render();
+            root.renderSync();
         });
         _renderList.length = 0;
 
