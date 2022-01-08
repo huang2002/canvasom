@@ -2,7 +2,20 @@ import { removeElements } from '3h-utils';
 import type { CanvasNode } from '../core/CanvasNode';
 import type { CanvasRoot } from '../core/CanvasRoot';
 
+/**
+ * Type of time stamp getters.
+ */
+export type TimeStampGetter = () => void;
+/** dts2md break */
+/**
+ * Schedule-related APIs.
+ */
 export namespace Schedule {
+    /** dts2md break */
+    /**
+     * Get current time stamp. (mutable)
+     */
+    export let getTimeStamp = Date.now;
 
     const _updateList: CanvasNode<any>[] = [];
     const _renderList: CanvasRoot<any>[] = [];
@@ -11,8 +24,10 @@ export namespace Schedule {
 
         _tickTimer = null;
 
+        const timeStamp = getTimeStamp();
+
         _updateList.forEach(node => {
-            node.update();
+            node.update(timeStamp);
         });
         _updateList.length = 0;
 

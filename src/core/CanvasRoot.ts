@@ -128,7 +128,7 @@ export class CanvasRoot<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * @override CanvasNode.beforeUpdate
      */
-    protected beforeUpdate() {
+    protected beforeUpdate(timeStamp: number) {
         const { bounds, renderer } = this;
         bounds.width = renderer.width;
         bounds.height = renderer.height;
@@ -160,8 +160,8 @@ export class CanvasRoot<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * Invokes `this.update` & `this.render`.
      * (This method is bound to the instance automatically.)
      */
-    updateAndRender() {
-        this.update();
+    updateAndRender(timeStamp: number) {
+        this.update(timeStamp);
         this.render();
     }
 

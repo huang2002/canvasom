@@ -60,7 +60,7 @@ export class AlignNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * @override CanvasNode.updateLayout
      */
-    protected updateLayout() {
+    protected updateLayout(timeStamp: number) {
 
         const { width, height } = this.bounds;
 

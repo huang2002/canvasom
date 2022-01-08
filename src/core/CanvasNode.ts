@@ -539,50 +539,50 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * A hook invoked before any other update.
      * (optional)
      */
-    protected beforeUpdate?(): void;
+    protected beforeUpdate?(timeStamp: number): void;
     /** dts2md break */
     /**
      * A hook invoked during updating.
      * (optional; typically used to update layout)
      */
-    protected updateLayout?(): void;
+    protected updateLayout?(timeStamp: number): void;
     /** dts2md break */
     /**
      * A hook invoked after update finishes.
      * (optional)
      */
-    protected afterUpdate?(): void;
+    protected afterUpdate?(timeStamp: number): void;
 
-    private _initUpdate() {
-        this.beforeUpdate?.();
+    private _initUpdate(timeStamp: number) {
+        this.beforeUpdate?.(timeStamp);
         if (!this.noChildUpdate) {
             this._childNodes.forEach(childNode => {
-                childNode._initUpdate();
+                childNode._initUpdate(timeStamp);
             });
         }
         this.layoutOffsetX = 0;
         this.layoutOffsetY = 0;
     }
 
-    private _invokeUpdateLayout() {
-        this.updateLayout?.();
+    private _invokeUpdateLayout(timeStamp: number) {
+        this.updateLayout?.(timeStamp);
         if (!this.noChildUpdate) {
             this._childNodes.forEach(childNode => {
-                childNode._invokeUpdateLayout();
+                childNode._invokeUpdateLayout(timeStamp);
             });
         }
     }
 
-    private _invokeAfterUpdate() {
-        this.afterUpdate?.();
+    private _invokeAfterUpdate(timeStamp: number) {
+        this.afterUpdate?.(timeStamp);
         if (!this.noChildUpdate) {
             this._childNodes.forEach(childNode => {
-                childNode._invokeAfterUpdate();
+                childNode._invokeAfterUpdate(timeStamp);
             });
         }
     }
 
-    private _updateLayout() {
+    private _updateLayout(timeStamp: number) {
 
         const { offsetX, offsetY, bounds } = this;
         let x: number;
@@ -624,11 +624,11 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             this.style,
         );
 
-        this.updateLayout?.();
+        this.updateLayout?.(timeStamp);
 
         if (!this.noChildUpdate) {
             this._childNodes.forEach(childNode => {
-                childNode._updateLayout();
+                childNode._updateLayout(timeStamp);
             });
         }
 
@@ -644,13 +644,13 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * 3. Invoke `afterUpdate` on this node and child nodes.
      * (This method is bound to the instance automatically.)
      */
-    update() {
+    update(timeStamp: number) {
         if (this.noUpdate) {
             return;
         }
-        this._initUpdate();
-        this._updateLayout();
-        this._invokeAfterUpdate();
+        this._initUpdate(timeStamp);
+        this._updateLayout(timeStamp);
+        this._invokeAfterUpdate(timeStamp);
     }
     /** dts2md break */
     /**

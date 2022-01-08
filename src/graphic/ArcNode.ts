@@ -77,7 +77,7 @@ export class ArcNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * @override CanvasNode.beforeUpdate
      */
-    protected beforeUpdate() {
+    protected beforeUpdate(timeStamp: number) {
         const { bounds, radius } = this;
         const size = radius * 2;
         bounds.width = size;

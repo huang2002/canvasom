@@ -225,7 +225,7 @@ export class ScrollNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * @override CanvasNode.updateLayout
      */
-    protected updateLayout() {
+    protected updateLayout(timeStamp: number) {
         const layoutOffsetX = -this._scrollX;
         const layoutOffsetY = -this._scrollY;
         this.childNodes.forEach(childNode => {

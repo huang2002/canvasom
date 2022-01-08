@@ -60,7 +60,7 @@ export class FlowNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * @override CanvasNode.updateLayout
      */
-    protected updateLayout() {
+    protected updateLayout(timeStamp: number) {
 
         const { childNodes, gap } = this;
 

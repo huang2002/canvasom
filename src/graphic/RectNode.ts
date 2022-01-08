@@ -63,7 +63,7 @@ export class RectNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * @override CanvasNode.beforeUpdate
      */
-    protected beforeUpdate() {
+    protected beforeUpdate(timeStamp: number) {
         const { bounds } = this;
         bounds.width = this.width;
         bounds.height = this.height;

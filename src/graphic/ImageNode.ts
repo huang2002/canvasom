@@ -123,7 +123,7 @@ export class ImageNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * @override CanvasNode.beforeUpdate
      */
-    protected beforeUpdate() {
+    protected beforeUpdate(timeStamp: number) {
         const { bounds, image } = this;
         bounds.width = this.destinationWidth || image?.width || 0;
         bounds.height = this.destinationHeight || image?.height || 0;
