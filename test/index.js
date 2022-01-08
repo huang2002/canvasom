@@ -11,12 +11,13 @@ const MENU_HEIGHT = 50;
  * @param {string} text
  * @param {COM.EventListener<COM.CanvasPointerEvent>} callback
  */
-const MenuButton = (text, callback) => (
+const MenuButton = (text, callback, visible = true) => (
     COM.create(COM.RectNode, {
         width: MENU_WIDTH,
         height: MENU_HEIGHT,
         radius: 10,
         interactive: true,
+        visible,
         style: {
             fillStyle: '#FFF',
             strokeStyle: '#111',
@@ -67,6 +68,9 @@ const startView = COM.create(COM.AlignNode, {
             root.replaceChild(startView, interactionView);
             COM.Schedule.updateAndRender(root);
         }),
+        MenuButton('invisible button', () => {
+            alert('How could you see me?');
+        }, false),
         MenuButton('toggle background', () => {
             if (root.computedStyle.fillStyle === null) {
                 root.style.fillStyle = 'rgba(255, 255, 0, .5)';
