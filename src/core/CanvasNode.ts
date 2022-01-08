@@ -1,7 +1,7 @@
-import { Event, EventEmitter } from "3h-event";
+import { type Event, EventEmitter } from "3h-event";
 import { insertElement, removeElements } from "3h-utils";
 import { CanvasStyle, Style } from '../common/Style';
-import { type Renderer } from './Renderer';
+import type { Renderer } from './Renderer';
 import { Bounds } from '../common/Bounds';
 import { Utils } from "../common/Utils";
 import { Schedule } from '../common/Schedule';
