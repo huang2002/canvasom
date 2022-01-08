@@ -604,7 +604,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
                 break;
             }
             default: {
-                throw new Error('unknown positioning mode');
+                throw new TypeError('unknown positioning mode');
             }
         }
 

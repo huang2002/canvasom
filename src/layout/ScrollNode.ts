@@ -343,7 +343,7 @@ export class ScrollNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
                 break;
             }
             default: {
-                throw new Error('unknown delta mode');
+                throw new TypeError('unknown delta mode');
             }
         }
 

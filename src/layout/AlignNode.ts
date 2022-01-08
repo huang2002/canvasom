@@ -87,7 +87,7 @@ export class AlignNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
                 break;
             }
             default: {
-                throw new Error('unknown alignX');
+                throw new TypeError('unknown alignX');
             }
         }
 
@@ -114,7 +114,7 @@ export class AlignNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
                 break;
             }
             default: {
-                throw new Error('unknown alignY');
+                throw new TypeError('unknown alignY');
             }
         }
 
