@@ -157,7 +157,7 @@ export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
      * Whether the node should be rendered.
      * @default true
      */
-    visibility: boolean;
+    visible: boolean;
     /**
      * Whether the node is interactive.
      * @default false
@@ -217,7 +217,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         this.offsetX = options?.offsetX ?? 0;
         this.offsetY = options?.offsetY ?? 0;
         this.position = options?.position ?? 'relative';
-        this.visibility = options?.visibility ?? true;
+        this.visible = options?.visible ?? true;
         this.interactive = options?.interactive ?? false;
         this.penetrable = options?.penetrable ?? false;
         this.style = options?.style ?? (Object.create(null) as {});
@@ -266,7 +266,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * Whether the node should be rendered.
      * @default true
      */
-    visibility: boolean;
+    visible: boolean;
     /**
      * Whether the node is interactive.
      * @default false
@@ -668,7 +668,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      */
     render(renderer: Renderer) {
 
-        if (!this.visibility) {
+        if (!this.visible) {
             return;
         }
 
