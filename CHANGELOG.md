@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.20.0
+
+- Rename `canvasNode.visibility` `canvasNode.visible`
+- Add animation APIs
+- Add asynchronous update/render
+- Add time stamp to update callbacks
+- Fix error types
+
 ## 0.19.0
 
 - Add `ImageNode`
