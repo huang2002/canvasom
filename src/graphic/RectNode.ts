@@ -24,6 +24,13 @@ export type RectNodeOptions<Events extends CanvasNodeEvents> = (
          * @default 0
          */
         radius: number;
+        /**
+         * Whether to set `width` and `height` to
+         * `bounds.width` and `bounds.height` on update.
+         * (Try this with stretch options!)
+         * @default false
+         */
+        pendingSize: boolean;
     }>
 );
 /** dts2md break */
@@ -41,6 +48,7 @@ export class RectNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         this.width = options?.width ?? 0;
         this.height = options?.height ?? 0;
         this.radius = options?.radius ?? 0;
+        this.pendingSize = options?.pendingSize ?? false;
     }
     /** dts2md break */
     /**
@@ -61,12 +69,25 @@ export class RectNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     radius: number;
     /** dts2md break */
     /**
+     * Whether to set `width` and `height` to
+     * `bounds.width` and `bounds.height` on update.
+     * (Try this with stretch options!)
+     * @default false
+     */
+    pendingSize: boolean;
+    /** dts2md break */
+    /**
      * @override CanvasNode.beforeUpdate
      */
     protected beforeUpdate(timeStamp: number) {
         const { bounds } = this;
-        bounds.width = this.width;
-        bounds.height = this.height;
+        if (this.pendingSize) {
+            this.width = bounds.width;
+            this.height = bounds.height;
+        } else {
+            bounds.width = this.width;
+            bounds.height = this.height;
+        }
     }
     /** dts2md break */
     /**

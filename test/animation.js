@@ -4,8 +4,8 @@
 
 const ANIMATION_CONTROL_WIDTH = 100;
 const ANIMATION_CONTROL_HEIGHT = 50;
-const ANIMATED_RECT_SIZE = 100;
-const ANIMATION_WIDTH = 500;
+const ANIMATION_CONTAINER_WIDTH = 500;
+const ANIMATION_CONTAINER_HEIGHT = 100;
 const ANIMATION_DURATION = 5000;
 
 /**
@@ -41,8 +41,9 @@ const AnimationControl = (text, callback) => (
 );
 
 const animatedRect = new COM.RectNode({
-    width: ANIMATED_RECT_SIZE,
-    height: ANIMATED_RECT_SIZE,
+    stretchX: 0.2,
+    stretchY: 1,
+    pendingSize: true,
     style: {
         fillStyle: '#00F',
     },
@@ -62,8 +63,8 @@ const animationView = COM.create(COM.CanvasNode, {
     COM.create(COM.RectNode, { // container
         offsetX: 50,
         offsetY: 100,
-        width: ANIMATION_WIDTH,
-        height: ANIMATED_RECT_SIZE,
+        width: ANIMATION_CONTAINER_WIDTH,
+        height: ANIMATION_CONTAINER_HEIGHT,
         style: {
             boundsStyle: 'rgba(0, 255, 0, .5)',
             boundsWidth: 6,
@@ -83,7 +84,7 @@ const animationView = COM.create(COM.CanvasNode, {
             }
             animation = animatedRect.animate({
                 key: 'offsetX',
-                to: ANIMATION_WIDTH - ANIMATED_RECT_SIZE,
+                to: ANIMATION_CONTAINER_WIDTH - animatedRect.width,
                 duration: ANIMATION_DURATION,
                 timing: COM.Timing.easeInOut,
                 callback: console.log,
