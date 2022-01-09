@@ -31,8 +31,7 @@ const MenuButton = (text, callback, visible = true) => (
         COM.create(COM.AlignNode, {
             alignX: 'center',
             alignY: 'center',
-            boundsWidth: MENU_WIDTH,
-            boundsHeight: MENU_HEIGHT,
+            autoStretch: true,
         }, [
             COM.create(COM.TextNode, {
                 content: text,
@@ -48,9 +47,9 @@ const MenuButton = (text, callback, visible = true) => (
 
 const startView = COM.create(COM.AlignNode, {
     offsetY: 60,
-    boundsWidth: root.width,
     alignX: 'center',
     interactive: true,
+    autoStretch: true,
 }, [
     COM.create(COM.FlowNode, {
         boundsWidth: MENU_WIDTH,

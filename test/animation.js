@@ -30,8 +30,7 @@ const AnimationControl = (text, callback) => (
         COM.create(COM.AlignNode, {
             alignX: 'center',
             alignY: 'center',
-            boundsWidth: ANIMATION_CONTROL_WIDTH,
-            boundsHeight: ANIMATION_CONTROL_HEIGHT,
+            autoStretch: true,
         }, [
             COM.create(COM.TextNode, {
                 content: text,

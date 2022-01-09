@@ -18,12 +18,12 @@ const LayoutRect = () => (
 const layoutView = COM.create(COM.CanvasNode, {
     offsetY: 60,
     penetrable: true,
+    autoStretch: true,
 }, [
 
     COM.create(COM.AlignNode, { // view container
-        boundsWidth: root.width,
-        boundsHeight: root.height - 60,
         alignX: 'center',
+        autoStretch: true,
     }, [
         COM.create(COM.ScrollNode, {
             boundsWidth: LAYOUT_CONTAINER_SIZE * 2 + LAYOUT_GAP,
@@ -53,9 +53,9 @@ const layoutView = COM.create(COM.CanvasNode, {
                 },
             }, [
                 COM.create(COM.FlowNode, {
-                    boundsWidth: LAYOUT_CONTAINER_SIZE * 2 + LAYOUT_GAP,
                     direction: 'y',
                     gap: LAYOUT_GAP,
+                    autoStretch: true,
                 }, [
 
                     COM.create(COM.FlowNode, { // row0
@@ -162,11 +162,10 @@ const layoutView = COM.create(COM.CanvasNode, {
                             },
                         }, [
                             COM.create(COM.ScrollNode, {
-                                boundsWidth: LAYOUT_CONTAINER_SIZE,
-                                boundsHeight: LAYOUT_CONTAINER_SIZE,
                                 scrollWidth: LAYOUT_CONTAINER_SIZE * 2,
                                 direction: 'x',
                                 root,
+                                autoStretch: true,
                                 listeners: {
                                     scroll(event) {
                                         if (event.data.deltaX !== 0) {
@@ -195,11 +194,10 @@ const layoutView = COM.create(COM.CanvasNode, {
                             },
                         }, [
                             COM.create(COM.ScrollNode, {
-                                boundsWidth: LAYOUT_CONTAINER_SIZE,
-                                boundsHeight: LAYOUT_CONTAINER_SIZE,
                                 scrollHeight: LAYOUT_CONTAINER_SIZE * 2,
                                 direction: 'y',
                                 root,
+                                autoStretch: true,
                                 listeners: {
                                     scroll(event) {
                                         if (event.data.deltaY !== 0) {
@@ -236,13 +234,12 @@ const layoutView = COM.create(COM.CanvasNode, {
                             },
                         }, [
                             COM.create(COM.ScrollNode, {
-                                boundsWidth: LAYOUT_CONTAINER_SIZE,
-                                boundsHeight: LAYOUT_CONTAINER_SIZE,
                                 scrollWidth: LAYOUT_CONTAINER_SIZE * 2,
                                 scrollHeight: LAYOUT_CONTAINER_SIZE * 2,
                                 direction: 'both',
                                 mode: 'both',
                                 root,
+                                autoStretch: true,
                                 listeners: {
                                     scroll(event) {
                                         const { data: { deltaX, deltaY } } = event;

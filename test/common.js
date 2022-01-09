@@ -25,11 +25,10 @@ const root = COM.create(COM.CanvasRoot, {
 const BackButton = () => (
     COM.create(COM.AlignNode, {
         position: 'absolute',
-        boundsWidth: root.width,
-        boundsHeight: root.height,
         alignX: 'center',
         alignY: 'end',
         interactive: true,
+        autoStretch: true,
     }, [
         COM.create(COM.RectNode, {
             offsetY: -50,
@@ -52,8 +51,7 @@ const BackButton = () => (
             COM.create(COM.AlignNode, {
                 alignX: 'center',
                 alignY: 'center',
-                boundsWidth: BACK_BUTTON_WIDTH,
-                boundsHeight: BACK_BUTTON_HEIGHT,
+                autoStretch: true,
             }, [
                 COM.create(COM.TextNode, {
                     content: 'back',

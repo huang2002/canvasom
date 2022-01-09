@@ -201,6 +201,12 @@ export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
      */
     boundsHeight: number;
     /**
+     * Automatically resize on update
+     * to fill the parent node.
+     * @default false
+     */
+    autoStretch: boolean;
+    /**
      * The positioning mode of this node.
      * @default 'relative'
      */
@@ -268,6 +274,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
         this.offsetX = options?.offsetX ?? 0;
         this.offsetY = options?.offsetY ?? 0;
+        this.autoStretch = options?.autoStretch ?? false;
         this.position = options?.position ?? 'relative';
         this.visible = options?.visible ?? true;
         this.interactive = options?.interactive ?? false;
@@ -304,6 +311,13 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * @default 0
      */
     offsetY: number;
+    /** dts2md break */
+    /**
+     * Automatically resize on update
+     * to fill the parent node.
+     * @default false
+     */
+    autoStretch: boolean;
     /** dts2md break */
     /**
      * The positioning mode of this node.
@@ -601,7 +615,8 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     }
     /** dts2md break */
     /**
-     * A hook invoked before any other update.
+     * A hook invoked right after automatic stretch
+     * and before any other update.
      * (optional)
      */
     protected beforeUpdate?(timeStamp: number): void;
@@ -619,14 +634,28 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     protected afterUpdate?(timeStamp: number): void;
 
     private _initUpdate(timeStamp: number) {
+
+        if (this.autoStretch) {
+            const { _parentNode } = this;
+            if (_parentNode) {
+                const { bounds: selfBounds } = this;
+                const { bounds: parentBounds } = _parentNode;
+                selfBounds.width = parentBounds.width;
+                selfBounds.height = parentBounds.height;
+            }
+        }
+
         this.beforeUpdate?.(timeStamp);
+
         if (!this.noChildUpdate) {
             this._childNodes.forEach(childNode => {
                 childNode._initUpdate(timeStamp);
             });
         }
+
         this.layoutOffsetX = 0;
         this.layoutOffsetY = 0;
+
     }
 
     private _invokeUpdateLayout(timeStamp: number) {
@@ -701,12 +730,13 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /** dts2md break */
     /**
      * Update this node synchronously following the procedures below:
-     * 1. Invoke `beforeUpdate` on this node and child nodes;
-     * 2. Update layout:
+     * 1. Automatically stretch if `this.autoStretch` is `true`;
+     * 2. Invoke `beforeUpdate` on this node and child nodes;
+     * 3. Update layout:
      *     - Compute layout of this node;
      *     - Invoke `updateLayout` on this node;
      *     - repeat on child nodes;
-     * 3. Invoke `afterUpdate` on this node and child nodes.
+     * 4. Invoke `afterUpdate` on this node and child nodes.
      */
     updateSync(timeStamp: number) {
         if (this.noUpdate) {
