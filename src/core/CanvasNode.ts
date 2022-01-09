@@ -40,9 +40,10 @@ export interface AnimateOptions<TargetType extends {}> {
     timing?: TimingFunction;
     /**
      * The root node of this node.
-     * (When this is provided,
+     * (When this is available,
      * `root.updateAndRender` will be invoked
      * on animation update.)
+     * @default this.getRoot()
      */
     root?: CanvasRoot;
     /**
@@ -442,6 +443,22 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     }
     /** dts2md break */
     /**
+     * Get the root node.
+     * (Returns `null` if not available.)
+     */
+    getRoot(): CanvasRoot<Events> | null {
+        let currentNode: CanvasNode<Events> | null = this;
+        while (currentNode) {
+            if (currentNode.isRoot) {
+                return currentNode as CanvasRoot<Events>;
+            } else {
+                currentNode = currentNode._parentNode;
+            }
+        }
+        return null;
+    }
+    /** dts2md break */
+    /**
      * Returns `(node === this) ||
      * (node.parentNode && this.containsChild(node.parentNode))`.
      */
@@ -761,12 +778,14 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      */
     animate(options: AnimateOptions<this>) {
 
-        const { key, root } = options;
+        const { key } = options;
 
         const currentValue = this[key];
         if (typeof currentValue !== 'number') {
             throw new TypeError('expect a numeral property');
         }
+
+        const root = (options.root === undefined) ? this.getRoot() : options.root;
 
         const animationOptions: Required<AnimationOptions> = {
             from: options.from ?? currentValue,

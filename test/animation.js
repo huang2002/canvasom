@@ -89,7 +89,6 @@ const animationView = COM.create(COM.CanvasNode, {
                 to: ANIMATION_WIDTH - ANIMATED_RECT_SIZE,
                 duration: ANIMATION_DURATION,
                 timing: COM.Timing.easeInOut,
-                root,
                 callback: console.log,
             });
         }),
