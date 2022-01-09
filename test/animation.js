@@ -59,6 +59,7 @@ let animation = null;
 
 const animationView = COM.create(COM.CanvasNode, {
     penetrable: true,
+    autoStretch: true,
 }, [
 
     COM.create(COM.RectNode, { // container
