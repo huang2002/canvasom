@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.22.0
+
+- Add `pendingSize` to `RectNode`
+- Replace `autoStretch` with `stretchX` & `stretchY`
+- Fix text rendering
+- Fix some docs
+
 ## 0.21.0
 
 - Add `autoStretch` to `CanvasNode`
