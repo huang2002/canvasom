@@ -250,7 +250,7 @@ export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
      * (eventName -> listener | listenerRecord)
      * @example
      * ```js
-     * COM.create(COM.Rect, {
+     * COM.create(COM.RectNode, {
      *     // ...
      *     listeners: {
      *         click: clickListener, // listener
