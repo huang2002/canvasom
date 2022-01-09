@@ -13,6 +13,13 @@ export type TextNodeOptions<Events extends CanvasNodeEvents> = (
          * @default ''
          */
         content: string;
+        /**
+         * Whether the text should be rendered
+         * from left to right.
+         * (This only affects text align and text baseline.)
+         * @default true
+         */
+        ltr: boolean;
     }>
 );
 /** dts2md break */
@@ -28,6 +35,7 @@ export class TextNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     constructor(options?: TextNodeOptions<Events>) {
         super(options);
         this.content = options?.content ?? '';
+        this.ltr = options?.ltr ?? true;
     }
     /** dts2md break */
     /**
@@ -37,18 +45,50 @@ export class TextNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     content: string;
     /** dts2md break */
     /**
+     * Whether the text should be rendered
+     * from left to right.
+     * (This only affects text align and text baseline.)
+     * @default true
+     */
+    ltr: boolean;
+    /** dts2md break */
+    /**
      * @override CanvasNode.renderSelf
      */
     protected renderSelf(renderer: Renderer) {
 
-        const { context } = renderer;
-        const { computedStyle, content, x, y } = this;
-
+        const { computedStyle } = this;
         if (!computedStyle.fillStyle && !computedStyle.strokeStyle) {
             return;
         }
 
+        const { context } = renderer;
         Style.applyText(computedStyle, context);
+
+        const { content, bounds: { width, height }, ltr } = this;
+        let { x, y } = this;
+
+        // adjust x
+        const { textAlign } = computedStyle;
+        if (textAlign === 'center') {
+            x += width / 2;
+        } else if (
+            (textAlign === 'right')
+            || (ltr ? (textAlign === 'end') : (textAlign === 'start'))
+        ) {
+            x += width;
+        }
+
+        // adjust y
+        const { textBaseline } = computedStyle;
+        if (textBaseline === 'middle') {
+            y += height / 2;
+        } else if (
+            (textBaseline === 'bottom')
+            || (textBaseline === 'alphabetic')
+        ) {
+            y += height;
+        }
 
         if (computedStyle.fillStyle) {
             context.fillText(content, x, y);
