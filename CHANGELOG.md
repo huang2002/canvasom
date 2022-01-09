@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.21.0
+
+- Add `autoStretch` to `CanvasNode`
+- Add `getRoot` to `CanvasNode`
+- Make `root` optional in `AnimateOptions`
+- Modify style inheritability
+
 ## 0.20.0
 
 - Rename `canvasNode.visibility` `canvasNode.visible`
