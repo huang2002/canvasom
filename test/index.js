@@ -28,20 +28,15 @@ const MenuButton = (text, callback, visible = true) => (
             click: callback,
         },
     }, [
-        COM.create(COM.AlignNode, {
-            alignX: 'center',
-            alignY: 'center',
-            autoStretch: true,
-        }, [
-            COM.create(COM.TextNode, {
-                content: text,
-                style: {
-                    fillStyle: '#000',
-                    textAlign: 'center',
-                    textBaseline: 'middle',
-                },
-            }),
-        ]),
+        COM.create(COM.TextNode, {
+            content: text,
+            stretch: 'both',
+            style: {
+                fillStyle: '#000',
+                textAlign: 'center',
+                textBaseline: 'middle',
+            },
+        }),
     ])
 );
 
@@ -49,7 +44,7 @@ const startView = COM.create(COM.AlignNode, {
     offsetY: 60,
     alignX: 'center',
     interactive: true,
-    autoStretch: true,
+    stretch: 'both',
 }, [
     COM.create(COM.FlowNode, {
         boundsWidth: MENU_WIDTH,

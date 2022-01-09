@@ -16,7 +16,7 @@ const createImageSource = (source) => {
 
 const graphicView = COM.create(COM.CanvasNode, {
     penetrable: true,
-    autoStretch: true,
+    stretch: 'both',
 }, [
 
     COM.create(COM.CanvasNode, { // container

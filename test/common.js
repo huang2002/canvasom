@@ -28,7 +28,7 @@ const BackButton = () => (
         alignX: 'center',
         alignY: 'end',
         interactive: true,
-        autoStretch: true,
+        stretch: 'both',
     }, [
         COM.create(COM.RectNode, {
             offsetY: -50,
@@ -48,20 +48,15 @@ const BackButton = () => (
                 },
             },
         }, [
-            COM.create(COM.AlignNode, {
-                alignX: 'center',
-                alignY: 'center',
-                autoStretch: true,
-            }, [
-                COM.create(COM.TextNode, {
-                    content: 'back',
-                    style: {
-                        fillStyle: '#000',
-                        textAlign: 'center',
-                        textBaseline: 'middle',
-                    },
-                }),
-            ]),
+            COM.create(COM.TextNode, {
+                content: 'back',
+                stretch: 'both',
+                style: {
+                    fillStyle: '#000',
+                    textAlign: 'center',
+                    textBaseline: 'middle',
+                },
+            }),
         ]),
     ])
 );

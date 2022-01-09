@@ -27,20 +27,15 @@ const AnimationControl = (text, callback) => (
             click: callback,
         },
     }, [
-        COM.create(COM.AlignNode, {
-            alignX: 'center',
-            alignY: 'center',
-            autoStretch: true,
-        }, [
-            COM.create(COM.TextNode, {
-                content: text,
-                style: {
-                    fillStyle: '#000',
-                    textAlign: 'center',
-                    textBaseline: 'middle',
-                },
-            }),
-        ]),
+        COM.create(COM.TextNode, {
+            content: text,
+            stretch: 'both',
+            style: {
+                fillStyle: '#000',
+                textAlign: 'center',
+                textBaseline: 'middle',
+            },
+        }),
     ])
 );
 
@@ -59,7 +54,7 @@ let animation = null;
 
 const animationView = COM.create(COM.CanvasNode, {
     penetrable: true,
-    autoStretch: true,
+    stretch: 'both',
 }, [
 
     COM.create(COM.RectNode, { // container

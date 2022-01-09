@@ -18,12 +18,12 @@ const LayoutRect = () => (
 const layoutView = COM.create(COM.CanvasNode, {
     offsetY: 60,
     penetrable: true,
-    autoStretch: true,
+    stretch: 'both',
 }, [
 
     COM.create(COM.AlignNode, { // view container
         alignX: 'center',
-        autoStretch: true,
+        stretch: 'both',
     }, [
         COM.create(COM.ScrollNode, {
             boundsWidth: LAYOUT_CONTAINER_SIZE * 2 + LAYOUT_GAP,
@@ -55,7 +55,7 @@ const layoutView = COM.create(COM.CanvasNode, {
                 COM.create(COM.FlowNode, {
                     direction: 'y',
                     gap: LAYOUT_GAP,
-                    autoStretch: true,
+                    stretch: 'both',
                 }, [
 
                     COM.create(COM.FlowNode, { // row0
@@ -165,7 +165,7 @@ const layoutView = COM.create(COM.CanvasNode, {
                                 scrollWidth: LAYOUT_CONTAINER_SIZE * 2,
                                 direction: 'x',
                                 root,
-                                autoStretch: true,
+                                stretch: 'both',
                                 listeners: {
                                     scroll(event) {
                                         if (event.data.deltaX !== 0) {
@@ -197,7 +197,7 @@ const layoutView = COM.create(COM.CanvasNode, {
                                 scrollHeight: LAYOUT_CONTAINER_SIZE * 2,
                                 direction: 'y',
                                 root,
-                                autoStretch: true,
+                                stretch: 'both',
                                 listeners: {
                                     scroll(event) {
                                         if (event.data.deltaY !== 0) {
@@ -239,7 +239,7 @@ const layoutView = COM.create(COM.CanvasNode, {
                                 direction: 'both',
                                 mode: 'both',
                                 root,
-                                autoStretch: true,
+                                stretch: 'both',
                                 listeners: {
                                     scroll(event) {
                                         const { data: { deltaX, deltaY } } = event;
