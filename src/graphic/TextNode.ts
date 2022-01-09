@@ -16,7 +16,7 @@ export type TextNodeOptions<Events extends CanvasNodeEvents> = (
         /**
          * Whether the text should be rendered
          * from left to right.
-         * (This only affects text align and text baseline.)
+         * (This only affects text align.)
          * @default true
          */
         ltr: boolean;
@@ -47,7 +47,7 @@ export class TextNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * Whether the text should be rendered
      * from left to right.
-     * (This only affects text align and text baseline.)
+     * (This only affects text align.)
      * @default true
      */
     ltr: boolean;
