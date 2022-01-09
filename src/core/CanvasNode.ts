@@ -179,6 +179,11 @@ export type CanvasNodeEvents = {
 export type CanvasNodePosition = 'relative' | 'absolute';
 /** dts2md break */
 /**
+ * Type of stretch parameters of canvas nodes.
+ */
+export type CanvasNodeStretch = 'none' | 'x' | 'y' | 'both';
+/** dts2md break */
+/**
  * Type of options of {@link CanvasNode}.
  */
 export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
@@ -202,10 +207,10 @@ export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
     boundsHeight: number;
     /**
      * Automatically resize on update
-     * to fill the parent node.
-     * @default false
+     * to fill the parent node in specific dimensions.
+     * @default 'none'
      */
-    autoStretch: boolean;
+    stretch: CanvasNodeStretch;
     /**
      * The positioning mode of this node.
      * @default 'relative'
@@ -274,7 +279,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
         this.offsetX = options?.offsetX ?? 0;
         this.offsetY = options?.offsetY ?? 0;
-        this.autoStretch = options?.autoStretch ?? false;
+        this.stretch = options?.stretch ?? 'none';
         this.position = options?.position ?? 'relative';
         this.visible = options?.visible ?? true;
         this.interactive = options?.interactive ?? false;
@@ -314,10 +319,10 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /** dts2md break */
     /**
      * Automatically resize on update
-     * to fill the parent node.
-     * @default false
+     * to fill the parent node in specific dimensions.
+     * @default 'none'
      */
-    autoStretch: boolean;
+    stretch: CanvasNodeStretch;
     /** dts2md break */
     /**
      * The positioning mode of this node.
@@ -635,12 +640,14 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
     private _initUpdate(timeStamp: number) {
 
-        if (this.autoStretch) {
-            const { _parentNode } = this;
-            if (_parentNode) {
-                const { bounds: selfBounds } = this;
-                const { bounds: parentBounds } = _parentNode;
+        const { _parentNode, stretch } = this;
+        if (_parentNode && stretch !== 'none') {
+            const { bounds: selfBounds } = this;
+            const { bounds: parentBounds } = _parentNode;
+            if (stretch === 'x' || stretch === 'both') {
                 selfBounds.width = parentBounds.width;
+            }
+            if (stretch === 'y' || stretch === 'both') {
                 selfBounds.height = parentBounds.height;
             }
         }
@@ -730,7 +737,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /** dts2md break */
     /**
      * Update this node synchronously following the procedures below:
-     * 1. Automatically stretch if `this.autoStretch` is `true`;
+     * 1. Automatically stretch according to `this.stretch`;
      * 2. Invoke `beforeUpdate` on this node and child nodes;
      * 3. Update layout:
      *     - Compute layout of this node;
