@@ -179,11 +179,6 @@ export type CanvasNodeEvents = {
 export type CanvasNodePosition = 'relative' | 'absolute';
 /** dts2md break */
 /**
- * Type of stretch parameters of canvas nodes.
- */
-export type CanvasNodeStretch = 'none' | 'x' | 'y' | 'both';
-/** dts2md break */
-/**
  * Type of options of {@link CanvasNode}.
  */
 export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
@@ -206,11 +201,19 @@ export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
      */
     boundsHeight: number;
     /**
-     * Automatically resize on update
-     * to fill the parent node in specific dimensions.
-     * @default 'none'
+     * If this is a number, the width of the node
+     * will be adjusted before update so that
+     * `thisBounds.width / parentBounds.width === stretchX`.
+     * @default null
      */
-    stretch: CanvasNodeStretch;
+    stretchX: number | null;
+    /**
+     * If this is a number, the height of the node
+     * will be adjusted before update so that
+     * `thisBounds.height / parentBounds.height === stretchY`.
+     * @default null
+     */
+    stretchY: number | null;
     /**
      * The positioning mode of this node.
      * @default 'relative'
@@ -279,7 +282,8 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
         this.offsetX = options?.offsetX ?? 0;
         this.offsetY = options?.offsetY ?? 0;
-        this.stretch = options?.stretch ?? 'none';
+        this.stretchX = options?.stretchX ?? null;
+        this.stretchY = options?.stretchY ?? null;
         this.position = options?.position ?? 'relative';
         this.visible = options?.visible ?? true;
         this.interactive = options?.interactive ?? false;
@@ -318,11 +322,20 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     offsetY: number;
     /** dts2md break */
     /**
-     * Automatically resize on update
-     * to fill the parent node in specific dimensions.
-     * @default 'none'
+     * If this is a number, the width of the node
+     * will be adjusted before update so that
+     * `thisBounds.width / parentBounds.width === stretchX`.
+     * @default null
      */
-    stretch: CanvasNodeStretch;
+    stretchX: number | null;
+    /** dts2md break */
+    /**
+     * If this is a number, the height of the node
+     * will be adjusted before update so that
+     * `thisBounds.height / parentBounds.height === stretchY`.
+     * @default null
+     */
+    stretchY: number | null;
     /** dts2md break */
     /**
      * The positioning mode of this node.
@@ -640,15 +653,16 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
     private _initUpdate(timeStamp: number) {
 
-        const { _parentNode, stretch } = this;
-        if (_parentNode && stretch !== 'none') {
-            const { bounds: selfBounds } = this;
+        // stretch
+        const { _parentNode } = this;
+        if (_parentNode) {
+            const { bounds: selfBounds, stretchX, stretchY } = this;
             const { bounds: parentBounds } = _parentNode;
-            if (stretch === 'x' || stretch === 'both') {
-                selfBounds.width = parentBounds.width;
+            if (stretchX !== null) {
+                selfBounds.width = parentBounds.width * stretchX;
             }
-            if (stretch === 'y' || stretch === 'both') {
-                selfBounds.height = parentBounds.height;
+            if (stretchY !== null) {
+                selfBounds.height = parentBounds.height * stretchY;
             }
         }
 

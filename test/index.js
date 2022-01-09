@@ -30,7 +30,8 @@ const MenuButton = (text, callback, visible = true) => (
     }, [
         COM.create(COM.TextNode, {
             content: text,
-            stretch: 'both',
+            stretchX: 1,
+            stretchY: 1,
             style: {
                 fillStyle: '#000',
                 textAlign: 'center',
@@ -44,7 +45,8 @@ const startView = COM.create(COM.AlignNode, {
     offsetY: 60,
     alignX: 'center',
     interactive: true,
-    stretch: 'both',
+    stretchX: 1,
+    stretchY: 1,
 }, [
     COM.create(COM.FlowNode, {
         boundsWidth: MENU_WIDTH,

@@ -13,7 +13,8 @@ const InteractionCounter = (eventName) => {
 
     const textNode = COM.create(COM.TextNode, {
         content: `${eventName}: ${count}`,
-        stretch: 'both',
+        stretchX: 1,
+        stretchY: 1,
         style: {
             fillStyle: '#000',
             textAlign: 'center',
@@ -46,13 +47,15 @@ const InteractionCounter = (eventName) => {
 const interactionView = COM.create(COM.CanvasNode, {
     offsetY: 60,
     penetrable: true,
-    stretch: 'both',
+    stretchX: 1,
+    stretchY: 1,
 }, [
 
     COM.create(COM.AlignNode, {
         alignX: 'center',
         interactive: true,
-        stretch: 'both',
+        stretchX: 1,
+        stretchY: 1,
     }, [
         COM.create(COM.FlowNode, {
             boundsWidth: COUNTER_WIDTH,
