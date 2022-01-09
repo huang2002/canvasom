@@ -22,6 +22,14 @@ const root = COM.create(COM.CanvasRoot, {
     interactive: true,
 });
 
+const resizeRoot = () => {
+    root.renderer.resize(window.innerWidth, window.innerHeight);
+    root.updateAndRender();
+};
+
+window.addEventListener('resize', resizeRoot);
+window.addEventListener('orientationchange', resizeRoot);
+
 const BackButton = () => (
     COM.create(COM.AlignNode, {
         position: 'absolute',
