@@ -108,6 +108,7 @@ const animationView = COM.create(COM.CanvasNode, {
         AnimationControl('reset', (event) => {
             if (animation) {
                 animation.stop(event.timeStamp);
+                animation = null;
             }
             animatedRect.offsetX = 0;
             root.updateAndRender();
