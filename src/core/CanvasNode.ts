@@ -5,58 +5,8 @@ import type { Renderer } from './Renderer';
 import { Bounds } from '../common/Bounds';
 import { Utils } from "../common/Utils";
 import { Schedule } from '../common/Schedule';
-import { AnimationCallback, Animation, AnimationOptions } from '../utils/Animation';
-import { Timing, TimingFunction } from '../utils/Timing';
 import type { CanvasRoot } from './CanvasRoot';
 
-/**
- * Type of options of `CanvasNode.animate`
- * and `CanvasNode.animateStyle`.
- */
-export interface AnimateOptions<TargetType extends {}> {
-    /**
-     * The key of the property to animate.
-     * (The property value must be a number.)
-     */
-    key: keyof TargetType;
-    /**
-     * Start value.
-     * @default thisNode[key]
-     */
-    from?: number;
-    /**
-     * End value.
-     */
-    to: number;
-    /**
-     * Duration of animation. (ms)
-     * @default 1000
-     */
-    duration?: number;
-    /**
-     * The timing function to use.
-     * @default Timing.linear
-     */
-    timing?: TimingFunction;
-    /**
-     * The root node of this node.
-     * (When this is available,
-     * `root.updateAndRender` will be invoked
-     * on animation update.)
-     * @default this.getRoot()
-     */
-    root?: CanvasRoot;
-    /**
-     * Start timeStamp.
-     * @default Schedule.getTimeStamp()
-     */
-    timeStamp?: number;
-    /**
-     * Addition callback.
-     */
-    callback?: AnimationCallback;
-}
-/** dts2md break */
 /**
  * Type of data of pinter events on canvas nodes.
  */
@@ -822,40 +772,6 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      */
     containsPoint(x: number, y: number) {
         return this.bounds.containsPoint(x, y);
-    }
-    /** dts2md break */
-    /**
-     * Animate specific property.
-     */
-    animate(options: AnimateOptions<this>) {
-
-        const { key } = options;
-
-        const currentValue = this[key];
-        if (typeof currentValue !== 'number') {
-            throw new TypeError('expect a numeral property');
-        }
-
-        const root = (options.root === undefined) ? this.getRoot() : options.root;
-
-        const animationOptions: Required<AnimationOptions> = {
-            from: options.from ?? currentValue,
-            to: options.to,
-            duration: options.duration ?? 1000,
-            timing: options.timing ?? Timing.linear,
-            callback: (value) => {
-                (this[key] as unknown as number) = value;
-                root?.updateAndRender();
-                options.callback?.(value);
-            },
-        };
-
-        const animation = new Animation(animationOptions);
-        const timeStamp = options.timeStamp ?? Schedule.getTimeStamp();
-        animation.start(timeStamp);
-
-        return animation;
-
     }
 
 }

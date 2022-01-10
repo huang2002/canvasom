@@ -25,3 +25,4 @@ export * from './layout/ScrollNode';
 export * from './utils/create';
 export * from './utils/Timing';
 export * from './utils/Animation';
+export * from './utils/animate';

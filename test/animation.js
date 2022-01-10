@@ -82,7 +82,8 @@ const animationView = COM.create(COM.CanvasNode, {
             if (animation) {
                 animation.stop(event.timeStamp);
             }
-            animation = animatedRect.animate({
+            animation = COM.animate({
+                target: animatedRect,
                 key: 'offsetX',
                 to: ANIMATION_CONTAINER_WIDTH - animatedRect.width,
                 duration: ANIMATION_DURATION,
