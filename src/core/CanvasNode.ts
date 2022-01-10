@@ -1,4 +1,4 @@
-import { type Event, EventEmitter } from "3h-event";
+import { type Event, EventEmitter, EventListeners, addListeners } from "3h-event";
 import { insertElement, removeElements } from "3h-utils";
 import { CanvasStyle, Style } from '../common/Style';
 import type { Renderer } from './Renderer';
@@ -212,7 +212,7 @@ export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
      * });
      * ```
      */
-    listeners: Partial<Utils.EventListeners<Events>>;
+    listeners: Partial<EventListeners<Events>>;
 }>;
 /**
  * Class of canvas object nodes.
@@ -242,7 +242,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         this.noUpdate = options?.noUpdate ?? false;
 
         if (options?.listeners) {
-            Utils.addListeners(this, options.listeners);
+            addListeners(this, options.listeners);
         }
 
         if (options?.boundsWidth) {
