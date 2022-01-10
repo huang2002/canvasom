@@ -44,30 +44,24 @@ const InteractionCounter = (eventName) => {
 
 };
 
-const interactionView = COM.create(COM.CanvasNode, {
+const interactionView = COM.create(COM.AlignNode, {
     offsetY: 60,
-    penetrable: true,
+    alignX: 'center',
+    interactive: true,
     stretchX: 1,
     stretchY: 1,
 }, [
 
-    COM.create(COM.AlignNode, {
-        alignX: 'center',
-        interactive: true,
-        stretchX: 1,
-        stretchY: 1,
+    COM.create(COM.FlowNode, {
+        boundsWidth: COUNTER_WIDTH,
+        direction: 'y',
+        gap: 20,
     }, [
-        COM.create(COM.FlowNode, {
-            boundsWidth: COUNTER_WIDTH,
-            direction: 'y',
-            gap: 20,
-        }, [
-            InteractionCounter('pointerstart'),
-            InteractionCounter('pointermove'),
-            InteractionCounter('pointerend'),
-            InteractionCounter('wheel'),
-            InteractionCounter('click'),
-        ]),
+        InteractionCounter('pointerstart'),
+        InteractionCounter('pointermove'),
+        InteractionCounter('pointerend'),
+        InteractionCounter('wheel'),
+        InteractionCounter('click'),
     ]),
 
     BackButton(),
