@@ -630,29 +630,30 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         let y: number;
 
         switch (this.position) {
+
             case 'absolute': {
                 x = offsetX;
                 y = offsetY;
                 break;
             }
+
             case 'relative': {
                 const { _parentNode } = this;
                 if (_parentNode) {
-                    x = offsetX + _parentNode._x;
-                    y = offsetY + _parentNode._y;
+                    x = offsetX + _parentNode._x + this.layoutOffsetX;
+                    y = offsetY + _parentNode._y + this.layoutOffsetY;
                 } else {
                     x = offsetX;
                     y = offsetY;
                 }
                 break;
             }
+
             default: {
                 throw new TypeError('unknown positioning mode');
             }
-        }
 
-        x += this.layoutOffsetX;
-        y += this.layoutOffsetY;
+        }
 
         this._x = x;
         this._y = y;
