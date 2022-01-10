@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.0
+
+- Remove `canvasNode.setListeners`
+- Extract `animate` from `CanvasNode`
+- Update `3h-event` to `0.4.0`
+- Fix layout offset effect
+- Improve some docs
+
 ## 0.22.0
 
 - Add `pendingSize` to `RectNode`
