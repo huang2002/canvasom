@@ -196,7 +196,7 @@ export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
      */
     noUpdate: boolean;
     /**
-     * Set a few event listeners.
+     * Add a few event listeners by providing a dict.
      * (eventName -> listener | listenerRecord)
      * @example
      * ```js
@@ -242,7 +242,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         this.noUpdate = options?.noUpdate ?? false;
 
         if (options?.listeners) {
-            this.setListeners(options.listeners);
+            Utils.addListeners(this, options.listeners);
         }
 
         if (options?.boundsWidth) {
@@ -399,29 +399,6 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      */
     get computedStyle() {
         return this._computedStyle;
-    }
-    /** dts2md break */
-    /**
-     * @see CanvasNodeOptions.listeners
-     */
-    setListeners(listeners: Partial<Utils.EventListeners<Events>>) {
-        let value;
-        Object.getOwnPropertyNames(listeners).forEach(name => {
-            value = listeners[name as keyof Events]!;
-            if (typeof value === 'function') {
-                this.addListener(name as keyof Events, value);
-            } else {
-                this.addListener(name as keyof Events, value.listener, value.once);
-            }
-        });
-        Object.getOwnPropertySymbols(listeners).forEach(symbol => {
-            value = listeners[symbol as keyof Events]!;
-            if (typeof value === 'function') {
-                this.addListener(symbol as keyof Events, value);
-            } else {
-                this.addListener(symbol as keyof Events, value.listener, value.once);
-            }
-        });
     }
     /** dts2md break */
     /**
