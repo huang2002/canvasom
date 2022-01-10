@@ -432,7 +432,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     }
     /** dts2md break */
     /**
-     * Removes a child node.
+     * Remove a child node.
      */
     removeChild(node: CanvasNode<Events>) {
 
