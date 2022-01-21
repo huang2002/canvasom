@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.24.0
+
+- Add identity APIs
+
 ## 0.23.0
 
 - Remove `canvasNode.setListeners`
