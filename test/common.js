@@ -32,6 +32,7 @@ window.addEventListener('orientationchange', resizeRoot);
 
 const BackButton = () => (
     COM.create(COM.AlignNode, {
+        classNames: ['back-button'],
         position: 'absolute',
         alignX: 'center',
         alignY: 'end',
@@ -70,3 +71,12 @@ const BackButton = () => (
         ]),
     ])
 );
+
+/**
+ * @param {boolean} condition
+ */
+const assert = (condition) => {
+    if (!condition) {
+        throw new Error('assertion failed');
+    }
+};

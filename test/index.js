@@ -14,6 +14,7 @@ const MENU_HEIGHT = 50;
  */
 const MenuButton = (text, callback, visible = true) => (
     COM.create(COM.RectNode, {
+        classNames: ['menu-button'],
         width: MENU_WIDTH,
         height: MENU_HEIGHT,
         radius: 10,
@@ -42,6 +43,7 @@ const MenuButton = (text, callback, visible = true) => (
 );
 
 const startView = COM.create(COM.AlignNode, {
+    id: 'start-view',
     offsetY: 60,
     alignX: 'center',
     interactive: true,
@@ -49,6 +51,7 @@ const startView = COM.create(COM.AlignNode, {
     stretchY: 1,
 }, [
     COM.create(COM.FlowNode, {
+        id: 'start-view-menu',
         boundsWidth: MENU_WIDTH,
         direction: 'y',
         gap: 20,
@@ -87,3 +90,5 @@ const startView = COM.create(COM.AlignNode, {
 
 root.appendChild(startView);
 root.updateAndRender();
+
+assert(COM.Utils.selectTag('root', root).length === 0);

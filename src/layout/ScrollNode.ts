@@ -105,6 +105,11 @@ export class ScrollNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     }
     /** dts2md break */
     /**
+     * @override CanvasNode.tag
+     */
+    readonly tag = 'scroll';
+    /** dts2md break */
+    /**
      * Scrollable width.
      * @default 0
      */

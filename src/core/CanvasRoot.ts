@@ -80,6 +80,11 @@ export class CanvasRoot<Events extends CanvasNodeEvents = CanvasNodeEvents>
     }
     /** dts2md break */
     /**
+     * @override CanvasNode.tag
+     */
+    readonly tag = 'root';
+    /** dts2md break */
+    /**
      * The renderer instance in use.
      */
     renderer: Renderer;

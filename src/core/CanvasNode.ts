@@ -133,6 +133,16 @@ export type CanvasNodePosition = 'relative' | 'absolute';
  */
 export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
     /**
+     * The unique identity of the node.
+     * @default ''
+     */
+    id: string;
+    /**
+     * The class names of the node.
+     * @default []
+     */
+    classNames: string[];
+    /**
      * The x-offset of this node.
      * @default 0
      */
@@ -230,6 +240,8 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
         super();
 
+        this.id = options?.id ?? '';
+        this.classNames = options?.classNames ?? [];
         this.offsetX = options?.offsetX ?? 0;
         this.offsetY = options?.offsetY ?? 0;
         this.stretchX = options?.stretchX ?? null;
@@ -258,6 +270,24 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * The bounds of this node.
      */
     readonly bounds = new Bounds();
+    /** dts2md break */
+    /**
+     * The tag name of the node.
+     * @default ''
+     */
+    readonly tag: string = '';
+    /** dts2md break */
+    /**
+     * The unique identity of the node.
+     * @default ''
+     */
+    id: string;
+    /** dts2md break */
+    /**
+     * The class names of the node.
+     * @default []
+     */
+    classNames: string[];
     /** dts2md break */
     /**
      * The x-offset of this node.

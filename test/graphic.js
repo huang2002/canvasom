@@ -14,7 +14,8 @@ const createImageSource = (source) => {
     return image;
 };
 
-const graphicView = COM.create(COM.CanvasNode, { // container
+const graphicView = COM.create(COM.CanvasNode, {
+    id: 'graphic-view',
     penetrable: true,
     offsetY: 10,
     stretchX: 1,
@@ -171,3 +172,5 @@ const graphicView = COM.create(COM.CanvasNode, { // container
     BackButton(),
 
 ]);
+
+assert(COM.Utils.selectTag('image', graphicView).length === 2);

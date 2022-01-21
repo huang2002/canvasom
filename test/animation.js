@@ -14,6 +14,7 @@ const ANIMATION_DURATION = 5000;
  */
 const AnimationControl = (text, callback) => (
     COM.create(COM.RectNode, {
+        classNames: ['animation-control'],
         width: ANIMATION_CONTROL_WIDTH,
         height: ANIMATION_CONTROL_HEIGHT,
         radius: 10,
@@ -41,6 +42,7 @@ const AnimationControl = (text, callback) => (
 );
 
 const animatedRect = new COM.RectNode({
+    id: 'animated-rect',
     stretchX: 0.2,
     stretchY: 1,
     pendingSize: true,
@@ -55,12 +57,14 @@ const animatedRect = new COM.RectNode({
 let animation = null;
 
 const animationView = COM.create(COM.CanvasNode, {
+    id: 'animation-view',
     penetrable: true,
     stretchX: 1,
     stretchY: 1,
 }, [
 
-    COM.create(COM.RectNode, { // container
+    COM.create(COM.RectNode, {
+        id: 'animation-container',
         offsetX: 50,
         offsetY: 100,
         width: ANIMATION_CONTAINER_WIDTH,
@@ -73,7 +77,8 @@ const animationView = COM.create(COM.CanvasNode, {
         animatedRect,
     ]),
 
-    COM.create(COM.FlowNode, { // controls
+    COM.create(COM.FlowNode, {
+        id: 'animation-controls',
         offsetX: 50,
         offsetY: 300,
         gap: 15,
@@ -119,3 +124,5 @@ const animationView = COM.create(COM.CanvasNode, {
     BackButton(),
 
 ]);
+
+assert(COM.Utils.selectId('animated-rect', animationView) === animatedRect);

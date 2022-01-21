@@ -39,6 +39,11 @@ export class TextNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     }
     /** dts2md break */
     /**
+     * @override CanvasNode.tag
+     */
+    readonly tag = 'text';
+    /** dts2md break */
+    /**
      * The text content.
      * @default ''
      */

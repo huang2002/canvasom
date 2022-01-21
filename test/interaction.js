@@ -23,6 +23,7 @@ const InteractionCounter = (eventName) => {
     });
 
     return COM.create(COM.RectNode, {
+        classNames: ['interaction-counter'],
         width: COUNTER_WIDTH,
         height: COUNTER_HEIGHT,
         radius: 6,
@@ -45,6 +46,7 @@ const InteractionCounter = (eventName) => {
 };
 
 const interactionView = COM.create(COM.AlignNode, {
+    id: 'interaction-view',
     offsetY: 60,
     alignX: 'center',
     interactive: true,
@@ -53,6 +55,7 @@ const interactionView = COM.create(COM.AlignNode, {
 }, [
 
     COM.create(COM.FlowNode, {
+        id: 'interaction-container',
         boundsWidth: COUNTER_WIDTH,
         direction: 'y',
         gap: 20,

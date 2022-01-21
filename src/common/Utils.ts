@@ -58,5 +58,86 @@ export namespace Utils {
             }
         }
     };
+    /** dts2md break */
+    /**
+     * Select a descendent node with specific id.
+     * (Returns `null` if not found.)
+     */
+    export const selectId = (
+        id: string,
+        node: CanvasNode,
+    ): CanvasNode | null => {
+
+        const { childNodes } = node;
+        let childNode, childResult;
+
+        for (let i = 0; i < childNodes.length; i++) {
+
+            childNode = childNodes[i];
+
+            if (childNode.id === id) {
+                return childNode;
+            }
+
+            if (childNode.childNodes.length) {
+                childResult = selectId(id, childNode);
+                if (childResult) {
+                    return childResult;
+                }
+            }
+
+        }
+
+        return null;
+
+    };
+    /** dts2md break */
+    /**
+     * Select descendent nodes with specific tag name.
+     */
+    export const selectTag = (
+        tag: string,
+        node: CanvasNode,
+        output?: CanvasNode[],
+    ): CanvasNode[] => {
+
+        const result = output ?? [];
+
+        node.childNodes.forEach(childNode => {
+            if (childNode.tag === tag) {
+                result.push(childNode);
+            }
+            if (childNode.childNodes.length) {
+                selectTag(tag, childNode, result);
+            }
+        });
+
+        return result;
+
+    };
+    /** dts2md break */
+    /**
+     * Select descendent nodes with specific class name.
+     */
+    export const selectClass = (
+        className: string,
+        node: CanvasNode,
+        output?: CanvasNode[],
+    ): CanvasNode[] => {
+
+        const result = output ?? [];
+
+        node.childNodes.forEach(childNode => {
+            if (childNode.classNames.includes(className)) {
+                result.push(childNode);
+            }
+            if (childNode.childNodes.length) {
+                selectClass(className, childNode, result);
+            }
+        });
+
+        return result;
+
+    };
 
 }

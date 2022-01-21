@@ -40,6 +40,11 @@ export class FlowNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     }
     /** dts2md break */
     /**
+     * @override CanvasNode.tag
+     */
+    readonly tag = 'flow';
+    /** dts2md break */
+    /**
      * Flow direction.
      * @default 'x'
      */

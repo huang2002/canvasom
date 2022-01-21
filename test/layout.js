@@ -7,6 +7,7 @@ const LAYOUT_GAP = 25;
 
 const LayoutRect = () => (
     COM.create(COM.RectNode, {
+        classNames: ['layout-rect'],
         width: LAYOUT_RECT_SIZE,
         height: LAYOUT_RECT_SIZE,
         style: {
@@ -15,7 +16,8 @@ const LayoutRect = () => (
     })
 );
 
-const layoutView = COM.create(COM.AlignNode, { // view container
+const layoutView = COM.create(COM.AlignNode, {
+    id: 'layout-view',
     offsetY: 60,
     alignX: 'center',
     stretchX: 1,
@@ -23,6 +25,7 @@ const layoutView = COM.create(COM.AlignNode, { // view container
 }, [
 
     COM.create(COM.ScrollNode, {
+        id: 'layout-container',
         boundsWidth: LAYOUT_CONTAINER_SIZE * 2 + LAYOUT_GAP,
         boundsHeight: LAYOUT_CONTAINER_SIZE * 2 + LAYOUT_GAP,
         scrollHeight: LAYOUT_CONTAINER_SIZE * 4,
@@ -57,6 +60,7 @@ const layoutView = COM.create(COM.AlignNode, { // view container
             }, [
 
                 COM.create(COM.FlowNode, { // row0
+                    classNames: ['layout-row'],
                     boundsHeight: LAYOUT_CONTAINER_SIZE,
                     direction: 'x',
                     gap: LAYOUT_GAP,
@@ -144,6 +148,7 @@ const layoutView = COM.create(COM.AlignNode, { // view container
                 ]),
 
                 COM.create(COM.FlowNode, { // row1
+                    classNames: ['layout-row'],
                     boundsHeight: LAYOUT_CONTAINER_SIZE,
                     direction: 'x',
                     gap: LAYOUT_GAP,
@@ -218,6 +223,7 @@ const layoutView = COM.create(COM.AlignNode, { // view container
                 ]),
 
                 COM.create(COM.AlignNode, { // row2
+                    classNames: ['layout-row'],
                     boundsWidth: LAYOUT_CONTAINER_SIZE * 2 + LAYOUT_GAP,
                     boundsHeight: LAYOUT_CONTAINER_SIZE,
                     alignX: 'center',
@@ -269,3 +275,5 @@ const layoutView = COM.create(COM.AlignNode, { // view container
     BackButton(),
 
 ]);
+
+assert(COM.Utils.selectClass('layout-row', layoutView).length === 3);
