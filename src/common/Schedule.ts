@@ -30,19 +30,24 @@ export namespace Schedule {
 
         const timeStamp = getTimeStamp();
 
-        _animationList.forEach(animation => {
+        const animationList = _animationList.slice();
+        const updateList = _updateList.slice();
+        const renderList = _renderList.slice();
+
+        _updateList.length = 0;
+        _renderList.length = 0;
+
+        animationList.forEach(animation => {
             animation.update(timeStamp);
         });
 
-        _updateList.forEach(node => {
+        updateList.forEach(node => {
             node.updateSync(timeStamp);
         });
-        _updateList.length = 0;
 
-        _renderList.forEach(root => {
+        renderList.forEach(root => {
             root.renderSync();
         });
-        _renderList.length = 0;
 
         _animationList = _animationList.filter(
             animation => animation.active
