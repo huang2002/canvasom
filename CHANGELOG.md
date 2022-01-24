@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.24.1
+
+- Fix tick loop
+
 ## 0.24.0
 
 - Add identity APIs
