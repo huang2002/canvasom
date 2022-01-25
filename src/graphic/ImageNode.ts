@@ -107,28 +107,28 @@ export class ImageNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /** dts2md break */
     /**
      * Image width in source.
-     * (`image.width` will be used if this is set to zero.)
+     * (Default to `image.width`.)
      * @default 0
      */
     sourceWidth: number;
     /** dts2md break */
     /**
      * Image height in source.
-     * (`image.height` will be used if this is set to zero.)
+     * (Default to `image.height`.)
      * @default 0
      */
     sourceHeight: number;
     /** dts2md break */
     /**
      * Destination width.
-     * (`image.width` will be used if this is set to zero.)
+     * (Default to `this.sourceWidth`.)
      * @default 0
      */
     destinationWidth: number;
     /** dts2md break */
     /**
      * Destination height.
-     * (`image.height` will be used if this is set to zero.)
+     * (Default to `this.sourceHeight`.)
      * @default 0
      */
     destinationHeight: number;
@@ -146,8 +146,8 @@ export class ImageNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      */
     protected beforeUpdate(timeStamp: number) {
         const { bounds, image } = this;
-        bounds.width = this.destinationWidth || image?.width || 0;
-        bounds.height = this.destinationHeight || image?.height || 0;
+        bounds.width = this.destinationWidth || this.sourceWidth || image?.width || 0;
+        bounds.height = this.destinationHeight || this.sourceHeight || image?.height || 0;
     }
     /** dts2md break */
     /**
@@ -160,17 +160,19 @@ export class ImageNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             return;
         }
 
-        const { context } = renderer;
-        context.drawImage(
+        const sourceWidth = this.sourceWidth || image.width;
+        const sourceHeight = this.sourceHeight || image.height;
+
+        renderer.context.drawImage(
             image,
             this.sourceX,
             this.sourceY,
-            this.sourceWidth || image.width,
-            this.sourceHeight || image.height,
+            sourceWidth,
+            sourceHeight,
             this.x,
             this.y,
-            this.destinationWidth || image.width,
-            this.destinationHeight || image.height,
+            this.destinationWidth || sourceWidth,
+            this.destinationHeight || sourceHeight,
         );
 
     }
