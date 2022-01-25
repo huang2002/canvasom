@@ -45,7 +45,7 @@ const animatedRect = new COM.RectNode({
     id: 'animated-rect',
     stretchX: 0.2,
     stretchY: 1,
-    pendingSize: true,
+    smartSize: true,
     style: {
         fillStyle: '#00F',
     },
