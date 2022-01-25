@@ -148,12 +148,13 @@ export class Vector {
      * (Default direction: anticlockwise)
      */
     tangent(clockwise = false): this {
+        const { x, y } = this;
         if (clockwise) {
-            this.x = this.y;
-            this.y = -this.x;
+            this.x = y;
+            this.y = -x;
         } else {
-            this.x = -this.y;
-            this.y = this.x;
+            this.x = -y;
+            this.y = x;
         }
         return this;
     }
