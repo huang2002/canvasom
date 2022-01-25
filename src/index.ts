@@ -4,6 +4,8 @@ export * from './common/Utils';
 export * from './common/Bounds';
 export * from './common/Style';
 export * from './common/Schedule';
+export * from './common/Vector';
+export * from './common/Vertices';
 
 export * from './interaction/detectTarget';
 
@@ -15,6 +17,7 @@ export * from './graphic/ShapeNode';
 export * from './graphic/RectNode';
 export * from './graphic/ArcNode';
 export * from './graphic/SectorNode';
+export * from './graphic/Polygon';
 export * from './graphic/TextNode';
 export * from './graphic/ImageNode';
 

@@ -162,6 +162,56 @@ const graphicView = COM.create(COM.CanvasNode, {
         style: GRAPHIC_BOUNDS_STYLE,
     }),
 
+    COM.create(COM.PolygonNode, {
+        offsetX: 410,
+        offsetY: 50,
+        vertices: COM.Vertices.createRectangle(100, 100),
+        style: {
+            ...GRAPHIC_BOUNDS_STYLE,
+            fillStyle: '#0FF',
+            strokeStyle: '#00F',
+            lineWidth: 2,
+        },
+    }),
+
+    COM.create(COM.PolygonNode, {
+        offsetX: 410,
+        offsetY: 170,
+        vertices: COM.Vertices.createRegularPolygon(5, 50),
+        style: {
+            ...GRAPHIC_BOUNDS_STYLE,
+            fillStyle: '#0FF',
+            strokeStyle: '#00F',
+            lineWidth: 2,
+        },
+    }),
+
+    COM.create(COM.PolygonNode, {
+        offsetX: 410,
+        offsetY: 290,
+        vertices: COM.Vertices.createStar(5, 20, 50),
+        style: {
+            ...GRAPHIC_BOUNDS_STYLE,
+            fillStyle: '#0FF',
+            strokeStyle: '#00F',
+            lineWidth: 2,
+        },
+    }),
+
+    COM.create(COM.PolygonNode, {
+        offsetX: 410,
+        offsetY: 410,
+        vertices: COM.Vertices.createRegularPolygon(8, 50)
+            .slice(0, -1)
+            .concat(new COM.Vector(0, 0)),
+        style: {
+            ...GRAPHIC_BOUNDS_STYLE,
+            fillStyle: '#0FF',
+            strokeStyle: '#00F',
+            lineWidth: 2,
+        },
+    }),
+
     BackButton(),
 
 ]);
