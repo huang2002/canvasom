@@ -1,6 +1,6 @@
 {
   "name": "canvasom",
-  "version": "0.24.1",
+  "version": "0.25.0",
   "description": "Canvas Object Model.",
   "module": "./dist/canvasom.min.js",
   "main": "./dist/canvasom.umd.min.js",
