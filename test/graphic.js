@@ -68,7 +68,7 @@ const graphicView = COM.create(COM.CanvasNode, {
 
     COM.create(COM.ArcNode, {
         offsetX: 50,
-        offsetY: 150,
+        offsetY: 170,
         radius: 50,
         style: {
             ...GRAPHIC_BOUNDS_STYLE,
@@ -78,7 +78,7 @@ const graphicView = COM.create(COM.CanvasNode, {
 
     COM.create(COM.ArcNode, {
         offsetX: 170,
-        offsetY: 150,
+        offsetY: 170,
         radius: 50,
         startAngle: 0,
         endAngle: COM.Utils.Constants.HALF_PI,
@@ -92,7 +92,7 @@ const graphicView = COM.create(COM.CanvasNode, {
 
     COM.create(COM.ArcNode, {
         offsetX: 290,
-        offsetY: 150,
+        offsetY: 170,
         radius: 50,
         startAngle: 0,
         endAngle: COM.Utils.Constants.HALF_PI,
@@ -105,7 +105,7 @@ const graphicView = COM.create(COM.CanvasNode, {
 
     COM.create(COM.SectorNode, {
         offsetX: 50,
-        offsetY: 270,
+        offsetY: 290,
         radius: 50,
         startAngle: 0,
         endAngle: COM.Utils.Constants.TWO_PI,
@@ -117,7 +117,7 @@ const graphicView = COM.create(COM.CanvasNode, {
 
     COM.create(COM.SectorNode, {
         offsetX: 170,
-        offsetY: 270,
+        offsetY: 290,
         radius: 50,
         startAngle: 0,
         endAngle: COM.Utils.Constants.HALF_PI,
@@ -131,7 +131,7 @@ const graphicView = COM.create(COM.CanvasNode, {
 
     COM.create(COM.SectorNode, {
         offsetX: 290,
-        offsetY: 270,
+        offsetY: 290,
         radius: 50,
         startAngle: 0,
         endAngle: COM.Utils.Constants.HALF_PI,
@@ -145,14 +145,14 @@ const graphicView = COM.create(COM.CanvasNode, {
     COM.create(COM.ImageNode, {
         image: createImageSource('./face.png'),
         offsetX: 50,
-        offsetY: 390,
+        offsetY: 410,
         style: GRAPHIC_BOUNDS_STYLE,
     }),
 
     COM.create(COM.ImageNode, {
         image: createImageSource('./face.png'),
         offsetX: 290,
-        offsetY: 390,
+        offsetY: 410,
         sourceX: 100,
         sourceY: 0,
         sourceWidth: 100,
@@ -168,8 +168,8 @@ const graphicView = COM.create(COM.CanvasNode, {
         vertices: COM.Vertices.createRectangle(100, 100),
         style: {
             ...GRAPHIC_BOUNDS_STYLE,
-            fillStyle: '#0FF',
-            strokeStyle: '#00F',
+            fillStyle: '#FDD',
+            strokeStyle: '#C33',
             lineWidth: 2,
         },
     }),
@@ -180,8 +180,8 @@ const graphicView = COM.create(COM.CanvasNode, {
         vertices: COM.Vertices.createRegularPolygon(5, 50),
         style: {
             ...GRAPHIC_BOUNDS_STYLE,
-            fillStyle: '#0FF',
-            strokeStyle: '#00F',
+            fillStyle: '#FDD',
+            strokeStyle: '#C33',
             lineWidth: 2,
         },
     }),
@@ -192,8 +192,8 @@ const graphicView = COM.create(COM.CanvasNode, {
         vertices: COM.Vertices.createStar(5, 20, 50),
         style: {
             ...GRAPHIC_BOUNDS_STYLE,
-            fillStyle: '#0FF',
-            strokeStyle: '#00F',
+            fillStyle: '#FDD',
+            strokeStyle: '#C33',
             lineWidth: 2,
         },
     }),
@@ -206,8 +206,8 @@ const graphicView = COM.create(COM.CanvasNode, {
             .concat(new COM.Vector(0, 0)),
         style: {
             ...GRAPHIC_BOUNDS_STYLE,
-            fillStyle: '#0FF',
-            strokeStyle: '#00F',
+            fillStyle: '#FDD',
+            strokeStyle: '#C33',
             lineWidth: 2,
         },
     }),
