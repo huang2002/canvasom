@@ -3,6 +3,14 @@
 /// <reference path="./common.js" />
 
 /**
+ * @type {Partial<COM.CanvasStyle>}
+ */
+const GRAPHIC_BOUNDS_STYLE = {
+    boundsStyle: 'rgba(0, 255, 255, .5)',
+    boundsWidth: 6,
+};
+
+/**
  * @param {string} source
  */
 const createImageSource = (source) => {
@@ -28,9 +36,8 @@ const graphicView = COM.create(COM.CanvasNode, {
         width: 100,
         height: 80,
         style: {
+            ...GRAPHIC_BOUNDS_STYLE,
             fillStyle: '#F00',
-            boundsStyle: 'rgba(0, 255, 255, .5)',
-            boundsWidth: 6,
         },
     }),
 
@@ -41,10 +48,9 @@ const graphicView = COM.create(COM.CanvasNode, {
         height: 80,
         radius: 16,
         style: {
+            ...GRAPHIC_BOUNDS_STYLE,
             strokeStyle: '#00F',
             lineWidth: 2,
-            boundsStyle: 'rgba(0, 255, 255, .5)',
-            boundsWidth: 6,
         },
     }),
 
@@ -55,9 +61,8 @@ const graphicView = COM.create(COM.CanvasNode, {
         height: 80,
         radius: -16,
         style: {
+            ...GRAPHIC_BOUNDS_STYLE,
             fillStyle: '#0F0',
-            boundsStyle: 'rgba(0, 255, 255, .5)',
-            boundsWidth: 6,
         },
     }),
 
@@ -66,9 +71,8 @@ const graphicView = COM.create(COM.CanvasNode, {
         offsetY: 150,
         radius: 50,
         style: {
+            ...GRAPHIC_BOUNDS_STYLE,
             fillStyle: '#F00',
-            boundsStyle: 'rgba(0, 255, 255, .5)',
-            boundsWidth: 6,
         },
     }),
 
@@ -79,11 +83,10 @@ const graphicView = COM.create(COM.CanvasNode, {
         startAngle: 0,
         endAngle: COM.Utils.Constants.HALF_PI,
         style: {
+            ...GRAPHIC_BOUNDS_STYLE,
             strokeStyle: '#00F',
             lineWidth: 2,
             lineCap: 'round',
-            boundsStyle: 'rgba(0, 255, 255, .5)',
-            boundsWidth: 6,
         },
     }),
 
@@ -95,9 +98,8 @@ const graphicView = COM.create(COM.CanvasNode, {
         endAngle: COM.Utils.Constants.HALF_PI,
         clockwise: true,
         style: {
+            ...GRAPHIC_BOUNDS_STYLE,
             fillStyle: '#0F0',
-            boundsStyle: 'rgba(0, 255, 255, .5)',
-            boundsWidth: 6,
         },
     }),
 
@@ -108,9 +110,8 @@ const graphicView = COM.create(COM.CanvasNode, {
         startAngle: 0,
         endAngle: COM.Utils.Constants.TWO_PI,
         style: {
+            ...GRAPHIC_BOUNDS_STYLE,
             fillStyle: '#F00',
-            boundsStyle: 'rgba(0, 255, 255, .5)',
-            boundsWidth: 6,
         },
     }),
 
@@ -121,11 +122,10 @@ const graphicView = COM.create(COM.CanvasNode, {
         startAngle: 0,
         endAngle: COM.Utils.Constants.HALF_PI,
         style: {
+            ...GRAPHIC_BOUNDS_STYLE,
             strokeStyle: '#00F',
             lineWidth: 2,
             lineCap: 'round',
-            boundsStyle: 'rgba(0, 255, 255, .5)',
-            boundsWidth: 6,
         },
     }),
 
@@ -137,9 +137,8 @@ const graphicView = COM.create(COM.CanvasNode, {
         endAngle: COM.Utils.Constants.HALF_PI,
         clockwise: true,
         style: {
+            ...GRAPHIC_BOUNDS_STYLE,
             fillStyle: '#0F0',
-            boundsStyle: 'rgba(0, 255, 255, .5)',
-            boundsWidth: 6,
         },
     }),
 
@@ -147,10 +146,7 @@ const graphicView = COM.create(COM.CanvasNode, {
         image: createImageSource('./face.png'),
         offsetX: 50,
         offsetY: 390,
-        style: {
-            boundsStyle: 'rgba(0, 255, 255, .5)',
-            boundsWidth: 6,
-        },
+        style: GRAPHIC_BOUNDS_STYLE,
     }),
 
     COM.create(COM.ImageNode, {
@@ -163,10 +159,7 @@ const graphicView = COM.create(COM.CanvasNode, {
         sourceHeight: 100,
         destinationWidth: 100,
         destinationHeight: 100,
-        style: {
-            boundsStyle: 'rgba(0, 255, 255, .5)',
-            boundsWidth: 6,
-        },
+        style: GRAPHIC_BOUNDS_STYLE,
     }),
 
     BackButton(),
