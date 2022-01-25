@@ -28,6 +28,13 @@ export type SectorNodeOptions<Events extends CanvasNodeEvents> = (
          * @default false
          */
         clockwise: boolean;
+        /**
+         * Whether to set `radius` to
+         * `Math.min(bounds.width, bounds.height) / 2` on update.
+         * (Try this with stretch options!)
+         * @default false
+         */
+        smartSize: boolean;
     }>
 );
 /** dts2md break */
@@ -45,6 +52,7 @@ export class SectorNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         this.startAngle = options?.startAngle ?? 0;
         this.endAngle = options?.endAngle ?? 0;
         this.radius = options?.radius ?? 0;
+        this.smartSize = options?.smartSize ?? false;
         this.clockwise = options?.clockwise ?? false;
     }
     /** dts2md break */
@@ -72,6 +80,14 @@ export class SectorNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     radius: number;
     /** dts2md break */
     /**
+     * Whether to set `radius` to
+     * `Math.min(bounds.width, bounds.height) / 2` on update.
+     * (Try this with stretch options!)
+     * @default false
+     */
+    smartSize: boolean;
+    /** dts2md break */
+    /**
      * Whether the direction is clockwise,
      * from `startAngle` to `endAngle`.
      * @default false
@@ -82,10 +98,14 @@ export class SectorNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * @override CanvasNode.beforeUpdate
      */
     protected beforeUpdate(timeStamp: number) {
-        const { bounds, radius } = this;
-        const size = radius * 2;
-        bounds.width = size;
-        bounds.height = size;
+        const { bounds } = this;
+        if (this.smartSize) {
+            this.radius = Math.min(bounds.width, bounds.height) / 2;
+        } else {
+            const size = this.radius * 2;
+            bounds.width = size;
+            bounds.height = size;
+        }
     }
     /** dts2md break */
     /**

@@ -51,6 +51,13 @@ export type ImageNodeOptions<Events extends CanvasNodeEvents> = (
          * @default 0
          */
         destinationHeight: number;
+        /**
+         * Whether to set `destinationWidth` and `destinationHeight` to
+         * `bounds.width` and `bounds.height` on update.
+         * (Try this with stretch options!)
+         * @default false
+         */
+        smartSize: boolean;
     }>
 );
 /** dts2md break */
@@ -72,6 +79,7 @@ export class ImageNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         this.sourceHeight = options?.sourceHeight ?? 0;
         this.destinationWidth = options?.destinationWidth ?? 0;
         this.destinationHeight = options?.destinationHeight ?? 0;
+        this.smartSize = options?.smartSize ?? false;
     }
     /** dts2md break */
     /**
@@ -124,6 +132,14 @@ export class ImageNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * @default 0
      */
     destinationHeight: number;
+    /** dts2md break */
+    /**
+     * Whether to set `destinationWidth` and `destinationHeight` to
+     * `bounds.width` and `bounds.height` on update.
+     * (Try this with stretch options!)
+     * @default false
+     */
+    smartSize: boolean;
     /** dts2md break */
     /**
      * @override CanvasNode.beforeUpdate

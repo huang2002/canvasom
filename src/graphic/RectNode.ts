@@ -30,7 +30,7 @@ export type RectNodeOptions<Events extends CanvasNodeEvents> = (
          * (Try this with stretch options!)
          * @default false
          */
-        pendingSize: boolean;
+        smartSize: boolean;
     }>
 );
 /** dts2md break */
@@ -48,7 +48,7 @@ export class RectNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         this.width = options?.width ?? 0;
         this.height = options?.height ?? 0;
         this.radius = options?.radius ?? 0;
-        this.pendingSize = options?.pendingSize ?? false;
+        this.smartSize = options?.smartSize ?? false;
     }
     /** dts2md break */
     /**
@@ -79,14 +79,14 @@ export class RectNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * (Try this with stretch options!)
      * @default false
      */
-    pendingSize: boolean;
+    smartSize: boolean;
     /** dts2md break */
     /**
      * @override CanvasNode.beforeUpdate
      */
     protected beforeUpdate(timeStamp: number) {
         const { bounds } = this;
-        if (this.pendingSize) {
+        if (this.smartSize) {
             this.width = bounds.width;
             this.height = bounds.height;
         } else {

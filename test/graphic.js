@@ -30,16 +30,22 @@ const graphicView = COM.create(COM.CanvasNode, {
     stretchY: 1,
 }, [
 
-    COM.create(COM.RectNode, {
+    COM.create(COM.CanvasNode, {
         offsetX: 50,
         offsetY: 50,
-        width: 100,
-        height: 80,
-        style: {
-            ...GRAPHIC_BOUNDS_STYLE,
-            fillStyle: '#F00',
-        },
-    }),
+        boundsWidth: 100,
+        boundsHeight: 100,
+    }, [
+        COM.create(COM.RectNode, {
+            stretchX: 1,
+            stretchY: .8,
+            smartSize: true,
+            style: {
+                ...GRAPHIC_BOUNDS_STYLE,
+                fillStyle: '#F00',
+            },
+        }),
+    ]),
 
     COM.create(COM.RectNode, {
         offsetX: 170,
@@ -66,15 +72,22 @@ const graphicView = COM.create(COM.CanvasNode, {
         },
     }),
 
-    COM.create(COM.ArcNode, {
+    COM.create(COM.CanvasNode, {
         offsetX: 50,
         offsetY: 170,
-        radius: 50,
-        style: {
-            ...GRAPHIC_BOUNDS_STYLE,
-            fillStyle: '#F00',
-        },
-    }),
+        boundsWidth: 100,
+        boundsHeight: 100,
+    }, [
+        COM.create(COM.ArcNode, {
+            stretchX: 1,
+            stretchY: 1,
+            smartSize: true,
+            style: {
+                ...GRAPHIC_BOUNDS_STYLE,
+                fillStyle: '#F00',
+            },
+        }),
+    ]),
 
     COM.create(COM.ArcNode, {
         offsetX: 170,
@@ -103,17 +116,24 @@ const graphicView = COM.create(COM.CanvasNode, {
         },
     }),
 
-    COM.create(COM.SectorNode, {
+    COM.create(COM.CanvasNode, {
         offsetX: 50,
         offsetY: 290,
-        radius: 50,
-        startAngle: 0,
-        endAngle: COM.Utils.Constants.TWO_PI,
-        style: {
-            ...GRAPHIC_BOUNDS_STYLE,
-            fillStyle: '#F00',
-        },
-    }),
+        boundsWidth: 100,
+        boundsHeight: 100,
+    }, [
+        COM.create(COM.SectorNode, {
+            stretchX: 1,
+            stretchY: 1,
+            smartSize: true,
+            startAngle: 0,
+            endAngle: COM.Utils.Constants.TWO_PI,
+            style: {
+                ...GRAPHIC_BOUNDS_STYLE,
+                fillStyle: '#F00',
+            },
+        }),
+    ]),
 
     COM.create(COM.SectorNode, {
         offsetX: 170,
@@ -149,18 +169,24 @@ const graphicView = COM.create(COM.CanvasNode, {
         style: GRAPHIC_BOUNDS_STYLE,
     }),
 
-    COM.create(COM.ImageNode, {
-        image: createImageSource('./face.png'),
+    COM.create(COM.CanvasNode, {
         offsetX: 290,
         offsetY: 410,
-        sourceX: 100,
-        sourceY: 0,
-        sourceWidth: 100,
-        sourceHeight: 100,
-        destinationWidth: 100,
-        destinationHeight: 100,
-        style: GRAPHIC_BOUNDS_STYLE,
-    }),
+        boundsWidth: 100,
+        boundsHeight: 100,
+    }, [
+        COM.create(COM.ImageNode, {
+            image: createImageSource('./face.png'),
+            sourceX: 100,
+            sourceY: 0,
+            sourceWidth: 100,
+            sourceHeight: 100,
+            stretchX: 1,
+            stretchY: 1,
+            smartSize: true,
+            style: GRAPHIC_BOUNDS_STYLE,
+        }),
+    ]),
 
     COM.create(COM.PolygonNode, {
         offsetX: 410,
