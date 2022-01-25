@@ -144,6 +144,21 @@ export class Vector {
     }
     /** dts2md break */
     /**
+     * Rotate the vector by 90 degrees.
+     * (Default direction: anticlockwise)
+     */
+    tangent(clockwise = false): this {
+        if (clockwise) {
+            this.x = this.y;
+            this.y = -this.x;
+        } else {
+            this.x = -this.y;
+            this.y = this.x;
+        }
+        return this;
+    }
+    /** dts2md break */
+    /**
      * Returns the dot production of `this` and `vector`.
      */
     dot(vector: VectorLike): number {
