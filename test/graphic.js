@@ -37,7 +37,7 @@ const graphicView = COM.create(COM.CanvasNode, {
         boundsHeight: 100,
     }, [
         COM.create(COM.RectNode, {
-            stretchX: 1,
+            stretchX: 1.1,
             stretchY: .8,
             smartSize: true,
             style: {
@@ -79,7 +79,7 @@ const graphicView = COM.create(COM.CanvasNode, {
         boundsHeight: 100,
     }, [
         COM.create(COM.ArcNode, {
-            stretchX: 1,
+            stretchX: 1.1,
             stretchY: 1,
             smartSize: true,
             style: {
@@ -123,7 +123,7 @@ const graphicView = COM.create(COM.CanvasNode, {
         boundsHeight: 100,
     }, [
         COM.create(COM.SectorNode, {
-            stretchX: 1,
+            stretchX: 1.1,
             stretchY: 1,
             smartSize: true,
             startAngle: 0,
