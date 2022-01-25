@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.25.0
+
+- Add `Vector` & `Vertices`
+- Add `PolygonNode`
+- Add `smartSize` option to shapes
+- Remove `rectNode.pendingSize`
+- Improve image size defaults
+
 ## 0.24.1
 
 - Fix tick loop
