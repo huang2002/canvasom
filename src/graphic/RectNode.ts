@@ -54,7 +54,7 @@ export class RectNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * @override CanvasNode.tag
      */
-    readonly tag = 'rect';
+    readonly tag: string = 'rect';
     /** dts2md break */
     /**
      * The width of the rectangle.

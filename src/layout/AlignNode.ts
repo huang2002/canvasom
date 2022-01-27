@@ -42,7 +42,7 @@ export class AlignNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * @override CanvasNode.tag
      */
-    readonly tag = 'align';
+    readonly tag: string = 'align';
     /** dts2md break */
     /**
      * Horizontal align.

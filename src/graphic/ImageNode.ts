@@ -85,7 +85,7 @@ export class ImageNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * @override CanvasNode.tag
      */
-    readonly tag = 'image';
+    readonly tag: string = 'image';
     /** dts2md break */
     /**
      * Image source.

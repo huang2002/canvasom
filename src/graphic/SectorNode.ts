@@ -59,7 +59,7 @@ export class SectorNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * @override CanvasNode.tag
      */
-    readonly tag = 'sector';
+    readonly tag: string = 'sector';
     /** dts2md break */
     /**
      * The start angle of the sector. (radian)

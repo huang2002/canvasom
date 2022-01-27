@@ -36,7 +36,7 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * @override CanvasNode.tag
      */
-    readonly tag = 'polygon';
+    readonly tag: string = 'polygon';
 
     private _vertices!: VectorLike[];
     private _originX = 0;

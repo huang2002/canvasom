@@ -60,7 +60,7 @@ export class ArcNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /**
      * @override CanvasNode.tag
      */
-    readonly tag = 'arc';
+    readonly tag: string = 'arc';
     /** dts2md break */
     /**
      * The start angle of the arc. (radian)
