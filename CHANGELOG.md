@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.25.1
+
+- Move `3h-event` to `dependences` to fix type errors
+
 ## 0.25.0
 
 - Add `Vector` & `Vertices`
