@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.25.2
+
+- Fix type of `tag` property
+
 ## 0.25.1
 
 - Move `3h-event` to `dependences` to fix type errors
