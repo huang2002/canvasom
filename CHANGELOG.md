@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.27.0
+
+- Change vertex type to `Vector`
+
 ## 0.26.0
 
 - Add more vector-related APIs
