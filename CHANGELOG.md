@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.26.0
+
+- Add more vector-related APIs
+
 ## 0.25.2
 
 - Fix type of `tag` property
