@@ -1,6 +1,6 @@
 import { ShapeNode, ShapeNodeOptions } from "./ShapeNode";
 import { CanvasNodeEvents } from '../core/CanvasNode';
-import type { VectorLike } from '../common/Vector';
+import type { Vector } from '../common/Vector';
 
 /**
  * Type of options of {@link PolygonNode}.
@@ -11,7 +11,7 @@ export type PolygonNodeOptions<Events extends CanvasNodeEvents> = (
         /**
          * The vertices of the polygon.
          */
-        vertices: VectorLike[];
+        vertices: Vector[];
     }>
 );
 /** dts2md break */
@@ -38,7 +38,7 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      */
     readonly tag: string = 'polygon';
 
-    private _vertices!: VectorLike[];
+    private _vertices!: Vector[];
     private _originX = 0;
     private _originY = 0;
     /** dts2md break */
@@ -52,14 +52,14 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * Get the vertices of the polygon.
      * (Set them using `updateVertices`.)
      */
-    get vertices(): readonly VectorLike[] {
+    get vertices(): readonly Vector[] {
         return this._vertices;
     }
     /** dts2md break */
     /**
      * Update the vertices of the polygon.
      */
-    updateVertices(vertices: VectorLike[]) {
+    updateVertices(vertices: Vector[]) {
 
         if (!vertices.length) {
             throw new Error('no vertices given');
