@@ -1,3 +1,6 @@
+import { random } from '3h-utils';
+import { Utils } from "./Utils";
+
 /**
  * Type of vector-like objects.
  */
@@ -24,6 +27,43 @@ export class Vector {
      */
     static from(vector: VectorLike) {
         return new Vector(vector.x, vector.y);
+    }
+    /** dts2md break */
+    /**
+     * Get a random normalized vector.
+     * (Default `startAngle`: 0; `endAngle`: )
+     */
+    static random(startAngle = 0, endAngle = Utils.Constants.TWO_PI) {
+        const angle = random(startAngle, endAngle);
+        return new Vector(
+            Math.cos(angle),
+            Math.sin(angle),
+        );
+    }
+    /** dts2md break */
+    /**
+     * vector1 += vector0 * (k1 / (Math.abs(k1) + Math.abs(k2))) * scale
+     * vector2 += vector0 * (k2 / (Math.abs(k1) + Math.abs(k2))) * scale
+     * (Default scale: 1)
+     */
+    static distribute(
+        vector0: VectorLike,
+        vector1: VectorLike,
+        vector2: VectorLike,
+        k1: number,
+        k2: number,
+        scale?: number,
+    ) {
+        let sum = Math.abs(k1) + Math.abs(k2);
+        if (scale !== undefined) {
+            sum /= scale;
+        }
+        k1 /= sum;
+        k2 /= sum;
+        vector1.x += vector0.x * k1;
+        vector1.y += vector0.y * k1;
+        vector2.x += vector0.x * k2;
+        vector2.y += vector0.y * k2;
     }
     /** dts2md break */
     /**
@@ -85,6 +125,14 @@ export class Vector {
     }
     /** dts2md break */
     /**
+     * Normalize the vector.
+     */
+    normalize(): this {
+        this.norm = 1;
+        return this;
+    }
+    /** dts2md break */
+    /**
      * Add (dx, dy) to the vector.
      */
     add(dx: number, dy: number): this {
@@ -99,6 +147,24 @@ export class Vector {
     addVector(vector: VectorLike): this {
         this.x += vector.x;
         this.y += vector.y;
+        return this;
+    }
+    /** dts2md break */
+    /**
+     * Subtract (dx, dy) from the vector.
+     */
+    sub(dx: number, dy: number): this {
+        this.x -= dx;
+        this.y -= dy;
+        return this;
+    }
+    /** dts2md break */
+    /**
+     * Subtract the given vector from this vector.
+     */
+    subVector(vector: VectorLike): this {
+        this.x -= vector.x;
+        this.y -= vector.y;
         return this;
     }
     /** dts2md break */
@@ -128,6 +194,16 @@ export class Vector {
     scaleVector(vector: VectorLike): this {
         this.x *= vector.x;
         this.y *= vector.y;
+        return this;
+    }
+    /** dts2md break */
+    /**
+     * Reverse the vector.
+     * ((x, y) -> (-x, -y))
+     */
+    reverse(): this {
+        this.x = -this.x;
+        this.y = -this.y;
         return this;
     }
     /** dts2md break */
@@ -171,6 +247,32 @@ export class Vector {
      */
     cross(vector: VectorLike): number {
         return this.x * vector.y - this.y * vector.x;
+    }
+    /** dts2md break */
+    /**
+     * Get the projection of this vector on specific direction.
+     */
+    project(direction: VectorLike): number {
+        const dotProduct = this.x * direction.x + this.y * direction.y;
+        const directionNorm = Math.sqrt(direction.x ** 2 + direction.y ** 2);
+        return dotProduct / directionNorm;
+    }
+    /** dts2md break */
+    /**
+     * Get the vector projection of this vector on specific direction.
+     */
+    projectVector(direction: VectorLike): Vector {
+        const dotProduct = this.x * direction.x + this.y * direction.y;
+        const directionNorm = Math.sqrt(direction.x ** 2 + direction.y ** 2);
+        return Vector.from(direction)
+            .scale(dotProduct / directionNorm);
+    }
+    /** dts2md break */
+    /**
+     * @override Object.toString
+     */
+    toString(fractionDigits?: number) {
+        return this.x.toFixed(fractionDigits) + ',' + this.y.toFixed(fractionDigits);
     }
 
 }
