@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.28.0
+
+- Add `smartUpdate` to `CanvasNode`
+- Fix some docs
+
 ## 0.27.0
 
 - Change vertex type to `Vector`
