@@ -206,6 +206,11 @@ export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
      */
     noUpdate: boolean;
     /**
+     * Whether to skip update when the node is invisible.
+     * @default true
+     */
+    smartUpdate: boolean;
+    /**
      * Add a few event listeners by providing a dict.
      * (eventName -> listener | listenerRecord)
      * @example
@@ -252,6 +257,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         this.penetrable = options?.penetrable ?? false;
         this.style = options?.style ?? (Object.create(null) as {});
         this.noUpdate = options?.noUpdate ?? false;
+        this.smartUpdate = options?.smartUpdate ?? true;
 
         if (options?.listeners) {
             addListeners(this, options.listeners);
@@ -352,6 +358,12 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * @default false
      */
     noUpdate: boolean;
+    /** dts2md break */
+    /**
+     * Whether to skip update when the node is invisible.
+     * @default true
+     */
+    smartUpdate: boolean;
     /** dts2md break */
     /**
      * Whether this is a root node.
@@ -717,7 +729,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * 4. Invoke `afterUpdate` on this node and child nodes.
      */
     updateSync(timeStamp: number) {
-        if (this.noUpdate) {
+        if (this.noUpdate || (this.smartUpdate && !this.visible)) {
             return;
         }
         this._initUpdate(timeStamp);
