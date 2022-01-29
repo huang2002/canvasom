@@ -739,7 +739,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /** dts2md break */
     /**
      * Update this node asynchronously.
-     * (equal to `Schedule.update(thisNode)`)
+     * (equal to `!thisNode.noUpdate && Schedule.update(thisNode)`)
      */
     update() {
         if (this.noUpdate) {
