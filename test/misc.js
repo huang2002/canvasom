@@ -91,6 +91,20 @@ T.test(null, {
         context.assert(almostEqual(v.y, -0.8));
     },
 
+    vector_set(context) {
+        const v = new Vector(10, 11);
+        v.set(3, 4);
+        context.assertStrictEqual(v.x, 3);
+        context.assertStrictEqual(v.y, 4);
+    },
+
+    vector_setVector(context) {
+        const v = new Vector(10, 11);
+        v.setVector({ x: 3, y: 4 });
+        context.assertStrictEqual(v.x, 3);
+        context.assertStrictEqual(v.y, 4);
+    },
+
     vector_add(context) {
         const v = new Vector(10, 11);
         v.add(-5, 1);

@@ -133,6 +133,24 @@ export class Vector {
     }
     /** dts2md break */
     /**
+     * Set the vector to (x, y).
+     */
+    set(x: number, y: number): this {
+        this.x = x;
+        this.y = y;
+        return this;
+    }
+    /** dts2md break */
+    /**
+     * Set this vector to the given vector.
+     */
+    setVector(vector: VectorLike): this {
+        this.x = vector.x;
+        this.y = vector.y;
+        return this;
+    }
+    /** dts2md break */
+    /**
      * Add (dx, dy) to the vector.
      */
     add(dx: number, dy: number): this {
