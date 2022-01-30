@@ -91,6 +91,17 @@ T.test(null, {
         context.assert(almostEqual(v.y, -0.8));
     },
 
+    vector_isZero(context) {
+        const v0 = new Vector(0, 0);
+        const v1 = new Vector(0, 1);
+        const v2 = new Vector(1, 0);
+        const v3 = new Vector(1, 1);
+        context.assertStrictEqual(v0.isZero(), true);
+        context.assertStrictEqual(v1.isZero(), false);
+        context.assertStrictEqual(v2.isZero(), false);
+        context.assertStrictEqual(v3.isZero(), false);
+    },
+
     vector_set(context) {
         const v = new Vector(10, 11);
         v.set(3, 4);
@@ -113,10 +124,14 @@ T.test(null, {
     },
 
     vector_addVector(context) {
-        const v = new Vector(10, 11);
-        v.addVector({ x: -5, y: 1 });
-        context.assertStrictEqual(v.x, 5);
-        context.assertStrictEqual(v.y, 12);
+        const v1 = new Vector(10, 11);
+        const v2 = new Vector(10, 11);
+        v1.addVector({ x: -5, y: 1 });
+        v2.addVector({ x: -5, y: 1 }, 2);
+        context.assertStrictEqual(v1.x, 5);
+        context.assertStrictEqual(v1.y, 12);
+        context.assertStrictEqual(v2.x, 0);
+        context.assertStrictEqual(v2.y, 13);
     },
 
     vector_sub(context) {
@@ -127,10 +142,14 @@ T.test(null, {
     },
 
     vector_subVector(context) {
-        const v = new Vector(10, 11);
-        v.subVector({ x: 5, y: -1 });
-        context.assertStrictEqual(v.x, 5);
-        context.assertStrictEqual(v.y, 12);
+        const v1 = new Vector(10, 11);
+        const v2 = new Vector(10, 11);
+        v1.subVector({ x: 5, y: -1 });
+        v2.subVector({ x: 5, y: -1 }, 2);
+        context.assertStrictEqual(v1.x, 5);
+        context.assertStrictEqual(v1.y, 12);
+        context.assertStrictEqual(v2.x, 0);
+        context.assertStrictEqual(v2.y, 13);
     },
 
     vector_scale(context) {

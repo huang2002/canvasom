@@ -133,6 +133,13 @@ export class Vector {
     }
     /** dts2md break */
     /**
+     * Returns `true` if the vector is a zero vector.
+     */
+    isZero() {
+        return (this.x === 0) && (this.y === 0);
+    }
+    /** dts2md break */
+    /**
      * Set the vector to (x, y).
      */
     set(x: number, y: number): this {
@@ -162,9 +169,14 @@ export class Vector {
     /**
      * Add the given vector to this vector.
      */
-    addVector(vector: VectorLike): this {
-        this.x += vector.x;
-        this.y += vector.y;
+    addVector(vector: VectorLike, scale?: number): this {
+        if (typeof scale === 'number') {
+            this.x += vector.x * scale;
+            this.y += vector.y * scale;
+        } else {
+            this.x += vector.x;
+            this.y += vector.y;
+        }
         return this;
     }
     /** dts2md break */
@@ -180,9 +192,14 @@ export class Vector {
     /**
      * Subtract the given vector from this vector.
      */
-    subVector(vector: VectorLike): this {
-        this.x -= vector.x;
-        this.y -= vector.y;
+    subVector(vector: VectorLike, scale?: number): this {
+        if (typeof scale === 'number') {
+            this.x -= vector.x * scale;
+            this.y -= vector.y * scale;
+        } else {
+            this.x -= vector.x;
+            this.y -= vector.y;
+        }
         return this;
     }
     /** dts2md break */
