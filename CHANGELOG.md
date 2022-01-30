@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.29.0
+
+- Add `vector.set` & `vector.setVector`
+- Fix an internal file name
+
 ## 0.28.0
 
 - Add `smartUpdate` to `CanvasNode`
