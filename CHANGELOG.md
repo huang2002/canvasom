@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.30.0
+
+- Add `vector.isZero()`
+- Add `scale` option to `vector.addVector` & `vector.subVector`
+
 ## 0.29.0
 
 - Add `vector.set` & `vector.setVector`
