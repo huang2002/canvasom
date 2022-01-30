@@ -17,7 +17,7 @@ export * from './graphic/ShapeNode';
 export * from './graphic/RectNode';
 export * from './graphic/ArcNode';
 export * from './graphic/SectorNode';
-export * from './graphic/Polygon';
+export * from './graphic/PolygonNode';
 export * from './graphic/TextNode';
 export * from './graphic/ImageNode';
 
