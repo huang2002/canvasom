@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.31.0
+
+- Adjust tick procedures
+- Add `ScrollNodeEvents`
+- Fix some docs
+- Fix generic types
+
 ## 0.30.0
 
 - Add `vector.isZero()`
