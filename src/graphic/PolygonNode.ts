@@ -111,5 +111,6 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             }
         });
     }
+    // TODO: override ShapeNode.containsPoint
 
 }

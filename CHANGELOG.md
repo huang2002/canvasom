@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.31.1
+
+- Fix some property overriding
+
 ## 0.31.0
 
 - Adjust tick procedures
