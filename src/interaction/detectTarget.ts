@@ -6,10 +6,10 @@ import type { CanvasNode } from '../core/CanvasNode';
  * (Returns an empty array if there is no interactive target.)
  */
 export const detectTarget = (
-    rootNode: CanvasNode,
+    rootNode: CanvasNode<any>,
     x: number,
     y: number,
-): CanvasNode[] => {
+): CanvasNode<any>[] => {
 
     if (rootNode.penetrable) {
         const { childNodes } = rootNode;
@@ -27,9 +27,9 @@ export const detectTarget = (
         return [];
     }
 
-    const targetPath: CanvasNode[] = [];
-    let currentNode: CanvasNode | null = rootNode;
-    let nextNode: CanvasNode | null = null;
+    const targetPath: CanvasNode<any>[] = [];
+    let currentNode: CanvasNode<any> | null = rootNode;
+    let nextNode: CanvasNode<any> | null = null;
     let childNodes;
 
     while (currentNode) {
@@ -41,7 +41,7 @@ export const detectTarget = (
 
         if (childNodes.length) {
 
-            const checkChildNode = (childNode: CanvasNode) => {
+            const checkChildNode = (childNode: CanvasNode<any>) => {
 
                 if (nextNode) {
                     return;

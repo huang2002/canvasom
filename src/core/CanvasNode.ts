@@ -26,7 +26,7 @@ export interface CanvasPointerEventData {
     /**
      * The interaction target.
      */
-    target: CanvasNode;
+    target: CanvasNode<any>;
     /**
      * The original DOM event.
      */

@@ -49,7 +49,7 @@ export namespace Utils {
      */
     export const bubbleEvent = (
         event: ValueType<CanvasNodeEvents>,
-        targetPath: CanvasNode[],
+        targetPath: CanvasNode<any>[],
     ) => {
         for (let i = targetPath.length - 1; i >= 0; i--) {
             targetPath[i].emit(event);
@@ -65,8 +65,8 @@ export namespace Utils {
      */
     export const selectId = (
         id: string,
-        node: CanvasNode,
-    ): CanvasNode | null => {
+        node: CanvasNode<any>,
+    ): CanvasNode<any> | null => {
 
         const { childNodes } = node;
         let childNode, childResult;
@@ -97,9 +97,9 @@ export namespace Utils {
      */
     export const selectTag = (
         tag: string,
-        node: CanvasNode,
-        output?: CanvasNode[],
-    ): CanvasNode[] => {
+        node: CanvasNode<any>,
+        output?: CanvasNode<any>[],
+    ): CanvasNode<any>[] => {
 
         const result = output ?? [];
 
@@ -121,9 +121,9 @@ export namespace Utils {
      */
     export const selectClass = (
         className: string,
-        node: CanvasNode,
-        output?: CanvasNode[],
-    ): CanvasNode[] => {
+        node: CanvasNode<any>,
+        output?: CanvasNode<any>[],
+    ): CanvasNode<any>[] => {
 
         const result = output ?? [];
 
