@@ -21,6 +21,12 @@ export type FlowNodeOptions<Events extends CanvasNodeEvents> = (
          * @default 0
          */
         gap: number;
+        /** dts2md break */
+        /**
+         * @override CanvasNode.penetrable
+         * @default true
+         */
+        penetrable: boolean;
     }>
 );
 /** dts2md break */
@@ -37,6 +43,7 @@ export class FlowNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         super(options);
         this.direction = options?.direction ?? 'x';
         this.gap = options?.gap ?? 0;
+        this.penetrable = options?.penetrable ?? true;
     }
     /** dts2md break */
     /**
@@ -60,7 +67,7 @@ export class FlowNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * @override CanvasNode.penetrable
      * @default true
      */
-    penetrable = true;
+    penetrable: boolean;
     /** dts2md break */
     /**
      * @override CanvasNode.updateLayout

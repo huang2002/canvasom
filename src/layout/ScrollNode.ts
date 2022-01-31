@@ -94,6 +94,11 @@ export type ScrollNodeOptions<Events extends ScrollNodeEvents> = (
          * @default 'Shift'
          */
         shiftModifier: string | null;
+        /**
+         * @override CanvasNode.interactive
+         * @default true
+         */
+        interactive: boolean;
     }>
 );
 /** dts2md break */
@@ -120,6 +125,7 @@ export class ScrollNode<Events extends ScrollNodeEvents = ScrollNodeEvents>
         this.lineScale = options?.lineScale ?? 25;
         this.pageScale = options?.pageScale ?? 300;
         this.shiftModifier = options?.shiftModifier ?? 'Shift';
+        this.interactive = options?.interactive ?? true;
 
         this._onPointerStart = this._onPointerStart.bind(this);
         this._onPointerMove = this._onPointerMove.bind(this);
@@ -197,7 +203,7 @@ export class ScrollNode<Events extends ScrollNodeEvents = ScrollNodeEvents>
      * @override CanvasNode.interactive
      * @default true
      */
-    interactive = true;
+    interactive: boolean;
 
     private _scrollX = 0;
     private _scrollY = 0;

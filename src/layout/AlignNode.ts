@@ -21,6 +21,12 @@ export type AlignNodeOptions<Events extends CanvasNodeEvents> = (
          * @default 'begin'
          */
         alignY: AlignMode;
+        /** dts2md break */
+        /**
+         * @override CanvasNode.penetrable
+         * @default true
+         */
+        penetrable: boolean;
     }>
 );
 /** dts2md break */
@@ -37,6 +43,7 @@ export class AlignNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         super(options);
         this.alignX = options?.alignX ?? 'begin';
         this.alignY = options?.alignY ?? 'begin';
+        this.penetrable = options?.penetrable ?? true;
     }
     /** dts2md break */
     /**
@@ -60,7 +67,7 @@ export class AlignNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * @override CanvasNode.penetrable
      * @default true
      */
-    penetrable = true;
+    penetrable: boolean;
     /** dts2md break */
     /**
      * @override CanvasNode.updateLayout
