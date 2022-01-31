@@ -16,7 +16,8 @@ export type PolygonNodeOptions<Events extends CanvasNodeEvents> = (
 );
 /** dts2md break */
 /**
- * Class of polygonangle nodes.
+ * Class of polygon nodes.
+ * (You can set `closePath` to `false` to create polylines.)
  */
 export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     extends ShapeNode<Events> {
