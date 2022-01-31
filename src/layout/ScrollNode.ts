@@ -1,8 +1,34 @@
-import { CanvasNode, CanvasNodeEvents, CanvasNodeOptions, CanvasPointerEvent, CanvasWheelEvent, CanvasScrollEventData } from '../core/CanvasNode';
+import { CanvasNode, CanvasNodeEvents, CanvasNodeOptions, CanvasPointerEvent, CanvasWheelEvent } from '../core/CanvasNode';
 import { Utils } from "../common/Utils";
 import { clamp } from '3h-utils';
 import { Event } from '3h-event';
 
+/**
+ * Type of data of scroll event.
+ */
+export interface CanvasScrollEventData {
+    /**
+     * Scroll x. (clamped)
+     */
+    deltaX: number;
+    /**
+     * Scroll y. (clamped)
+     */
+    deltaY: number;
+}
+/** dts2md break */
+/**
+ * Type of scroll events on canvas nodes.
+ */
+export type CanvasScrollEvent = Event<'scroll', CanvasScrollEventData>;
+/** dts2md break */
+/**
+ * Type map of events on scroll nodes.
+ */
+export interface ScrollNodeEvents extends CanvasNodeEvents {
+    scroll: CanvasScrollEvent;
+}
+/** dts2md break */
 /**
  * Type of interaction modes of scroll nodes.
  */
@@ -16,7 +42,7 @@ export type ScrollDirection = 'none' | 'x' | 'y' | 'both';
 /**
  * Type of options of {@link ScrollNode}.
  */
-export type ScrollNodeOptions<Events extends CanvasNodeEvents> = (
+export type ScrollNodeOptions<Events extends ScrollNodeEvents> = (
     & CanvasNodeOptions<Events>
     & Partial<{
         /**
@@ -46,7 +72,7 @@ export type ScrollNodeOptions<Events extends CanvasNodeEvents> = (
          * So, it's recommended to pass your canvas root here.)
          * @default this
          */
-        root: CanvasNode<Events>;
+        root: CanvasNode<any>;
         /**
          * Scroll scale of pixels.
          * @default 1
@@ -74,7 +100,7 @@ export type ScrollNodeOptions<Events extends CanvasNodeEvents> = (
 /**
  * Class of container nodes that act like scrollable views.
  */
-export class ScrollNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
+export class ScrollNode<Events extends ScrollNodeEvents = ScrollNodeEvents>
     extends CanvasNode<Events> {
     /** dts2md break */
     /**
@@ -140,7 +166,7 @@ export class ScrollNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * So, it's recommended to pass your canvas root here.)
      * @default this
      */
-    readonly root: CanvasNode<Events>;
+    readonly root: CanvasNode<any>;
     /** dts2md break */
     /**
      * Scroll scale of pixels.
