@@ -228,8 +228,16 @@ export class ScrollNode<Events extends ScrollNodeEvents = ScrollNodeEvents>
     scrollBy(dx: number, dy: number) {
 
         const { bounds } = this;
-        const scrollX = clamp(this._scrollX + dx, 0, this.scrollWidth - bounds.width);
-        const scrollY = clamp(this._scrollY + dy, 0, this.scrollHeight - bounds.height);
+        const scrollX = clamp(
+            this._scrollX + dx,
+            0,
+            this.scrollWidth - bounds.width,
+        );
+        const scrollY = clamp(
+            this._scrollY + dy,
+            0,
+            this.scrollHeight - bounds.height,
+        );
         const deltaX = scrollX - this._scrollX;
         const deltaY = scrollY - this._scrollY;
 
@@ -322,7 +330,7 @@ export class ScrollNode<Events extends ScrollNodeEvents = ScrollNodeEvents>
             allowScrollY ? (this._scrollY0 + this._y0 - y) : 0,
         );
 
-        if (this._scrollX === _scrollX && this._scrollY === _scrollY) { // not scrolled
+        if ((this._scrollX === _scrollX) && (this._scrollY === _scrollY)) { // not scrolled
             // reinitialize
             this._x0 = x;
             this._y0 = y;
