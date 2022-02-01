@@ -266,8 +266,8 @@ export class ScrollNode<Events extends ScrollNodeEvents = ScrollNodeEvents>
         const layoutOffsetX = -this._scrollX;
         const layoutOffsetY = -this._scrollY;
         this.childNodes.forEach(childNode => {
-            (childNode as ScrollNode<Events>).layoutOffsetX = layoutOffsetX;
-            (childNode as ScrollNode<Events>).layoutOffsetY = layoutOffsetY;
+            childNode.layoutOffsetX = layoutOffsetX;
+            childNode.layoutOffsetY = layoutOffsetY;
         });
     }
 

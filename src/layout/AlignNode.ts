@@ -83,18 +83,14 @@ export class AlignNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             case 'center': {
                 this.childNodes.forEach(childNode => {
                     const { bounds: childBounds } = childNode;
-                    // narrow the type to access protected properties
-                    (childNode as AlignNode<Events>).layoutOffsetX =
-                        (width - childBounds.width) / 2;
+                    childNode.layoutOffsetX = (width - childBounds.width) / 2;
                 });
                 break;
             }
             case 'end': {
                 this.childNodes.forEach(childNode => {
                     const { bounds: childBounds } = childNode;
-                    // narrow the type to access protected properties
-                    (childNode as AlignNode<Events>).layoutOffsetX =
-                        (width - childBounds.width);
+                    childNode.layoutOffsetX = width - childBounds.width;
                 });
                 break;
             }
@@ -110,18 +106,14 @@ export class AlignNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             case 'center': {
                 this.childNodes.forEach(childNode => {
                     const { bounds: childBounds } = childNode;
-                    // narrow the type to access protected properties
-                    (childNode as AlignNode<Events>).layoutOffsetY =
-                        (height - childBounds.height) / 2;
+                    childNode.layoutOffsetY = (height - childBounds.height) / 2;
                 });
                 break;
             }
             case 'end': {
                 this.childNodes.forEach(childNode => {
                     const { bounds: childBounds } = childNode;
-                    // narrow the type to access protected properties
-                    (childNode as AlignNode<Events>).layoutOffsetY =
-                        (height - childBounds.height);
+                    childNode.layoutOffsetY = height - childBounds.height;
                 });
                 break;
             }

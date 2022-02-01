@@ -81,8 +81,7 @@ export class FlowNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             case 'x': {
                 let dx = 0;
                 childNodes.forEach(childNode => {
-                    // narrow the type to access protected properties
-                    (childNode as FlowNode<Events>).layoutOffsetX = dx;
+                    childNode.layoutOffsetX = dx;
                     dx += childNode.bounds.width + gap;
                 });
                 break;
@@ -91,8 +90,7 @@ export class FlowNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             case 'y': {
                 let dy = 0;
                 childNodes.forEach(childNode => {
-                    // narrow the type to access protected properties
-                    (childNode as FlowNode<Events>).layoutOffsetY = dy;
+                    childNode.layoutOffsetY = dy;
                     dy += childNode.bounds.height + gap;
                 });
                 break;

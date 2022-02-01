@@ -346,6 +346,20 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     smartUpdate: boolean;
     /** dts2md break */
     /**
+     * The x offset in layout.
+     * (This should be set by layout parent nodes.)
+     * @default 0
+     */
+    layoutOffsetX = 0;
+    /** dts2md break */
+    /**
+     * The y offset in layout.
+     * (This should be set by layout parent nodes.)
+     * @default 0
+     */
+    layoutOffsetY = 0;
+    /** dts2md break */
+    /**
      * Whether this is a root node.
      */
     protected isRoot = false;
@@ -361,20 +375,6 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * @default false
      */
     protected noChildRender = false;
-    /** dts2md break */
-    /**
-     * The x offset in layout.
-     * (This should be set by layout parent nodes.)
-     * @default 0
-     */
-    protected layoutOffsetX = 0;
-    /** dts2md break */
-    /**
-     * The y offset in layout.
-     * (This should be set by layout parent nodes.)
-     * @default 0
-     */
-    protected layoutOffsetY = 0;
 
     private _parentNode: CanvasNode<Events> | null = null;
     private _childNodes: CanvasNode<Events>[] = [];
