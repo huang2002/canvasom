@@ -6,6 +6,7 @@ import { Bounds } from '../common/Bounds';
 import { Utils } from "../common/Utils";
 import { Schedule } from '../common/Schedule';
 import type { CanvasRoot } from './CanvasRoot';
+import { Vector } from '../index';
 
 /**
  * Type of data of pinter events on canvas nodes.
@@ -132,6 +133,12 @@ export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
      * @default 0
      */
     offsetY: number;
+    /** dts2md break */
+    /**
+     * The offset of this node.
+     * @default new Vector(offsetX, offsetY)
+     */
+    offset: Vector;
     /**
      * Set `bounds.width`.
      */
@@ -227,8 +234,10 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
         this.id = options?.id ?? '';
         this.classNames = options?.classNames ?? [];
-        this.offsetX = options?.offsetX ?? 0;
-        this.offsetY = options?.offsetY ?? 0;
+        this.offset = options?.offset ?? new Vector(
+            options?.offsetX ?? 0,
+            options?.offsetY ?? 0,
+        );
         this.stretchX = options?.stretchX ?? null;
         this.stretchY = options?.stretchY ?? null;
         this.position = options?.position ?? 'relative';
@@ -276,16 +285,9 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     classNames: string[];
     /** dts2md break */
     /**
-     * The x-offset of this node.
-     * @default 0
+     * The offset of this node.
      */
-    offsetX: number;
-    /** dts2md break */
-    /**
-     * The y-offset of this node.
-     * @default 0
-     */
-    offsetY: number;
+    offset: Vector;
     /** dts2md break */
     /**
      * If this is a number, the width of the node
@@ -412,6 +414,34 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      */
     get y() {
         return this._y;
+    }
+    /** dts2md break */
+    /**
+     * Get `thisNode.offset.x`.
+     */
+    get offsetX() {
+        return this.offset.x;
+    }
+    /** dts2md break */
+    /**
+     * Set `thisNode.offset.x`.
+     */
+    set offsetX(offsetX: number) {
+        this.offset.x = offsetX;
+    }
+    /** dts2md break */
+    /**
+     * Get `thisNode.offset.y`.
+     */
+    get offsetY() {
+        return this.offset.y;
+    }
+    /** dts2md break */
+    /**
+     * Set `thisNode.offset.y`.
+     */
+    set offsetY(offsetY: number) {
+        this.offset.y = offsetY;
     }
     /** dts2md break */
     /**
@@ -670,26 +700,26 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
     private _updateLayout(timeStamp: number) {
 
-        const { offsetX, offsetY, bounds } = this;
+        const { offset, bounds } = this;
         let x: number;
         let y: number;
 
         switch (this.position) {
 
             case 'absolute': {
-                x = offsetX;
-                y = offsetY;
+                x = offset.x;
+                y = offset.y;
                 break;
             }
 
             case 'relative': {
                 const { _parentNode } = this;
                 if (_parentNode) {
-                    x = offsetX + _parentNode._x + this.layoutOffsetX;
-                    y = offsetY + _parentNode._y + this.layoutOffsetY;
+                    x = offset.x + _parentNode._x + this.layoutOffsetX;
+                    y = offset.y + _parentNode._y + this.layoutOffsetY;
                 } else {
-                    x = offsetX;
-                    y = offsetY;
+                    x = offset.x;
+                    y = offset.y;
                 }
                 break;
             }
