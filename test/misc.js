@@ -221,8 +221,8 @@ T.test(null, {
         const d1 = new Vector(1, 1);
         const d2 = new Vector(0, -1);
         const v1 = v0.projectVector(d1);
-        context.assert(almostEqual(v1.x, Math.SQRT2));
-        context.assert(almostEqual(v1.y, Math.SQRT2));
+        context.assert(almostEqual(v1.x, 1));
+        context.assert(almostEqual(v1.y, 1));
         const v2 = v0.projectVector(d2);
         context.assert(almostEqual(v2.x, 0));
         context.assert(almostEqual(v2.y, 0));

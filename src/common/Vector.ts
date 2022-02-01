@@ -298,9 +298,9 @@ export class Vector {
      */
     projectVector(direction: VectorLike): Vector {
         const dotProduct = this.x * direction.x + this.y * direction.y;
-        const directionNorm = Math.sqrt(direction.x ** 2 + direction.y ** 2);
+        const directionSquareNorm = direction.x ** 2 + direction.y ** 2;
         return Vector.from(direction)
-            .scale(dotProduct / directionNorm);
+            .scale(dotProduct / directionSquareNorm);
     }
     /** dts2md break */
     /**
