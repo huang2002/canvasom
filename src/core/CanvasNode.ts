@@ -361,6 +361,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /** dts2md break */
     /**
      * Whether this is a root node.
+     * (See {@link CanvasRoot}.)
      */
     protected isRoot = false;
     /** dts2md break */
