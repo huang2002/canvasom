@@ -1,6 +1,6 @@
 import { ShapeNode, ShapeNodeOptions } from "./ShapeNode";
 import { CanvasNodeEvents } from '../core/CanvasNode';
-import type { Vector } from '../common/Vector';
+import { Vector } from '../common/Vector';
 
 /**
  * Type of options of {@link PolygonNode}.
@@ -38,10 +38,14 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * @override CanvasNode.tag
      */
     readonly tag: string = 'polygon';
+    /** dts2md break */
+    /**
+     * The origin offset of the polygon.
+     * (Updated internally when vertices change.)
+     */
+    readonly originOffset = new Vector();
 
     private _vertices!: Vector[];
-    private _originX = 0;
-    private _originY = 0;
     /** dts2md break */
     /**
      * @override ShapeNode.closePath
@@ -84,8 +88,7 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             }
         });
 
-        this._originX = xMin;
-        this._originY = yMin;
+        this.originOffset.set(xMin, yMin);
         this.bounds.width = xMax - xMin;
         this.bounds.height = yMax - yMin;
         this._vertices = vertices;
@@ -96,17 +99,17 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * @override ShapeNode.path
      */
     path(context: CanvasRenderingContext2D) {
-        const { _originX, _originY } = this;
+        const { originOffset } = this;
         this.vertices.forEach((vertex, i) => {
             if (i) {
                 context.lineTo(
-                    vertex.x - _originX,
-                    vertex.y - _originY,
+                    vertex.x - originOffset.x,
+                    vertex.y - originOffset.y,
                 );
             } else {
                 context.moveTo(
-                    vertex.x - _originX,
-                    vertex.y - _originY,
+                    vertex.x - originOffset.x,
+                    vertex.y - originOffset.y,
                 );
             }
         });
