@@ -125,4 +125,4 @@ const animationView = COM.create(COM.CanvasNode, {
 
 ]);
 
-assert(COM.Utils.selectId('animated-rect', animationView) === animatedRect);
+assert(animationView.selectId('animated-rect') === animatedRect);

@@ -91,4 +91,4 @@ const startView = COM.create(COM.AlignNode, {
 root.appendChild(startView);
 root.updateAndRender();
 
-assert(COM.Utils.selectTag('root', root).length === 0);
+assert(root.selectTag('root').length === 0);

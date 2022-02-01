@@ -276,4 +276,4 @@ const layoutView = COM.create(COM.AlignNode, {
 
 ]);
 
-assert(COM.Utils.selectClass('layout-row', layoutView).length === 3);
+assert(layoutView.selectClass('layout-row').length === 3);

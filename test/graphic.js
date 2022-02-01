@@ -242,4 +242,4 @@ const graphicView = COM.create(COM.CanvasNode, {
 
 ]);
 
-assert(COM.Utils.selectTag('image', graphicView).length === 2);
+assert(graphicView.selectTag('image').length === 2);

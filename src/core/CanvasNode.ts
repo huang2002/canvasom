@@ -570,6 +570,28 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     }
     /** dts2md break */
     /**
+     * Select a descendent node with specific id.
+     * (Returns `null` if not found.)
+     */
+    selectId(id: string): CanvasNode<Events> | null {
+        return Utils.selectId(id, this);
+    }
+    /** dts2md break */
+    /**
+     * Select descendent nodes with specific class name.
+     */
+    selectClass(className: string): CanvasNode<Events>[] {
+        return Utils.selectClass(className, this);
+    }
+    /** dts2md break */
+    /**
+     * Select descendent nodes with specific tag name.
+     */
+    selectTag(tag: string): CanvasNode<Events>[] {
+        return Utils.selectTag(tag, this);
+    }
+    /** dts2md break */
+    /**
      * Emit an event on this node
      * and repeat on child nodes.
      */
