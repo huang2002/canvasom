@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.32.0
+
+- Make layout offset public to avoid type hacks
+- Improve docs
+
 ## 0.31.2
 
 - Fix `vector.projectVector`
