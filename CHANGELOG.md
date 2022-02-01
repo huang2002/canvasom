@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.34.0
+
+- Add `canvasNode.offset`
+- Replace `polygonNode._originX/Y` with `polygonNode.origin`
+
 ## 0.33.0
 
 - Add `select*` to `CanvasNode`
