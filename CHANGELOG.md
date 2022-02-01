@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.31.2
+
+- Fix `vector.projectVector`
+
 ## 0.31.1
 
 - Fix some property overriding
