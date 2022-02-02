@@ -53,6 +53,12 @@ T.test(null, {
         context.assertStrictEqual(v2.y, -5);
     },
 
+    Vector_distance(context) {
+        const v1 = new Vector(-1, 2);
+        const v2 = new Vector(2, 6);
+        context.assertStrictEqual(Vector.distance(v1, v2), 5);
+    },
+
     vector_norm_get(context) {
         const v = new Vector(3, 4);
         context.assertStrictEqual(v.norm, 5);

@@ -67,6 +67,16 @@ export class Vector {
     }
     /** dts2md break */
     /**
+     * @returns Norm of (vector1 - vector2).
+     */
+    static distance(vector1: VectorLike, vector2: VectorLike) {
+        return Math.sqrt(
+            (vector2.x - vector1.x) ** 2
+            + (vector2.y - vector1.y) ** 2
+        );
+    }
+    /** dts2md break */
+    /**
      * Constructor of {@link Vector}.
      */
     constructor();
