@@ -23,7 +23,7 @@ export type AlignNodeOptions<Events extends CanvasNodeEvents> = (
         alignY: AlignMode;
         /** dts2md break */
         /**
-         * @override CanvasNode.penetrable
+         * @override CanvasNodeOptions.penetrable
          * @default true
          */
         penetrable: boolean;

@@ -23,7 +23,7 @@ export type FlowNodeOptions<Events extends CanvasNodeEvents> = (
         gap: number;
         /** dts2md break */
         /**
-         * @override CanvasNode.penetrable
+         * @override CanvasNodeOptions.penetrable
          * @default true
          */
         penetrable: boolean;

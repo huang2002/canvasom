@@ -12,6 +12,11 @@ export type PolygonNodeOptions<Events extends CanvasNodeEvents> = (
          * The vertices of the polygon.
          */
         vertices: Vector[];
+        /**
+         * @override ShapeNodeOptions.closePath
+         * @default true
+         */
+        closePath: boolean;
     }>
 );
 /** dts2md break */
@@ -27,6 +32,7 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      */
     constructor(options?: PolygonNodeOptions<Events>) {
         super(options);
+        this.closePath = options?.closePath ?? true;
         if (options?.vertices) {
             this.updateVertices(options.vertices);
         } else {
@@ -51,7 +57,7 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * @override ShapeNode.closePath
      * @default true
      */
-    closePath = true;
+    closePath: boolean;
     /** dts2md break */
     /**
      * Get the vertices of the polygon.

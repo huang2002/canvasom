@@ -95,7 +95,7 @@ export type ScrollNodeOptions<Events extends ScrollNodeEvents> = (
          */
         shiftModifier: string | null;
         /**
-         * @override CanvasNode.interactive
+         * @override CanvasNodeOptions.interactive
          * @default true
          */
         interactive: boolean;
