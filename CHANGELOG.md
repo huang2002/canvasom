@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.34.1
+
+- Fix option overriding
+- Fix `Vertices.fromArray`
+- Fix calculation of polygon bounds
+
 ## 0.34.0
 
 - Add `canvasNode.offset`
