@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.36.0
+
+- Add `stretch` option to `CanvasNode`
+- Add `align` option to `AlignNode`
+
 ## 0.35.0
 
 - Add `Vector.distance`
