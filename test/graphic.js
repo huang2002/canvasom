@@ -203,7 +203,9 @@ const graphicView = COM.create(COM.CanvasNode, {
     COM.create(COM.PolygonNode, {
         offsetX: 410,
         offsetY: 170,
-        vertices: COM.Vertices.createRegularPolygon(5, 50),
+        vertices: COM.Vertices.createRegularPolygon(8, 50)
+            .slice(0, -1)
+            .concat(new COM.Vector(0, 0)),
         style: {
             ...GRAPHIC_BOUNDS_STYLE,
             fillStyle: '#FDD',
@@ -227,14 +229,17 @@ const graphicView = COM.create(COM.CanvasNode, {
     COM.create(COM.PolygonNode, {
         offsetX: 410,
         offsetY: 410,
-        vertices: COM.Vertices.createRegularPolygon(8, 50)
-            .slice(0, -1)
-            .concat(new COM.Vector(0, 0)),
+        closePath: false,
+        vertices: COM.Vertices.fromArray([
+            0, 100,
+            100, 0,
+        ]),
         style: {
             ...GRAPHIC_BOUNDS_STYLE,
-            fillStyle: '#FDD',
             strokeStyle: '#C33',
-            lineWidth: 2,
+            lineWidth: 6,
+            lineCap: 'round',
+            lineJoin: 'round',
         },
     }),
 
