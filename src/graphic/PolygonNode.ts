@@ -84,12 +84,14 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         vertices.forEach(vertex => {
             if (vertex.x < xMin) {
                 xMin = vertex.x;
-            } else if (vertex.x > xMax) {
+            }
+            if (vertex.x > xMax) {
                 xMax = vertex.x;
             }
             if (vertex.y < yMin) {
                 yMin = vertex.y;
-            } else if (vertex.y > yMax) {
+            }
+            if (vertex.y > yMax) {
                 yMax = vertex.y;
             }
         });
