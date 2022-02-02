@@ -13,14 +13,19 @@ export type AlignNodeOptions<Events extends CanvasNodeEvents> = (
     & Partial<{
         /**
          * Horizontal align.
-         * @default 'begin'
+         * @default options.align
          */
         alignX: AlignMode;
         /**
          * Vertical align.
-         * @default 'begin'
+         * @default options.align
          */
         alignY: AlignMode;
+        /**
+         * Default value of `alignX` and `alignY`.
+         * @default 'begin'
+         */
+        align: AlignMode;
         /** dts2md break */
         /**
          * @override CanvasNodeOptions.penetrable
@@ -41,8 +46,9 @@ export class AlignNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      */
     constructor(options?: AlignNodeOptions<Events>) {
         super(options);
-        this.alignX = options?.alignX ?? 'begin';
-        this.alignY = options?.alignY ?? 'begin';
+        const defaultAlign = options?.align ?? 'begin';
+        this.alignX = options?.alignX ?? defaultAlign;
+        this.alignY = options?.alignY ?? defaultAlign;
         this.penetrable = options?.penetrable ?? true;
     }
     /** dts2md break */

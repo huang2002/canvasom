@@ -222,8 +222,7 @@ const layoutView = COM.create(COM.AlignNode, {
                     classNames: ['layout-row'],
                     boundsWidth: LAYOUT_CONTAINER_SIZE * 2 + LAYOUT_GAP,
                     boundsHeight: LAYOUT_CONTAINER_SIZE,
-                    alignX: 'center',
-                    alignY: 'center',
+                    align: 'center',
                 }, [
                     COM.create(COM.RectNode, {
                         width: LAYOUT_CONTAINER_SIZE,
