@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.35.0
+
+- Add `Vector.distance`
+
 ## 0.34.1
 
 - Fix option overriding
