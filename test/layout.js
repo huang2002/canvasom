@@ -20,8 +20,7 @@ const layoutView = COM.create(COM.AlignNode, {
     id: 'layout-view',
     offsetY: 60,
     alignX: 'center',
-    stretchX: 1,
-    stretchY: 1,
+    stretch: 1,
 }, [
 
     COM.create(COM.ScrollNode, {
@@ -55,8 +54,7 @@ const layoutView = COM.create(COM.AlignNode, {
             COM.create(COM.FlowNode, {
                 direction: 'y',
                 gap: LAYOUT_GAP,
-                stretchX: 1,
-                stretchY: 1,
+                stretch: 1,
             }, [
 
                 COM.create(COM.FlowNode, { // row0
@@ -168,8 +166,7 @@ const layoutView = COM.create(COM.AlignNode, {
                             scrollWidth: LAYOUT_CONTAINER_SIZE * 2,
                             direction: 'x',
                             root,
-                            stretchX: 1,
-                            stretchY: 1,
+                            stretch: 1,
                             listeners: {
                                 scroll(event) {
                                     if (event.data.deltaX !== 0) {
@@ -201,8 +198,7 @@ const layoutView = COM.create(COM.AlignNode, {
                             scrollHeight: LAYOUT_CONTAINER_SIZE * 2,
                             direction: 'y',
                             root,
-                            stretchX: 1,
-                            stretchY: 1,
+                            stretch: 1,
                             listeners: {
                                 scroll(event) {
                                     if (event.data.deltaY !== 0) {
@@ -245,8 +241,7 @@ const layoutView = COM.create(COM.AlignNode, {
                             direction: 'both',
                             mode: 'both',
                             root,
-                            stretchX: 1,
-                            stretchY: 1,
+                            stretch: 1,
                             listeners: {
                                 scroll(event) {
                                     const { data: { deltaX, deltaY } } = event;

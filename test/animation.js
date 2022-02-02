@@ -30,8 +30,7 @@ const AnimationControl = (text, callback) => (
     }, [
         COM.create(COM.TextNode, {
             content: text,
-            stretchX: 1,
-            stretchY: 1,
+            stretch: 1,
             style: {
                 fillStyle: '#000',
                 textAlign: 'center',
@@ -59,8 +58,7 @@ let animation = null;
 const animationView = COM.create(COM.CanvasNode, {
     id: 'animation-view',
     penetrable: true,
-    stretchX: 1,
-    stretchY: 1,
+    stretch: 1,
 }, [
 
     COM.create(COM.RectNode, {

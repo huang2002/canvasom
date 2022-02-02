@@ -151,16 +151,21 @@ export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
      * If this is a number, the width of the node
      * will be adjusted before update so that
      * `thisBounds.width / parentBounds.width === stretchX`.
-     * @default null
+     * @default options.stretch
      */
     stretchX: number | null;
     /**
      * If this is a number, the height of the node
      * will be adjusted before update so that
      * `thisBounds.height / parentBounds.height === stretchY`.
-     * @default null
+     * @default options.stretch
      */
     stretchY: number | null;
+    /**
+     * Default value of `stretchX` and `stretchY`.
+     * @default null
+     */
+    stretch: number | null;
     /**
      * The positioning mode of this node.
      * @default 'relative'
@@ -232,14 +237,16 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
         super();
 
+        const defaultStretch = options?.stretch ?? null;
+
         this.id = options?.id ?? '';
         this.classNames = options?.classNames ?? [];
         this.offset = options?.offset ?? new Vector(
             options?.offsetX ?? 0,
             options?.offsetY ?? 0,
         );
-        this.stretchX = options?.stretchX ?? null;
-        this.stretchY = options?.stretchY ?? null;
+        this.stretchX = options?.stretchX ?? defaultStretch;
+        this.stretchY = options?.stretchY ?? defaultStretch;
         this.position = options?.position ?? 'relative';
         this.visible = options?.visible ?? true;
         this.interactive = options?.interactive ?? false;

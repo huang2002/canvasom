@@ -26,8 +26,7 @@ const graphicView = COM.create(COM.CanvasNode, {
     id: 'graphic-view',
     penetrable: true,
     offsetY: 10,
-    stretchX: 1,
-    stretchY: 1,
+    stretch: 1,
 }, [
 
     COM.create(COM.CanvasNode, {
@@ -181,8 +180,7 @@ const graphicView = COM.create(COM.CanvasNode, {
             sourceY: 0,
             sourceWidth: 100,
             sourceHeight: 100,
-            stretchX: 1,
-            stretchY: 1,
+            stretch: 1,
             smartSize: true,
             style: GRAPHIC_BOUNDS_STYLE,
         }),
