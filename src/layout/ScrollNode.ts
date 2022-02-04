@@ -73,6 +73,7 @@ export type ScrollNodeOptions<Events extends ScrollNodeEvents> = (
          * @default this
          */
         root: CanvasNode<any>;
+        // TODO: autoUpdate: boolean;
         /**
          * Scroll scale of pixels.
          * @default 1
