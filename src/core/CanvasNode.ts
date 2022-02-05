@@ -103,11 +103,11 @@ export type CanvasNodeEvents = {
 };
 /** dts2md break */
 /**
- * Type of position parameters of canvas nodes.
+ * Type of offset mode of canvas nodes.
  * 'relative' - Relative to the parent node.
  * 'absolute' - Relative to the root node.
  */
-export type CanvasNodePosition = 'relative' | 'absolute';
+export type CanvasNodeOffsetMode = 'relative' | 'absolute';
 /** dts2md break */
 /**
  * Type of options of {@link CanvasNode}.
@@ -168,9 +168,10 @@ export type CanvasNodeOptions<Events extends CanvasNodeEvents> = Partial<{
     stretch: number | null;
     /**
      * The positioning mode of this node.
+     * (Controls how `offset` functions.)
      * @default 'relative'
      */
-    position: CanvasNodePosition;
+    offsetMode: CanvasNodeOffsetMode;
     /**
      * Whether the node should be rendered.
      * @default true
@@ -247,7 +248,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         );
         this.stretchX = options?.stretchX ?? defaultStretch;
         this.stretchY = options?.stretchY ?? defaultStretch;
-        this.position = options?.position ?? 'relative';
+        this.offsetMode = options?.offsetMode ?? 'relative';
         this.visible = options?.visible ?? true;
         this.interactive = options?.interactive ?? false;
         this.penetrable = options?.penetrable ?? false;
@@ -314,9 +315,10 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     /** dts2md break */
     /**
      * The positioning mode of this node.
+     * (Controls how `offset` functions.)
      * @default 'relative'
      */
-    position: CanvasNodePosition;
+    offsetMode: CanvasNodeOffsetMode;
     /** dts2md break */
     /**
      * Whether the node should be rendered.
@@ -711,7 +713,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         let x: number;
         let y: number;
 
-        switch (this.position) {
+        switch (this.offsetMode) {
 
             case 'absolute': {
                 x = offset.x;

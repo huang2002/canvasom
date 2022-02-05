@@ -33,7 +33,7 @@ window.addEventListener('orientationchange', resizeRoot);
 const BackButton = () => (
     COM.create(COM.AlignNode, {
         classNames: ['back-button'],
-        position: 'absolute',
+        offsetMode: 'absolute',
         alignX: 'center',
         alignY: 'end',
         interactive: true,
