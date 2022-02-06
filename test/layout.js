@@ -34,13 +34,6 @@ const layoutView = COM.create(COM.AlignNode, {
             boundsStyle: 'rgba(255, 0, 0, .5)',
             boundsWidth: 6,
         },
-        listeners: {
-            scroll(event) {
-                if (event.data.deltaY !== 0) {
-                    root.updateAndRender();
-                }
-            },
-        },
     }, [
         COM.create(COM.RectNode, {
             width: LAYOUT_CONTAINER_SIZE * 2 + LAYOUT_GAP,
@@ -167,13 +160,6 @@ const layoutView = COM.create(COM.AlignNode, {
                             direction: 'x',
                             root,
                             stretch: 1,
-                            listeners: {
-                                scroll(event) {
-                                    if (event.data.deltaX !== 0) {
-                                        root.updateAndRender();
-                                    }
-                                },
-                            },
                         }, [
                             COM.create(COM.ArcNode, {
                                 radius: LAYOUT_CONTAINER_SIZE,
@@ -199,13 +185,6 @@ const layoutView = COM.create(COM.AlignNode, {
                             direction: 'y',
                             root,
                             stretch: 1,
-                            listeners: {
-                                scroll(event) {
-                                    if (event.data.deltaY !== 0) {
-                                        root.updateAndRender();
-                                    }
-                                },
-                            },
                         }, [
                             COM.create(COM.ArcNode, {
                                 radius: LAYOUT_CONTAINER_SIZE,
@@ -241,14 +220,6 @@ const layoutView = COM.create(COM.AlignNode, {
                             mode: 'both',
                             root,
                             stretch: 1,
-                            listeners: {
-                                scroll(event) {
-                                    const { data: { deltaX, deltaY } } = event;
-                                    if ((deltaX !== 0) || (deltaY !== 0)) {
-                                        root.updateAndRender();
-                                    }
-                                },
-                            },
                         }, [
                             COM.create(COM.ArcNode, {
                                 offsetX: LAYOUT_CONTAINER_SIZE / 2,

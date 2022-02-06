@@ -1,5 +1,7 @@
 import { CanvasNode, CanvasNodeEvents, CanvasNodeOptions, CanvasPointerEvent, CanvasWheelEvent } from '../core/CanvasNode';
+import { CanvasRoot } from "../core/CanvasRoot";
 import { Utils } from "../common/Utils";
+import { Schedule } from '../common/Schedule';
 import { clamp } from '3h-utils';
 import { Event } from '3h-event';
 
@@ -67,13 +69,27 @@ export type ScrollNodeOptions<Events extends ScrollNodeEvents> = (
          */
         direction: ScrollDirection;
         /**
-         * The root node.
-         * (This influences the listening of pointer events.
-         * So, it's recommended to pass your canvas root here.)
-         * @default this
+         * The node that holds event listeners.
+         * @default options.root ?? this
          */
-        root: CanvasNode<any>;
-        // TODO: autoUpdate: boolean;
+        eventRoot: CanvasNode<any>;
+        /**
+         * The node that should be updated on scrolling.
+         * (Set this to null to disable automatic update.)
+         * @default options.root
+         */
+        updateRoot: CanvasNode<any> | null;
+        /**
+         * The root node that should be rerendered on scrolling.
+         * (Set this to null to disable automatic rerender.)
+         * @default options.root
+         */
+        renderRoot: CanvasRoot<any> | null;
+        /**
+         * Default value of `eventRoot`, `updateRoot` and `renderRoot`.
+         * @default null
+         */
+        root: CanvasRoot<any> | null;
         /**
          * Scroll scale of pixels.
          * @default 1
@@ -116,10 +132,14 @@ export class ScrollNode<Events extends ScrollNodeEvents = ScrollNodeEvents>
 
         super(options);
 
+        const defaultRoot = (options?.root !== undefined) ? options.root : null;
+
         this.mode = options?.mode
             ?? (Utils.Constants.SUPPORTS_TOUCH_EVENTS ? 'drag' : 'wheel');
         this.direction = options?.direction ?? 'none';
-        this.root = options?.root ?? this;
+        this.eventRoot = options?.eventRoot ?? defaultRoot ?? this;
+        this.updateRoot = options?.updateRoot ?? defaultRoot;
+        this.renderRoot = options?.renderRoot ?? defaultRoot;
         this.scrollWidth = options?.scrollWidth ?? 0;
         this.scrollHeight = options?.scrollHeight ?? 0;
         this.pixelScale = options?.pixelScale ?? 1;
@@ -168,12 +188,24 @@ export class ScrollNode<Events extends ScrollNodeEvents = ScrollNodeEvents>
     direction: ScrollDirection;
     /** dts2md break */
     /**
-     * The root node.
-     * (This influences the listening of pointer events.
-     * So, it's recommended to pass your canvas root here.)
-     * @default this
+     * The node that holds event listeners.
+     * @default options.root ?? this
      */
-    readonly root: CanvasNode<any>;
+    readonly eventRoot: CanvasNode<any>;
+    /** dts2md break */
+    /**
+     * The root node that should be updated on scrolling.
+     * (Set this to null to disable automatic update.)
+     * @default options.root
+     */
+    updateRoot: CanvasNode<any> | null;
+    /** dts2md break */
+    /**
+     * The root node that should be rerendered on scrolling.
+     * (Set this to null to disable automatic rerender.)
+     * @default options.root
+     */
+    renderRoot: CanvasRoot<any> | null;
     /** dts2md break */
     /**
      * Scroll scale of pixels.
@@ -255,8 +287,20 @@ export class ScrollNode<Events extends ScrollNodeEvents = ScrollNodeEvents>
         this.emit(scrollEvent as unknown as Utils.ValueType<Events>);
 
         if (!scrollEvent.canceled) {
+
             this._scrollX = scrollX;
             this._scrollY = scrollY;
+
+            if (deltaX || deltaY) {
+                const { updateRoot, renderRoot } = this;
+                if (updateRoot) {
+                    Schedule.update(updateRoot);
+                }
+                if (renderRoot) {
+                    Schedule.render(renderRoot);
+                }
+            }
+
         }
 
     }
@@ -433,10 +477,10 @@ export class ScrollNode<Events extends ScrollNodeEvents = ScrollNodeEvents>
         const { mode } = this;
 
         if ((mode === 'drag') || (mode === 'both')) {
-            const { root } = this;
+            const { eventRoot } = this;
             this.addListener('pointerstart', this._onPointerStart);
-            root.addListener('pointermove', this._onPointerMove);
-            root.addListener('pointerend', this._onPointerEnd);
+            eventRoot.addListener('pointermove', this._onPointerMove);
+            eventRoot.addListener('pointerend', this._onPointerEnd);
         }
 
         if ((mode === 'wheel') || (mode === 'both')) {
@@ -459,10 +503,10 @@ export class ScrollNode<Events extends ScrollNodeEvents = ScrollNodeEvents>
         const { mode } = this;
 
         if ((mode === 'drag') || (mode === 'both')) {
-            const { root } = this;
+            const { eventRoot } = this;
             this.removeListener('pointerstart', this._onPointerStart);
-            root.removeListener('pointermove', this._onPointerMove);
-            root.removeListener('pointerend', this._onPointerEnd);
+            eventRoot.removeListener('pointermove', this._onPointerMove);
+            eventRoot.removeListener('pointerend', this._onPointerEnd);
         }
 
         if ((mode === 'wheel') || (mode === 'both')) {
