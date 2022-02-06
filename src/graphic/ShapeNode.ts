@@ -61,6 +61,7 @@ export abstract class ShapeNode<Events extends CanvasNodeEvents = CanvasNodeEven
     /** dts2md break */
     /**
      * Illustrates the path of the shape.
+     * (Relative to `this.position`.)
      */
     abstract path(context: CanvasRenderingContext2D): void;
     /** dts2md break */
