@@ -122,6 +122,31 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             }
         });
     }
-    // TODO: override ShapeNode.containsPoint
+    /**
+     * @override ShapeNode.containsPoint
+     */
+    containsPoint(x: number, y: number) {
+        const { sign } = Math;
+        const { _vertices, originOffset, position } = this;
+        const { length: verticesLength } = _vertices;
+        const _x = x - position.x + originOffset.x;
+        const _y = y - position.y + originOffset.y;
+        let j, v1, v2, cross1, x1, y1, x2, y2, cross2;
+        for (let i = 0; i < verticesLength; i++) {
+            j = (i + 1) % verticesLength;
+            v1 = _vertices[i];
+            v2 = _vertices[j];
+            cross1 = v1.cross(v2);
+            x1 = v1.x - _x;
+            y1 = v1.y - _y;
+            x2 = v2.x - _x;
+            y2 = v2.y - _y;
+            cross2 = x1 * y2 - y1 * x2;
+            if (sign(cross1) === -sign(cross2)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }

@@ -58,11 +58,52 @@ const interactionView = COM.create(COM.AlignNode, {
         direction: 'y',
         gap: 20,
     }, [
+
         InteractionCounter('pointerstart'),
         InteractionCounter('pointermove'),
         InteractionCounter('pointerend'),
         InteractionCounter('wheel'),
         InteractionCounter('click'),
+
+        COM.create(COM.AlignNode, {
+            stretchX: 1,
+            boundsHeight: 160,
+            alignX: 'center',
+        }, [
+            COM.create(COM.PolygonNode, {
+                id: 'polygon-test',
+                vertices: COM.Vertices.createRegularPolygon(5, 80),
+                interactive: true,
+                style: {
+                    fillStyle: '#FFF',
+                    strokeStyle: '#111',
+                    lineWidth: 2,
+                },
+                listeners: {
+                    click(event) {
+                        console.log('!!');
+                        const { data: { target: { style } } } = event;
+                        if (style.fillStyle === '#FFF') {
+                            style.fillStyle = '#CCC';
+                        } else {
+                            style.fillStyle = '#FFF';
+                        }
+                        root.updateAndRender();
+                    },
+                },
+            }, [
+                COM.create(COM.TextNode, {
+                    content: `polygon test`,
+                    stretch: 1,
+                    style: {
+                        fillStyle: '#000',
+                        textAlign: 'center',
+                        textBaseline: 'middle',
+                    },
+                }),
+            ]),
+        ]),
+
     ]),
 
     BackButton(),
