@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.37.0
+
+- Replace old `position` with `offsetMode`
+- Add new `position` vector
+- Add `polygonNode.containsPoint`
+- Add more root-related options
+- Improve docs
+
 ## 0.36.0
 
 - Add `stretch` option to `CanvasNode`
