@@ -75,11 +75,15 @@ export abstract class ShapeNode<Events extends CanvasNodeEvents = CanvasNodeEven
         }
 
         const { _context } = ShapeNode;
+        const { position } = this;
 
         _context.beginPath();
         this.path(_context);
 
-        return _context.isPointInPath(x - this.x, y - this.y);
+        return _context.isPointInPath(
+            x - position.x,
+            y - position.y,
+        );
 
     }
     /** dts2md break */
@@ -88,10 +92,10 @@ export abstract class ShapeNode<Events extends CanvasNodeEvents = CanvasNodeEven
      */
     protected renderSelf(renderer: Renderer) {
 
-        const { x, y, computedStyle, closePath, clipContent, childNodes } = this;
+        const { position, computedStyle, closePath, clipContent, childNodes } = this;
         const { context } = renderer;
 
-        context.translate(x, y);
+        context.translate(position.x, position.y);
 
         context.beginPath();
         this.path(context);
@@ -104,7 +108,7 @@ export abstract class ShapeNode<Events extends CanvasNodeEvents = CanvasNodeEven
             context.shadowColor = Utils.Constants.TRANSPARENT;
         }
 
-        context.translate(-x, -y);
+        context.translate(-position.x, -position.y);
 
         if (clipContent && childNodes.length) {
             context.save();
@@ -116,14 +120,14 @@ export abstract class ShapeNode<Events extends CanvasNodeEvents = CanvasNodeEven
         }
 
         if (computedStyle.strokeStyle) {
-            context.translate(x, y);
+            context.translate(position.x, position.y);
             context.beginPath();
             this.path(context);
             if (closePath) {
                 context.closePath();
             }
             context.stroke();
-            context.translate(-x, -y);
+            context.translate(-position.x, -position.y);
         }
 
         if (!clipContent) {

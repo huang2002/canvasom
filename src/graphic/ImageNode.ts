@@ -160,6 +160,7 @@ export class ImageNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             return;
         }
 
+        const { position } = this;
         const sourceWidth = this.sourceWidth || image.width;
         const sourceHeight = this.sourceHeight || image.height;
 
@@ -169,8 +170,8 @@ export class ImageNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             this.sourceY,
             sourceWidth,
             sourceHeight,
-            this.x,
-            this.y,
+            position.x,
+            position.y,
             this.destinationWidth || sourceWidth,
             this.destinationHeight || sourceHeight,
         );

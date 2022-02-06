@@ -270,6 +270,12 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     }
     /** dts2md break */
     /**
+     * The absolute position of the node.
+     * (Relative to the root; updated internally.)
+     */
+    readonly position = new Vector();
+    /** dts2md break */
+    /**
      * The bounds of this node.
      */
     readonly bounds = new Bounds();
@@ -390,8 +396,6 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
     private _parentNode: CanvasNode<Events> | null = null;
     private _childNodes: CanvasNode<Events>[] = [];
-    private _x = 0;
-    private _y = 0;
     private _computedStyle: CanvasStyle = Object.assign(
         Object.create(null),
         Style.defaults,
@@ -409,20 +413,6 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      */
     get childNodes(): readonly CanvasNode<Events>[] {
         return this._childNodes;
-    }
-    /** dts2md break */
-    /**
-     * The absolute x-offset of this node.
-     */
-    get x() {
-        return this._x;
-    }
-    /** dts2md break */
-    /**
-     * The absolute y-offset of this node.
-     */
-    get y() {
-        return this._y;
     }
     /** dts2md break */
     /**
@@ -724,8 +714,9 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             case 'relative': {
                 const { _parentNode } = this;
                 if (_parentNode) {
-                    x = offset.x + _parentNode._x + this.layoutOffsetX;
-                    y = offset.y + _parentNode._y + this.layoutOffsetY;
+                    const { position: parentPosition } = _parentNode;
+                    x = offset.x + parentPosition.x + this.layoutOffsetX;
+                    y = offset.y + parentPosition.y + this.layoutOffsetY;
                 } else {
                     x = offset.x;
                     y = offset.y;
@@ -739,8 +730,7 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
         }
 
-        this._x = x;
-        this._y = y;
+        this.position.set(x, y);
         bounds.left = x;
         bounds.top = y;
 

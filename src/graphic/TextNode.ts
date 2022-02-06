@@ -71,7 +71,7 @@ export class TextNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         Style.applyText(computedStyle, context);
 
         const { content, bounds: { width, height }, ltr } = this;
-        let { x, y } = this;
+        let { position: { x, y } } = this;
 
         // adjust x
         const { textAlign } = computedStyle;
