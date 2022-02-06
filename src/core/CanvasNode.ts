@@ -3,10 +3,10 @@ import { insertElement, removeElements } from "3h-utils";
 import { CanvasStyle, Style } from '../common/Style';
 import type { Renderer } from './Renderer';
 import { Bounds } from '../common/Bounds';
+import { Vector } from '../common/Vector';
 import { Utils } from "../common/Utils";
 import { Schedule } from '../common/Schedule';
 import type { CanvasRoot } from './CanvasRoot';
-import { Vector } from '../index';
 
 /**
  * Type of data of pinter events on canvas nodes.
