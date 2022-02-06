@@ -122,6 +122,7 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             }
         });
     }
+    /** dts2md break */
     /**
      * @override ShapeNode.containsPoint
      */
