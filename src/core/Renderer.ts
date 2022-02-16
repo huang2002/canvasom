@@ -6,22 +6,22 @@ export type RendererOptions = Partial<{
      * The canvas element to use.
      * (If this is omitted, one will be created internally.)
      */
-    canvas?: HTMLCanvasElement;
+    canvas: HTMLCanvasElement;
     /**
      * Width of the view.
      * @default 480
      */
-    width?: number;
+    width: number;
     /**
      * Height of the view.
      * @default 320
      */
-    height?: number;
+    height: number;
     /**
      * Pixel ratio.
      * @default window.devicePixelRatio
      */
-    ratio?: number;
+    ratio: number;
 }>;
 /** dts2md break */
 /**
