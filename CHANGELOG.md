@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.38.0
+
+- Add `autoInitialize` option to `Renderer`
+- Add `renderer.scaleX/Y`
+
 ## 0.37.0
 
 - Replace old `position` with `offsetMode`
