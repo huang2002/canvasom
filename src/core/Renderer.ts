@@ -22,6 +22,11 @@ export type RendererOptions = Partial<{
      * @default window.devicePixelRatio
      */
     ratio: number;
+    /**
+     * Whether to invoke `initialize` in constructor.
+     * @default true
+     */
+    autoInitialize: boolean;
 }>;
 /** dts2md break */
 /**
@@ -47,7 +52,9 @@ export class Renderer {
         this._height = options?.height ?? 320;
         this._ratio = options?.ratio ?? window.devicePixelRatio ?? 1;
 
-        this.initialize();
+        if (options?.autoInitialize !== false) {
+            this.initialize();
+        }
 
     }
     /** dts2md break */
@@ -64,10 +71,10 @@ export class Renderer {
     private _ratio: number;
     private _width: number;
     private _height: number;
-    private _clientX!: number;
-    private _clientY!: number;
-    private _scaleX!: number;
-    private _scaleY!: number;
+    private _clientX = 0;
+    private _clientY = 0;
+    private _scaleX = 1;
+    private _scaleY = 1;
     /** dts2md break */
     /**
      * Current pixel ratio.
