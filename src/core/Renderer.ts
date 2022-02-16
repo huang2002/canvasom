@@ -66,6 +66,8 @@ export class Renderer {
     private _height: number;
     private _clientX!: number;
     private _clientY!: number;
+    private _scaleX!: number;
+    private _scaleY!: number;
     /** dts2md break */
     /**
      * Current pixel ratio.
@@ -105,6 +107,22 @@ export class Renderer {
     }
     /** dts2md break */
     /**
+     * Get the scale x of the canvas positions.
+     * (Updated by `this.initialize`.)
+     */
+    get scaleX() {
+        return this._scaleX;
+    }
+    /** dts2md break */
+    /**
+     * Get the scale y of the canvas positions.
+     * (Updated by `this.initialize`.)
+     */
+    get scaleY() {
+        return this._scaleY;
+    }
+    /** dts2md break */
+    /**
      * Resize the view.
      */
     resize(width: number, height: number, ratio?: number) {
@@ -135,6 +153,8 @@ export class Renderer {
         const bounds = canvas.getBoundingClientRect();
         this._clientX = bounds.left;
         this._clientY = bounds.top;
+        this._scaleX = _width / bounds.width;
+        this._scaleY = _height / bounds.height;
 
     }
     /** dts2md break */
@@ -143,7 +163,7 @@ export class Renderer {
      * from the given x-offset in client view.
      */
     toViewX(clientX: number) {
-        return clientX - this._clientX;
+        return (clientX - this._clientX) * this._scaleX;
     }
     /** dts2md break */
     /**
@@ -151,7 +171,7 @@ export class Renderer {
      * from the given y-offset in client view.
      */
     toViewY(clientY: number) {
-        return clientY - this._clientY;
+        return (clientY - this._clientY) * this._scaleY;
     }
 
 }
