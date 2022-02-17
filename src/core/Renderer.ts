@@ -27,6 +27,12 @@ export type RendererOptions = Partial<{
      * @default true
      */
     autoInitialize: boolean;
+    /**
+     * Whether to automatically set
+     * the element style of the canvas.
+     * @default true
+     */
+    autoStyle: boolean;
 }>;
 /** dts2md break */
 /**
@@ -48,6 +54,7 @@ export class Renderer {
         }
         this.context = context;
 
+        this.autoStyle = options?.autoStyle ?? true;
         this._width = options?.width ?? 480;
         this._height = options?.height ?? 320;
         this._ratio = options?.ratio ?? window.devicePixelRatio ?? 1;
@@ -75,6 +82,13 @@ export class Renderer {
     private _clientY = 0;
     private _scaleX = 1;
     private _scaleY = 1;
+    /** dts2md break */
+    /**
+     * Whether to automatically set
+     * the element style of the canvas.
+     * @default true
+     */
+    autoStyle: boolean;
     /** dts2md break */
     /**
      * Current pixel ratio.
@@ -153,8 +167,10 @@ export class Renderer {
         const { style: canvasStyle } = canvas;
         canvas.width = _width * _ratio;
         canvas.height = _height * _ratio;
-        canvasStyle.width = `${_width}px`;
-        canvasStyle.height = `${_height}px`;
+        if (this.autoStyle) {
+            canvasStyle.width = `${_width}px`;
+            canvasStyle.height = `${_height}px`;
+        }
         this.context.setTransform(_ratio, 0, 0, _ratio, 0, 0,);
 
         const bounds = canvas.getBoundingClientRect();
