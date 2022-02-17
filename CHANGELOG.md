@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.39.0
+
+- Add `autoStyle` option to `Renderer`
+
 ## 0.38.0
 
 - Add `autoInitialize` option to `Renderer`
