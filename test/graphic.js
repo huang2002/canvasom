@@ -241,6 +241,20 @@ const graphicView = COM.create(COM.CanvasNode, {
         },
     }),
 
+    COM.create(COM.TextNode, {
+        offsetX: 530,
+        offsetY: 50,
+        content: 'TEXT',
+        style: {
+            fillStyle: '#0F0',
+            strokeStyle: '#00F',
+            font: 'bold 50px sans-serif',
+            shadowColor: '#F00',
+            shadowBlur: 5,
+            shadowOffsetY: 5,
+        },
+    }),
+
     BackButton(),
 
 ]);

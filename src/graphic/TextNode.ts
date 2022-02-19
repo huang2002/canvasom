@@ -1,3 +1,4 @@
+import { Utils } from '../common/Utils';
 import { Style } from '../common/Style';
 import { CanvasNode, CanvasNodeEvents, CanvasNodeOptions } from '../core/CanvasNode';
 import type { Renderer } from '../core/Renderer';
@@ -97,6 +98,7 @@ export class TextNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
         if (computedStyle.fillStyle) {
             context.fillText(content, x, y);
+            context.shadowColor = Utils.Constants.TRANSPARENT;
         }
 
         if (computedStyle.strokeStyle) {
