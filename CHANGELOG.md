@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.39.1
+
+- Fix text shadow
+
 ## 0.39.0
 
 - Add `autoStyle` option to `Renderer`
