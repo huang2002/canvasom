@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0
+
+- Version bump
+
 ## 0.39.1
 
 - Fix text shadow
