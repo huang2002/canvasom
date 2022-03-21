@@ -61,31 +61,33 @@ export type AnimationEvents = {
 /**
  * Type of options of {@link Animation}.
  */
-export interface AnimationOptions<Events extends AnimationEvents> {
+export type AnimationOptions<Events extends AnimationEvents> = Partial<{
     /**
      * Start value.
+     * @default 0
      */
     from: number;
     /**
      * End value.
+     * @default 1
      */
     to: number;
     /**
      * Duration of animation. (ms)
      * @default 1000
      */
-    duration?: number;
+    duration: number;
     /**
      * The timing function to use.
      * @default Timing.linear
      */
-    timing?: TimingFunction;
+    timing: TimingFunction;
     /**
      * The callback that is automatically
      * attached to `update` event.
      */
-    callback?: EventListener<Events['update']>;
-}
+    callback: EventListener<Events['update']>;
+}>;
 /** dts2md break */
 /**
  * Class of animations.
@@ -96,24 +98,26 @@ export class Animation<Events extends AnimationEvents = AnimationEvents>
     /**
      * Constructor of {@link Animation}.
      */
-    constructor(options: AnimationOptions<Events>) {
+    constructor(options?: AnimationOptions<Events>) {
         super();
-        this.from = options.from;
-        this.to = options.to;
-        this.duration = options.duration ?? 1000;
-        this.timing = options.timing ?? Timing.linear;
-        if (options.callback) {
+        this.from = options?.from ?? 0;
+        this.to = options?.to ?? 1;
+        this.duration = options?.duration ?? 1000;
+        this.timing = options?.timing ?? Timing.linear;
+        if (options?.callback) {
             this.addListener('update', options.callback);
         }
     }
     /** dts2md break */
     /**
      * Start value.
+     * @default 0
      */
     from: number;
     /** dts2md break */
     /**
      * End value.
+     * @default 1
      */
     to: number;
     /** dts2md break */
