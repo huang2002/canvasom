@@ -39,6 +39,6 @@
     "typescript": "^4.0.0"
   },
   "dependencies": {
-    "3h-event": "^0.4.0"
+    "3h-event": "^0.4.1"
   }
 }
