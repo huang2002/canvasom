@@ -13,7 +13,7 @@ export interface AnimationEventData {
      */
     currentValue: number;
     /**
-     * Current progress. (Linear; in range [0, 1].)
+     * Current raw progress. (Linear; in range [0, 1].)
      */
     rawProgress: number;
     /**
