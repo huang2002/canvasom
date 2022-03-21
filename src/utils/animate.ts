@@ -1,7 +1,8 @@
 import { Schedule } from '../common/Schedule';
 import type { CanvasNode } from '../core/CanvasNode';
 import type { CanvasRoot } from '../core/CanvasRoot';
-import { AnimationCallback, Animation, AnimationOptions } from '../utils/Animation';
+import { AnimationEvents } from '../index';
+import { Animation, AnimationOptions } from '../utils/Animation';
 import { Timing, TimingFunction } from '../utils/Timing';
 
 /**
@@ -48,10 +49,6 @@ export interface AnimateOptions<TargetType extends CanvasNode<any>> {
      * @default Schedule.getTimeStamp()
      */
     timeStamp?: number;
-    /**
-     * Additional callback.
-     */
-    callback?: AnimationCallback;
 }
 /** dts2md break */
 /**
@@ -70,15 +67,14 @@ export const animate = <TargetType extends CanvasNode<any>>(
 
     const root = (options.root === undefined) ? target.getRoot() : options.root;
 
-    const animationOptions: Required<AnimationOptions> = {
+    const animationOptions: Required<AnimationOptions<AnimationEvents>> = {
         from: options.from ?? currentValue,
         to: options.to,
         duration: options.duration ?? 1000,
         timing: options.timing ?? Timing.linear,
-        callback: (value) => {
-            (target[key] as unknown as number) = value;
+        callback: (event) => {
+            (target[key] as unknown as number) = event.data.currentValue;
             root?.updateAndRender();
-            options.callback?.(value);
         },
     };
 

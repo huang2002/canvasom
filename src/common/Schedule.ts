@@ -20,7 +20,7 @@ export namespace Schedule {
      */
     export let getTimeStamp = Date.now;
 
-    let _animationList: Animation[] = [];
+    let _animationList: Animation<any>[] = [];
     const _updateList: CanvasNode<any>[] = [];
     const _renderList: CanvasRoot<any>[] = [];
 
@@ -82,7 +82,7 @@ export namespace Schedule {
      * Add the given animation to update list.
      * (The animation will be updated asynchronously.)
      */
-    export const animate = (animation: Animation) => {
+    export const animate = (animation: Animation<any>) => {
         if (!_animationList.includes(animation)) {
             _animationList.push(animation);
             _requestTick();
@@ -92,7 +92,7 @@ export namespace Schedule {
     /**
      * Remove the given animation from update list.
      */
-    export const cancelAnimation = (animation: Animation) => {
+    export const cancelAnimation = (animation: Animation<any>) => {
         const index = _animationList.indexOf(animation);
         if (index === -1) {
             return;

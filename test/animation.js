@@ -91,8 +91,8 @@ const animationView = COM.create(COM.CanvasNode, {
                 to: ANIMATION_CONTAINER_WIDTH - animatedRect.width,
                 duration: ANIMATION_DURATION,
                 timing: COM.Timing.easeInOut,
-                callback: console.log,
             });
+            animation.on('update', console.log);
         }),
         AnimationControl('stop', (event) => {
             if (animation) {
@@ -106,7 +106,7 @@ const animationView = COM.create(COM.CanvasNode, {
         }),
         AnimationControl('finish', (event) => {
             if (animation) {
-                animation.finish();
+                animation.finish(event.timeStamp);
             }
         }),
         AnimationControl('reset', (event) => {
