@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
+- Update Animation APIs
+
 ## 1.0.0
 
 - Version bump
