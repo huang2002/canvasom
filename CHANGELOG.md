@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- Update `3h-event` to `0.4.1`
+
 ## 1.1.0
 
 - Update Animation APIs
