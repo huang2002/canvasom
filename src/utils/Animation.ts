@@ -146,6 +146,9 @@ export class Animation<Events extends AnimationEvents = AnimationEvents>
     updateOnStart: boolean;
 
     private _active = false;
+    private _currentValue = 0;
+    private _rawProgress = 0;
+    private _progress = 0;
     /** dts2md break */
     /**
      * Whether the animation is active.
@@ -153,13 +156,31 @@ export class Animation<Events extends AnimationEvents = AnimationEvents>
     get active() {
         return this._active;
     }
+    /** dts2md break */
+    /**
+     * Current value. (In range [from, to].)
+     */
+    get currentValue() {
+        return this._currentValue;
+    }
+    /** dts2md break */
+    /**
+     * Current raw progress. (Linear; in range [0, 1].)
+     */
+    get rawProgress() {
+        return this._rawProgress;
+    }
+    /** dts2md break */
+    /**
+     * Current progress. (`timing(rawProgress)`)
+     */
+    get progress() {
+        return this._progress;
+    }
 
     private _startTimeStamp = 0;
     private _pauseTimeStamp = 0;
     private _offsetTime = 0;
-    private _currentValue = 0;
-    private _rawProgress = 0;
-    private _progress = 0;
 
     private _update(rawProgress: number) {
 
