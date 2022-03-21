@@ -87,6 +87,11 @@ export type AnimationOptions<Events extends AnimationEvents> = Partial<{
      * attached to `update` event.
      */
     callback: EventListener<Events['update']>;
+    /**
+     * Whether to emit `update` events when animation starts.
+     * @default true
+     */
+    updateOnStart: boolean;
 }>;
 /** dts2md break */
 /**
@@ -104,6 +109,7 @@ export class Animation<Events extends AnimationEvents = AnimationEvents>
         this.to = options?.to ?? 1;
         this.duration = options?.duration ?? 1000;
         this.timing = options?.timing ?? Timing.linear;
+        this.updateOnStart = options?.updateOnStart ?? true;
         if (options?.callback) {
             this.addListener('update', options.callback);
         }
@@ -132,6 +138,12 @@ export class Animation<Events extends AnimationEvents = AnimationEvents>
      * @default Timing.linear
      */
     timing: TimingFunction;
+    /** dts2md break */
+    /**
+     * Whether to emit `update` events when animation starts.
+     * @default true
+     */
+    updateOnStart: boolean;
 
     private _active = false;
     /** dts2md break */
@@ -145,16 +157,20 @@ export class Animation<Events extends AnimationEvents = AnimationEvents>
     private _startTimeStamp = 0;
     private _pauseTimeStamp = 0;
     private _offsetTime = 0;
-    private _finished = true;
     private _currentValue = 0;
     private _rawProgress = 0;
     private _progress = 0;
 
-    private _update(
-        currentValue: number,
-        rawProgress: number,
-        progress: number,
-    ) {
+    private _update(rawProgress: number) {
+
+        const { from, to, timing } = this;
+        const progress = timing(rawProgress);
+        const currentValue = interpolate(from, to, progress);
+
+        this._currentValue = currentValue;
+        this._rawProgress = rawProgress;
+        this._progress = progress;
+
         const event: AnimationUpdateEvent = new Event({
             name: 'update',
             stoppable: true,
@@ -166,6 +182,7 @@ export class Animation<Events extends AnimationEvents = AnimationEvents>
             },
         });
         this.emit(event as unknown as Utils.ValueType<Events>);
+
     }
     /** dts2md break */
     /**
@@ -194,11 +211,13 @@ export class Animation<Events extends AnimationEvents = AnimationEvents>
 
         if (!event.canceled) {
             this._active = true;
-            this._finished = false;
             this._startTimeStamp = timeStamp;
             this._offsetTime = 0;
             this._currentValue = this.from;
             this._progress = 0;
+            if (this.updateOnStart) {
+                this._update(0);
+            }
             Schedule.animate(this);
         }
 
@@ -210,7 +229,7 @@ export class Animation<Events extends AnimationEvents = AnimationEvents>
      */
     stop(timeStamp: number) {
 
-        if (!this._active || this._finished) {
+        if (!this._active || (this._rawProgress >= 1)) {
             return;
         }
 
@@ -242,7 +261,7 @@ export class Animation<Events extends AnimationEvents = AnimationEvents>
      */
     resume(timeStamp: number) {
 
-        if (this._active || this._finished) {
+        if (this._active || (this._rawProgress >= 1)) {
             return;
         }
 
@@ -274,7 +293,7 @@ export class Animation<Events extends AnimationEvents = AnimationEvents>
      */
     finish(timeStamp: number) {
 
-        if (this._finished) {
+        if (this._rawProgress >= 1) {
             return;
         }
 
@@ -293,20 +312,9 @@ export class Animation<Events extends AnimationEvents = AnimationEvents>
         this.emit(event as unknown as Utils.ValueType<Events>);
 
         if (!event.canceled) {
-
-            const { from, to, timing } = this;
-            const endProgress = timing(1);
-            const endValue = interpolate(from, to, endProgress);
-
-            this._update(endValue, 1, endProgress);
-
+            this._update(1);
             this._active = false;
-            this._finished = true;
-            this._currentValue = endValue;
-            this._rawProgress = 1;
-            this._progress = endProgress;
             Schedule.cancelAnimation(this);
-
         }
 
     }
@@ -339,13 +347,7 @@ export class Animation<Events extends AnimationEvents = AnimationEvents>
         this.emit(event as unknown as Utils.ValueType<Events>);
 
         if (!event.canceled) {
-            const { from, to, timing } = this;
-            const progress = timing(rawProgress);
-            const currentValue = interpolate(from, to, progress);
-            this._currentValue = currentValue;
-            this._rawProgress = rawProgress;
-            this._progress = progress;
-            this._update(currentValue, rawProgress, progress);
+            this._update(rawProgress);
         }
 
     }

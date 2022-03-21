@@ -67,7 +67,7 @@ export const animate = <TargetType extends CanvasNode<any>>(
 
     const root = (options.root === undefined) ? target.getRoot() : options.root;
 
-    const animationOptions: Required<AnimationOptions<AnimationEvents>> = {
+    const animationOptions: AnimationOptions<AnimationEvents> = {
         from: options.from ?? currentValue,
         to: options.to,
         duration: options.duration ?? 1000,
