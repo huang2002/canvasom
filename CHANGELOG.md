@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+- Add `locate` method
+- Add `afterLocating` hook
+
 ## 1.1.1
 
 - Update `3h-event` to `0.4.1`
