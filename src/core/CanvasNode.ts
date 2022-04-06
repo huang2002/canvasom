@@ -650,6 +650,11 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * (optional)
      */
     protected afterUpdate?(timeStamp: number): void;
+    /** dts2md break */
+    /**
+     * A hook invoked after locating.
+     */
+    protected afterLocating?(timeStamp: number): void;
 
     private _initUpdate(timeStamp: number) {
 
@@ -734,6 +739,8 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         bounds.left = x;
         bounds.top = y;
 
+        this.afterLocating?.(timeStamp);
+
         Style.compute(
             this._computedStyle,
             this._parentNode?._computedStyle ?? Style.defaults,
@@ -745,6 +752,59 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         if (!this.noChildUpdate) {
             this._childNodes.forEach(childNode => {
                 childNode._updateLayout(timeStamp);
+            });
+        }
+
+    }
+    /** dts2md break */
+    /**
+     * Locate the node.
+     * (You can invoke this to re-locate nodes
+     * whose positions are changed in `updateLayout` or `afterUpdate`
+     * so that they will be rendered at newest positions.)
+     */
+    locate(timeStamp: number) {
+
+        const { offset, bounds } = this;
+        let x: number;
+        let y: number;
+
+        switch (this.offsetMode) {
+
+            case 'absolute': {
+                x = offset.x;
+                y = offset.y;
+                break;
+            }
+
+            case 'relative': {
+                const { _parentNode } = this;
+                if (_parentNode) {
+                    const { position: parentPosition } = _parentNode;
+                    x = offset.x + parentPosition.x + this.layoutOffsetX;
+                    y = offset.y + parentPosition.y + this.layoutOffsetY;
+                } else {
+                    x = offset.x;
+                    y = offset.y;
+                }
+                break;
+            }
+
+            default: {
+                throw new TypeError('unknown positioning mode');
+            }
+
+        }
+
+        this.position.set(x, y);
+        bounds.left = x;
+        bounds.top = y;
+
+        this.afterLocating?.(timeStamp);
+
+        if (!this.noChildUpdate) {
+            this._childNodes.forEach(childNode => {
+                childNode.locate(timeStamp);
             });
         }
 
