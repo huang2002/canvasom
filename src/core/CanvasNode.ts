@@ -505,6 +505,17 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     }
     /** dts2md break */
     /**
+     * Remove all child nodes.
+     */
+    clearChildNodes() {
+        const { _childNodes } = this;
+        _childNodes.forEach(childNode => {
+            childNode._parentNode = null;
+        });
+        _childNodes.length = 0;
+    }
+    /** dts2md break */
+    /**
      * Append a new child node.
      */
     appendChild(node: CanvasNode<Events>) {
