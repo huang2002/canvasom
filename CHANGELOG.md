@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- Add `clearChildNodes` to `CanvasNode`
+
 ## 1.2.0
 
 - Add `locate` method
