@@ -1,5 +1,5 @@
 import { type Event, EventEmitter, EventListeners, addListeners } from "3h-event";
-import { insertElement, removeElements } from "3h-utils";
+import { insertElement, merge, removeElements } from "3h-utils";
 import { CanvasStyle, Style } from '../common/Style';
 import type { Renderer } from './Renderer';
 import { Bounds } from '../common/Bounds';
@@ -7,6 +7,8 @@ import { Vector } from '../common/Vector';
 import { Utils } from "../common/Utils";
 import { Schedule } from '../common/Schedule';
 import type { CanvasRoot } from './CanvasRoot';
+import { NodeRecord, NodeRecordOptions, NodeRecordValue } from '../utils/createFromRecord';
+import { registry } from '../common/registry';
 
 /**
  * Type of data of pinter events on canvas nodes.
@@ -895,5 +897,56 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
     containsPoint(x: number, y: number) {
         return this.bounds.containsPoint(x, y);
     }
+    /** dts2md break */
+    /**
+     * Returns the options for record creation.
+     * (Remember to override this when declaring a subclass
+     * with extended options.)
+     */
+    getRecordOptions(): NodeRecordOptions {
+        const filteredStyle = merge(this.style); // copy
+        if (typeof filteredStyle.fillStyle !== 'string') {
+            filteredStyle.fillStyle = null;
+        }
+        if (typeof filteredStyle.strokeStyle !== 'string') {
+            filteredStyle.strokeStyle = null;
+        }
+        if (typeof filteredStyle.boundsStyle !== 'string') {
+            filteredStyle.boundsStyle = null;
+        }
+        return {
+            id: this.id,
+            classNames: this.classNames,
+            offsetX: this.offsetX,
+            offsetY: this.offsetY,
+            boundsWidth: this.bounds.width,
+            boundsHeight: this.bounds.height,
+            stretchX: this.stretchX,
+            stretchY: this.stretchY,
+            offsetMode: this.offsetMode,
+            visible: this.visible,
+            interactive: this.interactive,
+            penetrable: this.penetrable,
+            style: filteredStyle as NodeRecordValue,
+            noUpdate: this.noUpdate,
+            smartUpdate: this.smartUpdate,
+        };
+    }
+    /** dts2md break */
+    /**
+     * Returns a record object that can be used to serialize this node.
+     * (Invokes `this.getRecordOptions` internally.)
+     */
+    toRecord(): NodeRecord {
+        return {
+            tag: this.tag,
+            options: this.getRecordOptions(),
+            childNodes: this._childNodes.map(
+                childNode => childNode.toRecord()
+            ),
+        };
+    }
 
 }
+
+registry.set('', CanvasNode);

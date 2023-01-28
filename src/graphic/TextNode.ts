@@ -2,6 +2,9 @@ import { Utils } from '../common/Utils';
 import { Style } from '../common/Style';
 import { CanvasNode, CanvasNodeEvents, CanvasNodeOptions } from '../core/CanvasNode';
 import type { Renderer } from '../core/Renderer';
+import { registry } from '../common/registry';
+import { merge } from '3h-utils';
+import { NodeRecordOptions } from '../utils/createFromRecord';
 
 /**
  * Type of options of {@link TextNode}.
@@ -106,5 +109,17 @@ export class TextNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         }
 
     }
+    /** dts2md break */
+    /**
+     * @override ShapeNode.getRecordOptions
+     */
+    getRecordOptions(): NodeRecordOptions {
+        return merge(super.getRecordOptions(), {
+            content: this.content,
+            ltr: this.ltr,
+        });
+    }
 
 }
+
+registry.set('text', TextNode);

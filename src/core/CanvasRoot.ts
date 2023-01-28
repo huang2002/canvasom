@@ -4,6 +4,7 @@ import { Utils } from "../common/Utils";
 import { detectTarget } from '../interaction/detectTarget';
 import { Event } from '3h-event';
 import { Schedule } from '../common/Schedule';
+import { NodeRecordOptions } from '../utils/createFromRecord';
 
 /**
  * The type of pointer.
@@ -536,5 +537,18 @@ export class CanvasRoot<Events extends CanvasNodeEvents = CanvasNodeEvents>
         this._listenerAttached = false;
 
     }
+    /** dts2md break */
+    /**
+     * @override CanvasNode.getRecordOptions
+     */
+    getRecordOptions(): NodeRecordOptions {
+        // TODO: implement serialization of root nodes
+        throw new TypeError(
+            "serialization of root nodes hasn't been implemented"
+        );
+    }
 
 }
+
+// TODO: implement serialization of root nodes
+// registry.set('root', CanvasRoot);

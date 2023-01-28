@@ -6,6 +6,7 @@ export * from './common/Style';
 export * from './common/Schedule';
 export * from './common/Vector';
 export * from './common/Vertices';
+export * from './common/registry';
 
 export * from './interaction/detectTarget';
 
@@ -26,6 +27,7 @@ export * from './layout/FlowNode';
 export * from './layout/ScrollNode';
 
 export * from './utils/create';
+export * from './utils/createFromRecord';
 export * from './utils/Timing';
 export * from './utils/Animation';
 export * from './utils/animate';

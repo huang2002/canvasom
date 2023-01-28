@@ -1,4 +1,7 @@
+import { merge } from '3h-utils';
+import { registry } from '../common/registry';
 import { CanvasNode, CanvasNodeEvents, CanvasNodeOptions } from '../core/CanvasNode';
+import { NodeRecordOptions } from '../utils/createFromRecord';
 
 /**
  * Type of align parameter.
@@ -129,5 +132,17 @@ export class AlignNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         }
 
     }
+    /** dts2md break */
+    /**
+     * @override CanvasNode.getRecordOptions
+     */
+    getRecordOptions(): NodeRecordOptions {
+        return merge(super.getRecordOptions(), {
+            alignX: this.alignX,
+            alignY: this.alignY,
+        });
+    }
 
 }
+
+registry.set('align', AlignNode);

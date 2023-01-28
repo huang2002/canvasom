@@ -1,6 +1,9 @@
 import { ShapeNode, ShapeNodeOptions } from "./ShapeNode";
 import { Utils } from "../common/Utils";
 import { CanvasNodeEvents } from '../core/CanvasNode';
+import { registry } from '../common/registry';
+import { merge } from '3h-utils';
+import { NodeRecordOptions } from '../utils/createFromRecord';
 
 /**
  * Type of options of {@link ArcNode}.
@@ -123,5 +126,20 @@ export class ArcNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             !this.clockwise,
         );
     }
+    /** dts2md break */
+    /**
+     * @override ShapeNode.getRecordOptions
+     */
+    getRecordOptions(): NodeRecordOptions {
+        return merge(super.getRecordOptions(), {
+            startAngle: this.startAngle,
+            endAngle: this.endAngle,
+            radius: this.radius,
+            clockwise: this.clockwise,
+            smartSize: this.smartSize,
+        });
+    }
 
 }
+
+registry.set('arc', ArcNode);

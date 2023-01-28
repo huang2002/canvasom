@@ -1,5 +1,6 @@
 import { Renderer } from '../core/Renderer';
 import { CanvasNode, CanvasNodeEvents, CanvasNodeOptions } from '../core/CanvasNode';
+import { NodeRecordOptions } from '../utils/createFromRecord';
 
 /**
  * Type of image sources of image nodes.
@@ -178,4 +179,18 @@ export class ImageNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
 
     }
 
+    /** dts2md break */
+    /**
+     * @override CanvasNode.getRecordOptions
+     */
+    getRecordOptions(): NodeRecordOptions {
+        // TODO: implement serialization of image nodes
+        throw new TypeError(
+            "serialization of image nodes hasn't been implemented"
+        );
+    }
+
 }
+
+// TODO: implement serialization of image nodes
+// registry.set('image', ImageNode);

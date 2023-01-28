@@ -1,4 +1,7 @@
+import { merge } from '3h-utils';
+import { registry } from '../common/registry';
 import { CanvasNode, CanvasNodeEvents, CanvasNodeOptions } from '../core/CanvasNode';
+import { NodeRecordOptions } from '../utils/createFromRecord';
 
 /**
  * Type of flow direction.
@@ -103,5 +106,17 @@ export class FlowNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         }
 
     }
+    /** dts2md break */
+    /**
+     * @override CanvasNode.getRecordOptions
+     */
+    getRecordOptions(): NodeRecordOptions {
+        return merge(super.getRecordOptions(), {
+            direction: this.direction,
+            gap: this.gap,
+        });
+    }
 
 }
+
+registry.set('flow', FlowNode);

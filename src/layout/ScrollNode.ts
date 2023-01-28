@@ -4,6 +4,7 @@ import { Utils } from "../common/Utils";
 import { Schedule } from '../common/Schedule';
 import { clamp } from '3h-utils';
 import { Event } from '3h-event';
+import { NodeRecordOptions } from '../utils/createFromRecord';
 
 /**
  * Type of data of scroll event.
@@ -516,5 +517,18 @@ export class ScrollNode<Events extends ScrollNodeEvents = ScrollNodeEvents>
         this._listenerAttached = false;
 
     }
+    /** dts2md break */
+    /**
+     * @override CanvasNode.getRecordOptions
+     */
+    getRecordOptions(): NodeRecordOptions {
+        // TODO: implement serialization of scroll nodes
+        throw new TypeError(
+            "serialization of scroll nodes hasn't been implemented"
+        );
+    }
 
 }
+
+// TODO: implement serialization of scroll nodes
+// registry.set('scroll', ScrollNode);

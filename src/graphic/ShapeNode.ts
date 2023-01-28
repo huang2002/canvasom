@@ -1,6 +1,8 @@
 import { Renderer } from '../core/Renderer';
 import { Utils } from '../common/Utils';
 import { CanvasNode, CanvasNodeEvents, CanvasNodeOptions } from '../core/CanvasNode';
+import { NodeRecordOptions } from '../utils/createFromRecord';
+import { merge } from '3h-utils';
 
 /**
  * Type of options of {@link ShapeNode}.
@@ -138,6 +140,16 @@ export abstract class ShapeNode<Events extends CanvasNodeEvents = CanvasNodeEven
             });
         }
 
+    }
+    /** dts2md break */
+    /**
+     * @override CanvasNode.getRecordOptions
+     */
+    getRecordOptions(): NodeRecordOptions {
+        return merge(super.getRecordOptions(), {
+            clipContent: this.clipContent,
+            closePath: this.closePath,
+        });
     }
 
 }

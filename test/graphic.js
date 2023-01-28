@@ -22,12 +22,10 @@ const createImageSource = (source) => {
     return image;
 };
 
-const graphicView = COM.create(COM.CanvasNode, {
-    id: 'graphic-view',
-    penetrable: true,
-    offsetY: 10,
-    stretch: 1,
-}, [
+/**
+ * @type {COM.CanvasNode<any>[]}
+ */
+const serializableNodes = [
 
     COM.create(COM.CanvasNode, {
         offsetX: 50,
@@ -161,31 +159,6 @@ const graphicView = COM.create(COM.CanvasNode, {
         },
     }),
 
-    COM.create(COM.ImageNode, {
-        image: createImageSource('./face.png'),
-        offsetX: 50,
-        offsetY: 410,
-        style: GRAPHIC_BOUNDS_STYLE,
-    }),
-
-    COM.create(COM.CanvasNode, {
-        offsetX: 290,
-        offsetY: 410,
-        boundsWidth: 100,
-        boundsHeight: 100,
-    }, [
-        COM.create(COM.ImageNode, {
-            image: createImageSource('./face.png'),
-            sourceX: 100,
-            sourceY: 0,
-            sourceWidth: 100,
-            sourceHeight: 100,
-            stretch: 1,
-            smartSize: true,
-            style: GRAPHIC_BOUNDS_STYLE,
-        }),
-    ]),
-
     COM.create(COM.PolygonNode, {
         offsetX: 410,
         offsetY: 50,
@@ -228,7 +201,7 @@ const graphicView = COM.create(COM.CanvasNode, {
         offsetX: 410,
         offsetY: 410,
         closePath: false,
-        vertices: COM.Vertices.fromArray([
+        vertices: COM.Vertices.fromNumbers([
             0, 100,
             100, 0,
         ]),
@@ -254,6 +227,51 @@ const graphicView = COM.create(COM.CanvasNode, {
             shadowOffsetY: 5,
         },
     }),
+
+];
+
+const serializedNodes = JSON.stringify(
+    serializableNodes.map(
+        node => node.toRecord()
+    )
+);
+
+const deserializedNodes = JSON.parse(serializedNodes)
+    .map(COM.createFromRecord);
+
+const graphicView = COM.create(COM.CanvasNode, {
+    id: 'graphic-view',
+    penetrable: true,
+    offsetY: 10,
+    stretch: 1,
+}, [
+
+    ...deserializedNodes,
+
+    COM.create(COM.ImageNode, {
+        image: createImageSource('./face.png'),
+        offsetX: 50,
+        offsetY: 410,
+        style: GRAPHIC_BOUNDS_STYLE,
+    }),
+
+    COM.create(COM.CanvasNode, {
+        offsetX: 290,
+        offsetY: 410,
+        boundsWidth: 100,
+        boundsHeight: 100,
+    }, [
+        COM.create(COM.ImageNode, {
+            image: createImageSource('./face.png'),
+            sourceX: 100,
+            sourceY: 0,
+            sourceWidth: 100,
+            sourceHeight: 100,
+            stretch: 1,
+            smartSize: true,
+            style: GRAPHIC_BOUNDS_STYLE,
+        }),
+    ]),
 
     BackButton(),
 

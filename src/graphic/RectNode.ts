@@ -1,6 +1,9 @@
 import { ShapeNode, ShapeNodeOptions } from "./ShapeNode";
 import { Utils } from "../common/Utils";
 import { CanvasNodeEvents } from '../core/CanvasNode';
+import { NodeRecordOptions } from '../utils/createFromRecord';
+import { merge } from '3h-utils';
+import { registry } from '../common/registry';
 
 /**
  * Type of options of {@link RectNode}.
@@ -122,5 +125,19 @@ export class RectNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
             context.rect(0, 0, width, height);
         }
     }
+    /** dts2md break */
+    /**
+     * @override ShapeNode.getRecordOptions
+     */
+    getRecordOptions(): NodeRecordOptions {
+        return merge(super.getRecordOptions(), {
+            width: this.width,
+            height: this.height,
+            radius: this.radius,
+            smartSize: this.smartSize,
+        });
+    }
 
 }
+
+registry.set('rect', RectNode);

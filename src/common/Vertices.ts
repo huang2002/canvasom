@@ -1,4 +1,4 @@
-import { Vector } from "./Vector";
+import { Vector, VectorLike } from "./Vector";
 import { Utils } from "./Utils";
 
 /**
@@ -7,23 +7,38 @@ import { Utils } from "./Utils";
 export namespace Vertices {
     /** dts2md break */
     /**
-     * Create vertices from a number array.
-     * (Expect: [x0, y0, x1, y1, ...])
+     * Create vertices from an array of numbers.
+     * (Expected input: [x0, y0, x1, y1, ...])
      */
-    export const fromArray = (array: number[]): Vector[] => {
+    export const fromNumbers = (numbers: number[]): Vector[] => {
 
-        if (array.length & 1) { // odd
+        if (numbers.length & 1) { // odd
             throw new RangeError('expect the array length to be even');
         }
 
         const result = [];
-        for (let i = 0; i < array.length; i += 2) {
+        for (let i = 0; i < numbers.length; i += 2) {
             result.push(
-                new Vector(array[i], array[i + 1])
+                new Vector(numbers[i], numbers[i + 1])
             );
         }
         return result;
 
+    };
+    /** dts2md break */
+    /**
+     * Convert vertices to an array of numbers.
+     * (Expected output: [x0, y0, x1, y1, ...])
+     */
+    export const toNumbers = (vertices: readonly VectorLike[]): number[] => {
+        const numbers = [];
+        for (let i = 0; i < vertices.length; i++) {
+            numbers.push(
+                vertices[i].x,
+                vertices[i].y,
+            );
+        }
+        return numbers;
     };
     /** dts2md break */
     /**
@@ -72,7 +87,7 @@ export namespace Vertices {
             result.push(
                 new Vector(
                     innerRadius * cos(angle),
-                    innerRadius * sin(angle) ,
+                    innerRadius * sin(angle),
                 )
             );
             angle += deltaAngle;
@@ -80,7 +95,7 @@ export namespace Vertices {
             result.push(
                 new Vector(
                     outerRadius * cos(angle),
-                    outerRadius * sin(angle) ,
+                    outerRadius * sin(angle),
                 )
             );
             angle += deltaAngle;

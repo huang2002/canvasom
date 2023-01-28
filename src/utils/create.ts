@@ -1,17 +1,6 @@
+import { NodeConstructor, NodeConstructorParameters } from '../common/registry';
 import type { CanvasNode } from '../core/CanvasNode';
 
-/**
- * Type of node constructors.
- */
-export type NodeConstructor<OptionType = any> =
-    new (options?: OptionType) => CanvasNode<any>;
-/** dts2md break */
-/**
- * Extract type of parameters of the given node constructor.
- */
-export type NodeConstructorParameters<Constructor extends NodeConstructor> =
-    Constructor extends NodeConstructor<infer T> ? T : never;
-/** dts2md break */
 /**
  * Create a node from the given arguments.
  */

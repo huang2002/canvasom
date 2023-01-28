@@ -1,6 +1,10 @@
 import { ShapeNode, ShapeNodeOptions } from "./ShapeNode";
 import { CanvasNodeEvents } from '../core/CanvasNode';
 import { Vector } from '../common/Vector';
+import { NodeRecordOptions } from '../utils/createFromRecord';
+import { merge } from '3h-utils';
+import { registry } from '../common/registry';
+import { Vertices } from '../common/Vertices';
 
 /**
  * Type of options of {@link PolygonNode}.
@@ -10,8 +14,10 @@ export type PolygonNodeOptions<Events extends CanvasNodeEvents> = (
     & Partial<{
         /**
          * The vertices of the polygon.
+         * (If the given array starts with a number, then the array
+         * will be transformed by `Vertices.fromNumbers`.)
          */
-        vertices: Vector[];
+        vertices: Vector[] | number[];
         /**
          * @override ShapeNodeOptions.closePath
          * @default true
@@ -34,7 +40,17 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         super(options);
         this.closePath = options?.closePath ?? true;
         if (options?.vertices) {
-            this.updateVertices(options.vertices);
+            if (typeof options.vertices[0] === 'number') {
+                this.updateVertices(
+                    Vertices.fromNumbers(
+                        options.vertices as number[]
+                    ),
+                );
+            } else {
+                this.updateVertices(
+                    options.vertices as Vector[]
+                );
+            }
         } else {
             this._vertices = [];
         }
@@ -149,5 +165,16 @@ export class PolygonNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         }
         return true;
     }
+    /** dts2md break */
+    /**
+     * @override ShapeNode.getRecordOptions
+     */
+    getRecordOptions(): NodeRecordOptions {
+        return merge(super.getRecordOptions(), {
+            vertices: Vertices.toNumbers(this.vertices),
+        });
+    }
 
 }
+
+registry.set('polygon', PolygonNode);

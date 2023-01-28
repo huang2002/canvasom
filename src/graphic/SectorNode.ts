@@ -1,5 +1,8 @@
 import { ShapeNode, ShapeNodeOptions } from "./ShapeNode";
 import { CanvasNodeEvents } from '../core/CanvasNode';
+import { registry } from '../common/registry';
+import { NodeRecordOptions } from '../utils/createFromRecord';
+import { merge } from '3h-utils';
 
 /**
  * Type of options of {@link SectorNode}.
@@ -124,5 +127,20 @@ export class SectorNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
         );
         context.lineTo(radius, radius);
     }
+    /** dts2md break */
+    /**
+     * @override ShapeNode.getRecordOptions
+     */
+    getRecordOptions(): NodeRecordOptions {
+        return merge(super.getRecordOptions(), {
+            startAngle: this.startAngle,
+            endAngle: this.endAngle,
+            radius: this.radius,
+            clockwise: this.clockwise,
+            smartSize: this.smartSize,
+        });
+    }
 
 }
+
+registry.set('sector', SectorNode);
