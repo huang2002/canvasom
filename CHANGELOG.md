@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.0
+
+- Add serialization APIs
+- Add `Vertices.toNumbers`
+- Rename `Vertices.fromArray` `Vertices.fromNumbers`
+- Update deps
+
 ## 1.3.0
 
 - Add `clearChildNodes` to `CanvasNode`
