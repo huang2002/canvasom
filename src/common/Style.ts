@@ -75,7 +75,7 @@ export interface CanvasStyle {
     /**
      * @default 'source-over'
      */
-    compositeOperation: string;
+    compositeOperation: GlobalCompositeOperation;
     /**
      * Pixel ratio
      * @default window.devicePixelRatio
