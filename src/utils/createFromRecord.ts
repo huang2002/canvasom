@@ -24,7 +24,7 @@ export type NodeRecordOptions = Record<string, NodeRecordValue>;
 export interface NodeRecord {
     tag: string;
     options: NodeRecordOptions;
-    childNodes: NodeRecord[];
+    childNodes?: NodeRecord[];
 }
 /** dts2md break */
 /**
@@ -40,6 +40,6 @@ export const createFromRecord = (record: NodeRecord): CanvasNode<any> => {
     return create(
         constructor,
         record.options,
-        record.childNodes.map(createFromRecord),
+        record.childNodes?.map(createFromRecord),
     );
 };

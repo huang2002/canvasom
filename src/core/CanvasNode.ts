@@ -938,13 +938,16 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      * (Invokes `this.getRecordOptions` internally.)
      */
     toRecord(): NodeRecord {
-        return {
+        const record: NodeRecord = {
             tag: this.tag,
             options: this.getRecordOptions(),
-            childNodes: this._childNodes.map(
-                childNode => childNode.toRecord()
-            ),
         };
+        if (this._childNodes.length) {
+            record.childNodes = this._childNodes.map(
+                childNode => childNode.toRecord()
+            );
+        }
+        return record;
     }
 
 }
