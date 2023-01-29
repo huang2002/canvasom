@@ -905,14 +905,29 @@ export class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents>
      */
     getRecordOptions(): NodeRecordOptions {
         const filteredStyle = merge(this.style); // copy
-        if (typeof filteredStyle.fillStyle !== 'string') {
-            filteredStyle.fillStyle = null;
+        if (
+            filteredStyle.fillStyle
+            && (typeof filteredStyle.fillStyle !== 'string')
+        ) {
+            throw new TypeError(
+                'encountered non-serializable fill style'
+            );
         }
-        if (typeof filteredStyle.strokeStyle !== 'string') {
-            filteredStyle.strokeStyle = null;
+        if (
+            filteredStyle.strokeStyle
+            && (typeof filteredStyle.strokeStyle !== 'string')
+        ) {
+            throw new TypeError(
+                'encountered non-serializable stroke style'
+            );
         }
-        if (typeof filteredStyle.boundsStyle !== 'string') {
-            filteredStyle.boundsStyle = null;
+        if (
+            filteredStyle.boundsStyle
+            && (typeof filteredStyle.boundsStyle !== 'string')
+        ) {
+            throw new TypeError(
+                'encountered non-serializable bounds style'
+            );
         }
         return {
             id: this.id,
